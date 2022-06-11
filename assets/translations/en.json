@@ -1,0 +1,127 @@
+{
+	"always-active": "Always active",
+	"app-title": "NekoDroid",
+	"backup-restore": "Backup & restore",
+	"blur-thumbs": "Blur thumbnails",
+	"blur-thumbs-sigma": "Blur intensity",
+	"carousel-item-count": "Carousel item count",
+	"confirm-exit": "Press again to exit",
+	"dark": "Dark",
+	"default-page": "Default page",
+	"favorites": "Favorites",
+	"history": "History",
+	"home": "Home",
+	"latest-eps": "Latest episodes",
+	"library": "Library",
+	"light": "Light",
+	"locale": "Language",
+	"more": "More",
+	"nav-labels": "Navigation labels",
+	"never-active": "Never active",
+	"no-synopsis": "No synopsis.",
+	"only-on-selected": "Only on selected",
+	"popular-animes": "Popular animes",
+	"private-browsing": "Private browsing",
+	"private-browsing-desc": "Pauses navigation history",
+	"seasonal-animes": "Seasonal animes",
+	"settings": "Settings",
+	"show-blur-thumbs-switch": "Show blur thumbnails switch",
+	"stats": "Statistics",
+	"system": "System",
+	"theme": "Theme",
+	"genre": "Genre",
+	"genres-list": {
+		"action": "action",
+		"adventure": "adventure",
+		"comedy": "comedy",
+		"drama": "drama",
+		"ecchi": "ecchi",
+		"fantasy": "fantasy",
+		"hentai": "hentai",
+		"horror": "horror",
+		"magicalGirl": "magical girl",
+		"mecha": "mecha",
+		"music": "music",
+		"mystery": "mystery",
+		"psychological": "psychological",
+		"romance": "romance",
+		"sciFi": "sci-fi",
+		"sliceOfLife": "slice of life",
+		"sports": "sports",
+		"supernatural": "supernatural",
+		"thriller": "thriller"
+	},
+	"format": "Format",
+	"status": "Status",
+	"types-statuses-list": {
+		"movie": "Movie",
+		"ova": "OVA",
+		"special": "Special",
+		"tv": "TV",
+		"aired": "Aired",
+		"airing": "Airing",
+		"planned": "Planned"
+	},
+	"episode": {
+		"short": "Ep {}",
+		"long": "Episode {}"
+	},
+	"episodes": {
+		"short": {
+			"zero": "? eps",
+			"one": "{} Ep",
+			"other": "{} Eps"
+		},
+		"long": {
+			"zero": "? episodes",
+			"one": "{} Episode",
+			"other": "{} Episodes"
+		}
+	},
+	"minutes": {
+		"short": {
+			"zero": "? Mins",
+			"one": "{} Min",
+			"other": "{} Mins"
+		},
+		"long": {
+			"zero": "? Minutes",
+			"one": "{} Minute",
+			"other": "{} Minutes"
+		}
+	},
+	"no-results": "No results",
+	"months": {
+		"short": {
+			"1": "Jan",
+			"2": "Feb",
+			"3": "Mar",
+			"4": "Apr",
+			"5": "May",
+			"6": "Jun",
+			"7": "Jul",
+			"8": "Aug",
+			"9": "Sep",
+			"10": "Oct",
+			"11": "Nov",
+			"12": "Dec"
+		},
+		"long": {
+			"1": "January",
+			"2": "February",
+			"3": "March",
+			"4": "April",
+			"5": "May",
+			"6": "June",
+			"7": "July",
+			"8": "August",
+			"9": "September",
+			"10": "October",
+			"11": "November",
+			"12": "December"
+		}
+	},
+	"empty-history": "The history is empty",
+	"empty-favorites": "No favorites",
+	"search": "Search"
+}
