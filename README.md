@@ -1,16 +1,44 @@
 # nekodroid
 
-A new Flutter project.
+![Demo animation](assets/images/nekodroid_logo_regular.svg "Demo animation")
 
-## Getting Started
+Unofficial android client for [neko-sama.fr](https://neko-sama.fr).
 
-This project is a starting point for a Flutter application.
+[Screenshots](screenshots/ "Screenshots")
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Download and install the [Latest APK](https://github.com/zkayia/nekodroid/releases/latest) or [Build](#Build) one.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Build
+
+Make sure to check out [docs.flutter.dev/deployment/android](https://docs.flutter.dev/deployment/android).
+
+1. Clone this repo:
+   ```
+   git clone https://github.com/zkayia/nekodroid
+   ```
+
+2. Make sure your installed sdk fits the requirement in the [pubspec.yaml](pubspec.yaml) file (under `environment` > `sdk`).
+
+3. Navigate to the project's root folder.
+
+4. Install dependencies:
+   ```
+   flutter pub get
+   ```
+
+5. Follow
+    [https://docs.flutter.dev/deployment/android#create-an-upload-keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore)
+
+   and
+	  [docs.flutter.dev/deployment/android#reference-the-keystore-from-the-app](https://docs.flutter.dev/deployment/android#reference-the-keystore-from-the-app)
+
+	 to setup apk signing.
+	 Gradle configuration is already done.
+
+6. Build the apk:
+   ```
+   flutter build apk
+   ```
+   To get an apk for each architecture add the `--split-per-abi` flag.
