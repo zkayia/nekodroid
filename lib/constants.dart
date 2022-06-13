@@ -25,7 +25,7 @@ const int kSearchDbMaxLifetime = 12 * 60 * 60 * 1000;
 
 const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
 const Curve kDefaultAnimCurve = Curves.easeInOutQuad;
-const ScrollPhysics kDefaultScrollPhysics = BouncingScrollPhysics();
+const ScrollPhysics kDefaultScrollPhysics = ClampingScrollPhysics();
 
 const double kDefaultElevation = 6;
 

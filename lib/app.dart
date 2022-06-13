@@ -31,6 +31,10 @@ class App extends ConsumerWidget {
 		localizationsDelegates: context.localizationDelegates,
 		supportedLocales: context.supportedLocales,
 		locale: context.locale,
+		builder: (context, child) => ScrollConfiguration(
+			behavior: _NoOverscrollIndicatorScrollBehavior(),
+			child: child!,
+		),
 		initialRoute: "/",
 		routes: {
 			"/": (context) => const BaseRoute(),
@@ -44,4 +48,14 @@ class App extends ConsumerWidget {
 			// "/stats": (context) => const StatsRoute(),
 		},
 	);
+}
+
+class _NoOverscrollIndicatorScrollBehavior extends ScrollBehavior {
+	
+	@override
+	Widget buildOverscrollIndicator(
+		BuildContext context,
+		Widget child,
+		ScrollableDetails details,
+	) => child;
 }
