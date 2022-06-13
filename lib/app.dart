@@ -26,7 +26,9 @@ class App extends ConsumerWidget {
 		title: "Nekodroid",
 		debugShowCheckedModeBanner: false,
 		theme: lightTheme,
-		darkTheme: darkTheme,
+		darkTheme: ref.watch(settingsProvider.select((value) => value.useAmoled))
+			? amoledTheme
+			: darkTheme,
 		themeMode: ref.watch(settingsProvider.select((value) => value.themeMode)),
 		localizationsDelegates: context.localizationDelegates,
 		supportedLocales: context.supportedLocales,

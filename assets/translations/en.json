@@ -122,5 +122,6 @@
 	},
 	"empty-history": "The history is empty",
 	"empty-favorites": "No favorites",
-	"search": "Search"
+	"search": "Search",
+	"use-amoled": "Use AMOLED"
 }

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nekodroid/helpers/nav_labels_mode.dart';
 import 'package:nekodroid/models/app_settings.dart';
-import 'package:version/version.dart';
 
 
 const kDefaultSettings = AppSettings(
 	themeMode: ThemeMode.system,
+	useAmoled: false,
 	defaultPage: 0,
 	carouselItemCount: 5,
 	secrecyEnabled: false,
@@ -85,6 +85,15 @@ final ThemeData lightTheme = _buildTheme(
 	polarAlt: const Color(0xff505050),
 );
 
+final ThemeData amoledTheme = _buildTheme(
+	brightness: Brightness.dark,
+	accent: _kAccentColor,
+	onAccent: _kOnAccentColor,
+	prim: const Color(0xff101010),
+	primAlt: const Color(0xff000000),
+	polar: const Color(0xfff9f9f9),
+	polarAlt: const Color(0xffb9b9b9),
+);
 
 ThemeData _buildTheme({
 	required Brightness brightness,
@@ -98,7 +107,6 @@ ThemeData _buildTheme({
 	final isDark = brightness == Brightness.dark;
 	final baseTheme = isDark ? ThemeData.dark() : ThemeData.light();
 	return baseTheme.copyWith(
-		useMaterial3: true,
 		primaryColor: prim,
 		scaffoldBackgroundColor: primAlt,
 		indicatorColor: accent,

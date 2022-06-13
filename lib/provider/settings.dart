@@ -33,6 +33,11 @@ class _SettingsProviderNotifier extends StateNotifier<AppSettings> {
 	void resetThemeMode() =>
 		state = state.copyWith(themeMode: kDefaultSettings.themeMode);
 
+	set useAmoled(bool value) =>
+		state = state.copyWith(useAmoled: value);
+	void resetUseAmoled() =>
+		state = state.copyWith(useAmoled: kDefaultSettings.useAmoled);
+
 	set defaultPage(int value) =>
 		state = state.copyWith(defaultPage: value);
 	void resetDefaultPage() =>

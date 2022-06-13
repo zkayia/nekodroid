@@ -75,6 +75,12 @@ class SettingsRoute extends ConsumerWidget {
 						],
 					),
 				),
+				SwitchListTile(
+					title: const Text("use-amoled").tr(),
+					value: ref.watch(settingsProvider.select((value) => value.useAmoled)),
+					onChanged: (bool value) =>
+						ref.read(settingsProvider.notifier).useAmoled = value,
+				),
 				ListTile(
 					// leading: const ListTileIcon(UniconsLine.home_alt),
 					title: const Text("locale").tr(),

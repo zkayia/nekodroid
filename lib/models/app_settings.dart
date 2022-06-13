@@ -11,6 +11,7 @@ import 'package:nekodroid/helpers/resolve_thememode.dart';
 class AppSettings {
 
 	final ThemeMode themeMode;
+	final bool useAmoled;
 	final int defaultPage;
 	final int carouselItemCount;
 	final bool secrecyEnabled;
@@ -22,6 +23,7 @@ class AppSettings {
 	
 	const AppSettings({
 		required this.themeMode,
+		required this.useAmoled,
 		required this.defaultPage,
 		required this.carouselItemCount,
 		required this.secrecyEnabled,
@@ -34,6 +36,7 @@ class AppSettings {
 
 	AppSettings copyWith({
 		ThemeMode? themeMode,
+		bool? useAmoled,
 		int? defaultPage,
 		int? carouselItemCount,
 		bool? secrecyEnabled,
@@ -44,6 +47,7 @@ class AppSettings {
 		int? lazyLoadItemCount,
 	}) => AppSettings(
 		themeMode: themeMode ?? this.themeMode,
+		useAmoled: useAmoled ?? this.useAmoled,
 		defaultPage: defaultPage ?? this.defaultPage,
 		carouselItemCount: carouselItemCount ?? this.carouselItemCount,
 		secrecyEnabled: secrecyEnabled ?? this.secrecyEnabled,
@@ -56,6 +60,7 @@ class AppSettings {
 
 	Map<String, dynamic> toMap() => {
 		"themeMode": themeMode.name,
+		"useAmoled": useAmoled,
 		"defaultPage": defaultPage,
 		"carouselItemCount": carouselItemCount,
 		"secrecyEnabled": secrecyEnabled,
@@ -68,6 +73,7 @@ class AppSettings {
 
 	factory AppSettings.fromMap(Map<String, dynamic> map) => AppSettings(
 		themeMode: resolveThemeMode(map["themeMode"]) ?? kDefaultSettings.themeMode,
+		useAmoled: map["useAmoled"] ?? kDefaultSettings.useAmoled,
 		defaultPage: map["defaultPage"] ?? kDefaultSettings.defaultPage,
 		carouselItemCount: map["carouselItemCount"] ?? kDefaultSettings.carouselItemCount,
 		secrecyEnabled: map["secrecyEnabled"] ?? kDefaultSettings.secrecyEnabled,
@@ -84,13 +90,14 @@ class AppSettings {
 
 	@override
 	String toString() =>
-		"AppSettings(themeMode: $themeMode, defaultPage: $defaultPage, carouselItemCount: $carouselItemCount, privateBrowsingEnabled: $secrecyEnabled, blurThumbs: $blurThumbs, blurThumbsShowSwitch: $blurThumbsShowSwitch, blurThumbsSigma: $blurThumbsSigma, navLabelsMode: $navLabelsMode, lazyLoadItemCount: $lazyLoadItemCount)";
+		"AppSettings(themeMode: $themeMode, useAmoled: $useAmoled, defaultPage: $defaultPage, carouselItemCount: $carouselItemCount, privateBrowsingEnabled: $secrecyEnabled, blurThumbs: $blurThumbs, blurThumbsShowSwitch: $blurThumbsShowSwitch, blurThumbsSigma: $blurThumbsSigma, navLabelsMode: $navLabelsMode, lazyLoadItemCount: $lazyLoadItemCount)";
 
 	@override
 	bool operator ==(Object other) {
 		if (identical(this, other)) return true;
 		return other is AppSettings
 			&& other.themeMode == themeMode
+			&& other.useAmoled == useAmoled
 			&& other.defaultPage == defaultPage
 			&& other.carouselItemCount == carouselItemCount
 			&& other.secrecyEnabled == secrecyEnabled
@@ -103,6 +110,7 @@ class AppSettings {
 
 	@override
 	int get hashCode => themeMode.hashCode
+		^ useAmoled.hashCode
 		^ defaultPage.hashCode
 		^ carouselItemCount.hashCode
 		^ secrecyEnabled.hashCode
