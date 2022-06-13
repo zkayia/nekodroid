@@ -29,7 +29,7 @@ Make sure to check out [docs.flutter.dev/deployment/android](https://docs.flutte
    ```
 
 5. Follow
-    [https://docs.flutter.dev/deployment/android#create-an-upload-keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore)
+    [docs.flutter.dev/deployment/android#create-an-upload-keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore)
 
    and
 	  [docs.flutter.dev/deployment/android#reference-the-keystore-from-the-app](https://docs.flutter.dev/deployment/android#reference-the-keystore-from-the-app)
