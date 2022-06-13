@@ -20,7 +20,7 @@ class AnimeTitle extends StatelessWidget {
 	const AnimeTitle(
 		this.title,
 		{
-			Key? key,
+			super.key,
 			this.isExtended=true,
 			this.locale,
 			this.semanticsLabel,
@@ -32,14 +32,12 @@ class AnimeTitle extends StatelessWidget {
 			this.textScaleFactor,
 			this.textWidthBasis,
 		}
-	) :
-		_isBold = false,
-		super(key: key);
+	) : _isBold = false;
 
 	const AnimeTitle.bold(
 		this.title,
 		{
-			Key? key,
+			super.key,
 			this.isExtended=true,
 			this.locale,
 			this.semanticsLabel,
@@ -51,9 +49,7 @@ class AnimeTitle extends StatelessWidget {
 			this.textScaleFactor,
 			this.textWidthBasis,
 		}
-	) :
-		_isBold = true,
-		super(key: key);
+	) : _isBold = true;
 
 	@override
 	Widget build(BuildContext context) => Text(

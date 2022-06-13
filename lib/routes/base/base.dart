@@ -16,7 +16,7 @@ import 'package:nekodroid/routes/base/widgets/nav_bar.dart';
 
 class BaseRoute extends ConsumerWidget {
 
-	const BaseRoute({Key? key}) : super(key: key);
+	const BaseRoute({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => SafeArea(

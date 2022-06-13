@@ -22,7 +22,7 @@ import 'package:nekodroid/widgets/large_icon.dart';
 
 class AnimeRoute extends ConsumerWidget {
 
-	const AnimeRoute({Key? key}) : super(key: key);
+	const AnimeRoute({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) {

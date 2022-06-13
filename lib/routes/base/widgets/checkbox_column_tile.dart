@@ -11,11 +11,11 @@ class CheckboxColumnTile extends StatelessWidget {
 	final void Function() onChanged;
 
 	const CheckboxColumnTile({
-		Key? key,
+		super.key,
 		required this.label,
 		required this.value,
 		required this.onChanged,
-	}) : super(key: key);
+	});
 
 	@override
 	Widget build(BuildContext context) => Card(

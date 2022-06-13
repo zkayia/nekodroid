@@ -20,7 +20,7 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 class SearchPage extends ConsumerWidget {
 
-	const SearchPage({Key? key}) : super(key: key);
+	const SearchPage({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => Stack(

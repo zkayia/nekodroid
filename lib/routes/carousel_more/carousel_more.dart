@@ -8,7 +8,7 @@ import 'package:nekodroid/widgets/generic_route.dart';
 
 class CarouselMoreRoute extends StatelessWidget {
 
-	const CarouselMoreRoute({Key? key}) : super(key: key);
+	const CarouselMoreRoute({super.key});
 
 	@override
 	Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:nekodroid/routes/base/widgets/library_tabview.dart';
 
 class LibraryPage extends StatelessWidget {
 
-	const LibraryPage({Key? key}) : super(key: key);
+	const LibraryPage({super.key});
 
 	@override
 	Widget build(BuildContext context) => DefaultTabController(

@@ -9,7 +9,7 @@ import 'package:nekodroid/routes/base/widgets/list_tile_icon.dart';
 
 class PrivateBrowsingSwitch extends ConsumerWidget {
 
-	const PrivateBrowsingSwitch({Key? key}) : super(key: key);
+	const PrivateBrowsingSwitch({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => ListTile(

@@ -12,11 +12,11 @@ class GenericRoute extends StatelessWidget {
 	final void Function(BuildContext context)? onExitTap;
 	
 	const GenericRoute({
-		Key? key,
+		super.key,
 		this.title,
 		this.body,
 		this.onExitTap,
-	}) : super(key: key);
+	});
 
 	@override
 	Widget build(BuildContext context) => SafeArea(

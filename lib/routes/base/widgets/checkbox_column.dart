@@ -11,10 +11,10 @@ class CheckboxColumn extends StatelessWidget {
 	final List<CheckboxColumnTile> tiles;
 
 	const CheckboxColumn({
-		Key? key,
+		super.key,
 		required this.title,
 		required this.tiles,
-	}) : super(key: key);
+	});
 
 	@override
 	Widget build(BuildContext context) => Column(

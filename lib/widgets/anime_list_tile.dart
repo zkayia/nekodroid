@@ -15,14 +15,14 @@ class AnimeListTile extends StatelessWidget {
 	final void Function() onTap;
 
 	const AnimeListTile({
-		Key? key,
+		super.key,
 		required this.title,
 		this.subtitle,
 		this.leading,
 		this.trailing,
 		this.titleWrap=true,
 		required this.onTap,
-	}) : super(key: key);
+	});
 
 	@override
 	Widget build(BuildContext context) => LimitedBox(

@@ -20,8 +20,8 @@ class AnimeCarousel extends StatelessWidget {
 		this.titleHeroTag,
 		required this.items,
 		this.onMoreTapped,
-		Key? key,
-	}) : super(key: key);
+		super.key,
+	});
 
 	@override
 	Widget build(BuildContext context) {

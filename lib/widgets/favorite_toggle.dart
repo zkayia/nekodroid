@@ -15,8 +15,8 @@ class FavoriteToggle extends ConsumerWidget {
 	const FavoriteToggle({
 		required this.anime,
 		this.boxOnly=false,
-		Key? key,
-	}) : super(key: key);
+		super.key,
+	});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => InkWell(

@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MorePage extends StatelessWidget {
 
-	const MorePage({Key? key}) : super(key: key);
+	const MorePage({super.key});
 
 	@override
 	Widget build(BuildContext context) => Padding(

@@ -22,8 +22,8 @@ class AnimeCard extends StatelessWidget {
 		this.label,
 		this.onImageTap,
 		this.onLabelTap,
-		Key? key,
-	}) : super(key: key);
+		super.key,
+	});
 
 	@override
 	Widget build(BuildContext context) => AspectRatio(

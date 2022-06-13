@@ -11,7 +11,7 @@ import 'package:nekodroid/routes/base/providers/selectable_filters.dart';
 
 class SearchBar extends ConsumerWidget {
 
-	const SearchBar({Key? key}) : super(key: key);
+	const SearchBar({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) {

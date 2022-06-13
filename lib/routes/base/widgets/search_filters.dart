@@ -11,7 +11,7 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 class SearchFilters extends ConsumerWidget {
 
-	const SearchFilters({Key? key}) : super(key: key);
+	const SearchFilters({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => Row(

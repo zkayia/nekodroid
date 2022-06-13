@@ -13,7 +13,7 @@ class EpisodeThumbnail extends ConsumerWidget {
 
 	final Uri imageUrl;
 	
-	const EpisodeThumbnail(this.imageUrl, {Key? key}) : super(key: key);
+	const EpisodeThumbnail(this.imageUrl, {super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => ConstrainedBox(

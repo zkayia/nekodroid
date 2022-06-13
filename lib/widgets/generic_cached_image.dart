@@ -8,7 +8,7 @@ class GenericCachedImage extends StatelessWidget {
 
 	final Uri imageUrl;
 
-	const GenericCachedImage(this.imageUrl, {Key? key}) : super(key: key);
+	const GenericCachedImage(this.imageUrl, {super.key});
 
 	@override
 	Widget build(BuildContext context) => CachedNetworkImage(

@@ -23,9 +23,7 @@ class _LazyLoadProviderNotifier extends StateNotifier<List<NSEpisode>> {
 	_LazyLoadProviderNotifier(
 		this._episodes,
 		this._lazyLoadItemCount,
-	) : super(
-		[..._episodes.take(_lazyLoadItemCount)],
-	);
+	) : super([..._episodes.take(_lazyLoadItemCount)]);
 
 	void loadMore() => state = [
 		..._episodes.take(state.length + _lazyLoadItemCount),

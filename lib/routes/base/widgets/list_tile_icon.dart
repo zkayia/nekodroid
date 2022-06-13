@@ -7,13 +7,9 @@ class ListTileIcon extends StatelessWidget {
 	final bool _useAccent;
 	final IconData icon;
 
-	const ListTileIcon(this.icon, {Key? key}) :
-		_useAccent = false,
-		super(key: key);
+	const ListTileIcon(this.icon, {super.key}) : _useAccent = false;
 
-	const ListTileIcon.accent(this.icon, {Key? key}) :
-		_useAccent = true,
-		super(key: key);
+	const ListTileIcon.accent(this.icon, {super.key}) : _useAccent = true;
 
 	@override
 	Widget build(BuildContext context) => SizedBox(

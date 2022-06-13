@@ -20,7 +20,7 @@ class OverflowText extends StatelessWidget {
 	const OverflowText(
 		this.text,
 		{
-			Key? key,
+			super.key,
 			this.maxLines,
 			this.locale,
 			this.semanticsLabel,
@@ -33,13 +33,12 @@ class OverflowText extends StatelessWidget {
 			this.textWidthBasis,
 		}
 	) :
-		_isSecondary = false,
-		super(key: key);
+		_isSecondary = false;
 
 	const OverflowText.secondary(
 		this.text,
 		{
-			Key? key,
+			super.key,
 			this.maxLines,
 			this.locale,
 			this.semanticsLabel,
@@ -52,8 +51,7 @@ class OverflowText extends StatelessWidget {
 		}
 	) :
 		_isSecondary = true,
-		style = null,
-		super(key: key);
+		style = null;
 
 	@override
 	Widget build(BuildContext context) => Text(

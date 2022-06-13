@@ -27,7 +27,7 @@ class SettingsRoute extends ConsumerWidget {
 		NavLabelsMode.onlySelected: "only-on-selected".tr(),
 	};
 
-	SettingsRoute({Key? key}) : super(key: key);
+	SettingsRoute({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => GenericRoute(

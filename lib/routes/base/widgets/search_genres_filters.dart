@@ -12,7 +12,7 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 class SearchGenresFilters extends ConsumerWidget {
 
-	const SearchGenresFilters({Key? key}) : super(key: key);
+	const SearchGenresFilters({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => Column(

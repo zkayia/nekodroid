@@ -18,7 +18,7 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 class PlayerRoute extends ConsumerWidget {
 
-	const PlayerRoute({Key? key}) : super(key: key);
+	const PlayerRoute({super.key});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) {

@@ -17,7 +17,7 @@ class AnimePageHeader extends StatelessWidget {
 
 	final NSAnime anime; 
 
-	const AnimePageHeader(this.anime, {Key? key}) : super(key: key);
+	const AnimePageHeader(this.anime, {super.key});
 
 	@override
 	Widget build(BuildContext context) {

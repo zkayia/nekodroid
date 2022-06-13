@@ -6,7 +6,7 @@ import 'package:nekodroid/widgets/generic_route.dart';
 
 class FullscreenViewerRoute extends StatelessWidget {
 
-	const FullscreenViewerRoute({Key? key}) : super(key: key);
+	const FullscreenViewerRoute({super.key});
 
 	@override
 	Widget build(BuildContext context) => GenericRoute(
