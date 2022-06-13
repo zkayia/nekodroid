@@ -1,6 +1,6 @@
 name: nekodroid
 description: Unofficial android client for neko-sama.fr.
-version: 1.0.0
+version: 1.0.0+1
 homepage: https://github.com/zkayia/nekodroid
 issue_tracker: https://github.com/zkayia/nekodroid/issues
 repository: https://github.com/zkayia/nekodroid
@@ -28,6 +28,7 @@ dependencies:
   fluttertoast: ^8.0.9
   hive_flutter: ^1.1.0
   lazy_load_scrollview: ^1.3.0
+  package_info_plus: ^1.4.2
   share_plus: ^4.0.4
   url_launcher: ^6.1.0
   version: ^2.0.0

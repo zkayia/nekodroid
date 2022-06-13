@@ -61,7 +61,6 @@ const List<Color> kShadowColors = [Colors.black, Colors.transparent];
 const List<double> kShadowStops = [0, 0.1];
 
 
-final Version kAppVersion = Version(1, 0, 0);
 final Uri kAppRepoUrl = Uri.https("github.com", "/zkayia/nekodroid");
 
 final ThemeData darkTheme = _buildTheme(

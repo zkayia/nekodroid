@@ -7,6 +7,7 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/routes/base/widgets/list_tile_icon.dart';
 import 'package:nekodroid/routes/base/widgets/private_browsing_switch.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -72,7 +73,12 @@ class MorePage extends StatelessWidget {
 					),
 				),
 				Center(
-					child: SingleLineText.secondary("${"app-title".tr()} $kAppVersion"),
+					child: FutureBuilder(
+						future: PackageInfo.fromPlatform(),
+						builder: (context, AsyncSnapshot<PackageInfo> snap) => SingleLineText.secondary(
+							"${snap.data?.appName ?? "..."} ${snap.data?.version ?? ""}".trim(),
+						),
+					),
 				),
 			],
 		),
