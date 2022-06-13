@@ -1,4 +1,5 @@
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
@@ -10,7 +11,6 @@ import 'package:nekodroid/widgets/generic_image.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 import 'package:nekosama_dart/nekosama_dart.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 
 class AnimePageHeader extends StatelessWidget {
@@ -75,14 +75,10 @@ class AnimePageHeader extends StatelessWidget {
 														),
 														child: const Icon(Boxicons.bx_link_external),
 													),
-													onTap: () async {
-														if (await canLaunchUrl(anime.url)) {
-															await launchUrl(
-																anime.url,
-																mode: LaunchMode.externalApplication,
-															);
-														}
-													},
+													onTap: () => AndroidIntent(
+														action: "action_view",
+														data: anime.url.toString(),
+													).launch(),
 												),
 											),
 											Material(

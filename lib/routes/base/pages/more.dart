@@ -1,4 +1,5 @@
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:nekodroid/routes/base/widgets/list_tile_icon.dart';
 import 'package:nekodroid/routes/base/widgets/private_browsing_switch.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 
 class MorePage extends StatelessWidget {
@@ -62,14 +62,10 @@ class MorePage extends StatelessWidget {
 				Center(
 					child: IconButton(
 						icon: const Icon(Boxicons.bxl_github),
-						onPressed: () async {
-							if (await canLaunchUrl(kAppRepoUrl)) {
-								await launchUrl(
-									kAppRepoUrl,
-									mode: LaunchMode.externalApplication,
-								);
-							}
-						},
+						onPressed: () => AndroidIntent(
+							action: "action_view",
+							data: kAppRepoUrl.toString(),
+						).launch(),
 					),
 				),
 				Center(
