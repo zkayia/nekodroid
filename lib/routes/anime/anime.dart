@@ -70,7 +70,6 @@ class AnimeRoute extends ConsumerWidget {
 										LimitedBox(
 											maxHeight: kAnimePageGroupMaxHeight,
 											child: TextButton(
-												child: synopsis,
 												onPressed: data.synopsis == null
 													? null
 													: () => Navigator.of(context).pushNamed(
@@ -82,6 +81,7 @@ class AnimeRoute extends ConsumerWidget {
 														Theme.of(context).scaffoldBackgroundColor,
 													),
 												),
+												child: synopsis,
 											),
 										),
 										if (ref.watch(settingsProvider.select((value) => value.blurThumbsShowSwitch)))

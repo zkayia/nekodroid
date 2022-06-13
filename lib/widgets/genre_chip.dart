@@ -36,14 +36,6 @@ class GenreChip extends StatelessWidget {
 				final theme = Theme.of(context);
 				return TextButton(
 					clipBehavior: Clip.hardEdge,
-					child: SingleLineText(
-						label,
-						style: selected
-							? theme.textTheme.bodyMedium?.copyWith(
-								color: theme.colorScheme.onPrimary,
-							)
-							: theme.textTheme.bodyMedium,
-					),
 					onPressed: onTap,
 					style: const ButtonStyle().copyWith(
 						elevation: MaterialStateProperty.all(
@@ -55,15 +47,23 @@ class GenreChip extends StatelessWidget {
 								: theme.colorScheme.background,
 						),
 					),
+					child: SingleLineText(
+						label,
+						style: selected
+							? theme.textTheme.bodyMedium?.copyWith(
+								color: theme.colorScheme.onPrimary,
+							)
+							: theme.textTheme.bodyMedium,
+					),
 				);
 			},
 		)
 		: TextButton(
-				clipBehavior: Clip.hardEdge,
-				child: SingleLineText.secondary(label),
-				onPressed: onTap,
-				style: const ButtonStyle().copyWith(
-					elevation: MaterialStateProperty.all(kDefaultElevation / 8),
-				),
+			clipBehavior: Clip.hardEdge,
+			onPressed: onTap,
+			style: const ButtonStyle().copyWith(
+				elevation: MaterialStateProperty.all(kDefaultElevation / 8),
+			),
+			child: SingleLineText.secondary(label),
 		);
 }

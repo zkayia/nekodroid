@@ -14,10 +14,10 @@ class GenreGrid extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) => Wrap(
-		children: genres,
 		clipBehavior: Clip.hardEdge,
 		crossAxisAlignment: WrapCrossAlignment.center,
 		runSpacing: kPaddingGenresGrid,
 		spacing: kPaddingGenresGrid,
+		children: genres,
 	);
 }
