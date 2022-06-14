@@ -127,7 +127,10 @@ ThemeData _buildTheme({
 			backgroundColor: primAlt,
 			foregroundColor: polar,
 			elevation: kDefaultElevation,
-			shadowColor: Colors.transparent,
+			toolbarHeight: kTopBarHeight,
+			shape: RoundedRectangleBorder(
+				borderRadius: BorderRadius.circular(kBorderRadMain),
+			),
 			systemOverlayStyle: brightness == Brightness.dark
 				? SystemUiOverlayStyle.light
 				: SystemUiOverlayStyle.dark,
