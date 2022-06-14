@@ -32,9 +32,9 @@ class SettingsRoute extends ConsumerWidget {
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => GenericRoute(
 		title: "settings".tr(),
-		onExitTap: (context) {
+		onExitTap: (context) async {
 			ref.read(settingsProvider.notifier).saveToHive();
-			Navigator.pop(context);
+			return true;
 		},
 		body: ListView(
 			physics: kDefaultScrollPhysics,
