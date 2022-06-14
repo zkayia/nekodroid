@@ -114,7 +114,8 @@ ThemeData _buildTheme({
 		colorScheme: (
 			isDark ? const ColorScheme.dark() : const ColorScheme.light()
 		).copyWith(
-			background: prim,
+			background: primAlt,
+			surface: prim,
 			primary: accent,
 			onPrimary: onAccent,
 			secondary: accent,

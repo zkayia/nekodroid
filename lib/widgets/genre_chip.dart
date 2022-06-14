@@ -42,7 +42,7 @@ class GenreChip extends StatelessWidget {
 						backgroundColor: MaterialStateProperty.all(
 							selected
 								? theme.colorScheme.primary
-								: theme.colorScheme.background,
+								: theme.colorScheme.surface,
 						),
 					),
 					child: SingleLineText(

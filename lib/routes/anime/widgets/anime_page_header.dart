@@ -64,7 +64,7 @@ class AnimePageHeader extends StatelessWidget {
 										mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 										children: [
 											Material(
-												color: Theme.of(context).colorScheme.background,
+												color: Theme.of(context).colorScheme.surface,
 												borderRadius: BorderRadius.circular(kBorderRadMain),
 												child: InkWell(
 													borderRadius: BorderRadius.circular(kBorderRadMain),
@@ -82,7 +82,7 @@ class AnimePageHeader extends StatelessWidget {
 												),
 											),
 											Material(
-												color: Theme.of(context).colorScheme.background,
+												color: Theme.of(context).colorScheme.surface,
 												borderRadius: BorderRadius.circular(kBorderRadMain),
 												child: InkWell(
 													borderRadius: BorderRadius.circular(kBorderRadMain),
@@ -100,7 +100,7 @@ class AnimePageHeader extends StatelessWidget {
 												),
 											),
 											Material(
-												color: Theme.of(context).colorScheme.background,
+												color: Theme.of(context).colorScheme.surface,
 												borderRadius: BorderRadius.circular(kBorderRadMain),
 												child: FavoriteToggle(anime: anime),
 											),
