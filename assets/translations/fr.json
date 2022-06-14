@@ -120,5 +120,9 @@
 	"empty-history": "L'historique est vide",
 	"empty-favorites": "Aucun favori",
 	"search": "Recherche",
-	"use-amoled": "Utiliser l'AMOLED"
+	"use-amoled": "Utiliser l'AMOLED",
+	"appearance": "Apparence",
+	"advanced": "Avancé",
+	"update": "Mise à jour",
+	"about": "A propos"
 }
