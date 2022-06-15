@@ -9,15 +9,18 @@ class LabelledIcon extends StatelessWidget {
 	final Axis _axis;
 	final Widget icon;
 	final String? label;
+	final Widget? labelWidget;
 
 	const LabelledIcon.horizontal({
 		required this.icon,
 		this.label,
+		this.labelWidget,
 		super.key,
 	}) : _axis = Axis.horizontal;
 	const LabelledIcon.vertical({
 		required this.icon,
 		this.label,
+		this.labelWidget,
 		super.key,
 	}) : _axis = Axis.vertical;
 
@@ -27,16 +30,19 @@ class LabelledIcon extends StatelessWidget {
 		mainAxisAlignment: MainAxisAlignment.center,
 		children: [
 			icon,
-			if (label != null)
+			if (label != null || labelWidget != null)
 				...[
 					if (_axis == Axis.horizontal)
 						const SizedBox(width: kPaddingSecond)
 					else
 						const SizedBox(height: kPaddingSecond),
-					OverflowText(
-						label!,
-						textAlign: TextAlign.center,
-					),
+					if (labelWidget != null)
+						labelWidget!
+					else if (label != null)
+						OverflowText(
+							label!,
+							textAlign: TextAlign.center,
+						),
 				],
 		],
 	);
