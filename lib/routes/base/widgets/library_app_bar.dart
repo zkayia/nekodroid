@@ -29,7 +29,7 @@ class LibraryAppBar extends StatelessWidget {
 					height: kTopBarHeight - kTabbarIndicatorSize,
 					child: FittedBox(
 						child: LabelledIcon.horizontal(
-							icon: const Icon(Boxicons.bx_heart),
+							icon: const Icon(Boxicons.bxs_heart),
 							label: "favorites".tr(),
 						),
 					),

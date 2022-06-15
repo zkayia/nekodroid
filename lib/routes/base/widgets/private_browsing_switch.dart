@@ -15,7 +15,7 @@ class PrivateBrowsingSwitch extends ConsumerWidget {
 	Widget build(BuildContext context, WidgetRef ref) => ListTile(
 		// TODO: implement private browsing
 		enabled: false,
-		leading: const ListTileIcon(Boxicons.bx_low_vision),
+		leading: const ListTileIcon(Boxicons.bxs_low_vision),
 		title: const Text("private-browsing").tr(),
 		subtitle: const Text("private-browsing-desc").tr(),
 		// trailing: Switch(

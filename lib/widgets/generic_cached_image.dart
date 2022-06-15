@@ -18,7 +18,7 @@ class GenericCachedImage extends StatelessWidget {
 			child: CircularProgressIndicator(value: progress.progress),
 		),
 		errorWidget: (context, message, err) => const Center(
-			child: Icon(Boxicons.bx_error_circle),
+			child: Icon(Boxicons.bxs_error_circle),
 		),
 	);
 }

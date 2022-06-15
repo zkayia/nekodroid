@@ -39,7 +39,7 @@ class LibraryTabview extends ConsumerWidget {
 							final episode = NSEpisode.fromJson(box.getAt(reverseIndex)!);
 							return ref.watch(animeProvider(episode.animeUrl)).when(
 								loading: () => const Center(child: CircularProgressIndicator()),
-								error: (err, stackTrace) => const Center(child: Icon(Boxicons.bx_error_circle)),
+								error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
 								data: (data) => AnimeListTile(
 									title: data.title,
 									subtitle: formatHistoryDatetime(
@@ -68,7 +68,7 @@ class LibraryTabview extends ConsumerWidget {
 						animeProvider(favorites.elementAt(index).key),
 					).when(
 						loading: () => const Center(child: CircularProgressIndicator()),
-						error: (err, stackTrace) => const Center(child: Icon(Boxicons.bx_error_circle)),
+						error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
 						data: (data) => AnimeListTile(
 							title: data.title,
 							subtitle: animeDataText(data),

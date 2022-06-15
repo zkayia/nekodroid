@@ -57,7 +57,7 @@ class AnimeCarousel extends StatelessWidget {
 									),
 									const SizedBox(width: kPaddingSecond),
 									IconButton(
-										icon: const Icon(Boxicons.bx_chevron_right),
+										icon: const Icon(Boxicons.bxs_chevron_right),
 										onPressed: onMoreTapped,
 									),
 								],

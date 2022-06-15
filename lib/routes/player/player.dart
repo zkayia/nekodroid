@@ -66,7 +66,7 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
 						videoProvider(ModalRoute.of(context)!.settings.arguments as NSEpisode),
 					).when(
 						loading: () => const CircularProgressIndicator(),
-						error: (err, stackTrace) => const LargeIcon(Boxicons.bx_error_circle),
+						error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
 						data: (data) => Stack(
 							alignment: Alignment.center,
 							children: [

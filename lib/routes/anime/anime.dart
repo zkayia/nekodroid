@@ -31,7 +31,7 @@ class AnimeRoute extends ConsumerWidget {
 			body: Center(
 				child: ref.watch(animeProvider(animeUrl)).when(
 					loading: () => const CircularProgressIndicator(),
-					error: (err, stackTrace) => const LargeIcon(Boxicons.bx_error_circle),
+					error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
 					data: (data) {
 						final synopsis = Hero(
 							tag: "anime_description",

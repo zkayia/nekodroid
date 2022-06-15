@@ -28,12 +28,12 @@ class SearchPage extends ConsumerWidget {
 			ref.watch(searchResultsProvider).when(
 				loading: () => const Center(child: CircularProgressIndicator()),
 				error: (err, stackTrace) => const Center(
-					child: LargeIcon(Boxicons.bx_error_circle),
+					child: LargeIcon(Boxicons.bxs_error_circle),
 				),
 				data: (data) {
 					if (data == null) {
 						return ref.read(isInSearchProvider)
-							? const LargeIcon(Boxicons.bx_error_circle)
+							? const LargeIcon(Boxicons.bxs_error_circle)
 							: ListView(
 								physics: kDefaultScrollPhysics,
 								padding: EdgeInsets.only(

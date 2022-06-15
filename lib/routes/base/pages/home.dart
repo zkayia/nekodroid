@@ -22,7 +22,7 @@ class HomePage extends ConsumerWidget {
 		onRefresh: () async => ref.refresh(homeProvider),
 		child: Center(
 			child: ref.watch(homeProvider).when(
-				error: (error, stackTrace) => const LargeIcon(Boxicons.bx_error_circle),
+				error: (error, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
 				loading: () => const CircularProgressIndicator(),
 				data: (data) {
 					final carousels = {

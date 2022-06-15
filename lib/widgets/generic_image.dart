@@ -27,7 +27,7 @@ class GenericImage extends StatelessWidget {
 				),
 			),
 		errorBuilder: (context, err, stackTrace) => const Center(
-			child: Icon(Boxicons.bx_error_circle),
+			child: Icon(Boxicons.bxs_error_circle),
 		),
 	);
 }
