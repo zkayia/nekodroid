@@ -248,6 +248,13 @@ ThemeData _buildTheme({
 			),
 		),
 		textTheme: const TextTheme().copyWith(
+			displayMedium: const TextStyle().copyWith(
+				overflow: TextOverflow.fade,
+				color: polar,
+				fontSize: 30,
+				fontFamily: "Roboto",
+				fontWeight: FontWeight.w700,
+			),
 			titleLarge: const TextStyle().copyWith(
 				overflow: TextOverflow.fade,
 				color: polar,
