@@ -200,8 +200,9 @@ class _SettingsHomePage extends ConsumerWidget implements WidgetTitleMixin {
 			Slider(
 				min: 3,
 				max: 10,
-				divisions: 9,
+				divisions: 7,
 				value: ref.watch(settingsProvider.select((value) => value.carouselItemCount)).toDouble(),
+				label: ref.watch(settingsProvider.select((value) => value.carouselItemCount)).toString(),
 				onChanged: (double value) =>
 					ref.read(settingsProvider.notifier).carouselItemCount = value.toInt(),
 			),
@@ -279,8 +280,11 @@ class _SettingsAnimePage extends ConsumerWidget implements WidgetTitleMixin {
 			Slider(
 				min: 1,
 				max: 20,
-				divisions: 20,
+				divisions: 19,
 				value: ref.watch(settingsProvider.select((value) => value.blurThumbsSigma)),
+				label: ref.watch(
+					settingsProvider.select((value) => value.blurThumbsSigma),
+				).toInt().toString(),
 				onChanged: (double value) =>
 					ref.read(settingsProvider.notifier).blurThumbsSigma = value,
 			),

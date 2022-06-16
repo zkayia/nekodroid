@@ -212,6 +212,16 @@ ThemeData _buildTheme({
 					: polar,
 			),
 		),
+		sliderTheme: const SliderThemeData().copyWith(
+			thumbColor: accent,
+			trackHeight: 8,
+			activeTrackColor: accent,
+			inactiveTrackColor: prim,
+			tickMarkShape: SliderTickMarkShape.noTickMark,
+			overlayShape: SliderComponentShape.noOverlay,
+			valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+			valueIndicatorTextStyle: const TextStyle().copyWith(color: onAccent),
+		),
 		switchTheme: const SwitchThemeData().copyWith(
 			thumbColor: MaterialStateColor.resolveWith(
 				(states) => states.contains(MaterialState.selected)
