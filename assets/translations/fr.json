@@ -121,7 +121,9 @@
 	"empty-favorites": "Aucun favori",
 	"search": "Recherche",
 	"use-amoled": "Utiliser l'AMOLED",
-	"appearance": "Apparence",
+	"general": "Général",
+	"anime": "Anime",
+	"player": "Lecteur",
 	"advanced": "Avancé",
 	"update": "Mise à jour",
 	"about": "A propos"
