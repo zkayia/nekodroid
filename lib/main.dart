@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nekodroid/app.dart';
-import 'package:nekodroid/constants.dart';
 
 // import 'dart:io';
 // import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -46,10 +45,7 @@ void main() async {
 	await Hive.openBox<Map>("history");
 	await Hive.openBox<String>("recent-history");
 	await Hive.openBox<String>("anime-cache");
-	final settingsBox = await Hive.openBox("settings");
-	if (settingsBox.isEmpty) {
-		await settingsBox.putAll(kDefaultSettings.toMap());
-	}
+	await Hive.openBox("settings");
 
 	runApp(
 		// // Layout testing tool
