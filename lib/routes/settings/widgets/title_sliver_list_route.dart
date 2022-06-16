@@ -8,16 +8,19 @@ import 'package:nekodroid/widgets/generic_route.dart';
 class TitleSliverListRoute extends ConsumerWidget {
 
 	final String title;
+	final Future<bool> Function(BuildContext context)? onExitTap;
 	final List<Widget> children;
 
 	const TitleSliverListRoute({
 		super.key,
 		required this.title,
+		this.onExitTap,
 		required this.children,
 	});
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => GenericRoute(
+		onExitTap: onExitTap,
 		body: CustomScrollView(
 			physics: kDefaultScrollPhysics,
 			controller: ref.watch(_scrollControllerProvider(title)),

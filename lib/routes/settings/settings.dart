@@ -29,6 +29,10 @@ class SettingsRoute extends ConsumerWidget {
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
 		title: "settings".tr(),
+		onExitTap: (context) async {
+			await ref.read(settingsProvider.notifier).saveToHive();
+			return true;
+		},
 		children: [
 			for (final settingsCategory in settingsCategories.entries)
 				...[
