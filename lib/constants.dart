@@ -226,12 +226,12 @@ ThemeData _buildTheme({
 			thumbColor: MaterialStateColor.resolveWith(
 				(states) => states.contains(MaterialState.selected)
 					? accent
-					: polar,
+					: polarAlt,
 			),
 			trackColor: MaterialStateColor.resolveWith(
 				(states) => states.contains(MaterialState.selected)
-					? Color.lerp(accent, polarAlt, 0.5) ?? accent
-					: polarAlt,
+					? accent
+					: prim,
 			),
 		),
 		tabBarTheme: const TabBarTheme().copyWith(
