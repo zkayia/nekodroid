@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:nekodroid/app.dart';
+import 'package:nekodroid/constants.dart';
 
 // import 'dart:io';
 // import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -20,6 +22,7 @@ void main() async {
 		DeviceOrientation.portraitUp,
 	]);
 	
+	Intl.defaultLocale = kFallbackLocale.toString();
 	await findSystemLocale();
 
 	await Hive.initFlutter();

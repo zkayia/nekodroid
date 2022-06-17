@@ -28,7 +28,7 @@ class _SettingsProviderNotifier extends StateNotifier<AppSettings> {
 
 	Future<void> saveToHive() async => Hive.box("settings").putAll(state.toMap());
 
-	set locale(Locale value) =>
+	set locale(String value) =>
 		state = state.copyWith(locale: value);
 	void resetLocale() =>
 		state = state.copyWith(locale: kDefaultSettings.locale);

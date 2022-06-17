@@ -108,18 +108,18 @@ class _SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
 					title: Text(context.tr.settingsLocale),
 					leading: const Icon(Boxicons.bx_text),
 				),
-				RadioListTile<Locale?>(
+				RadioListTile<String>(
 					title: Text(context.tr.settingsDeviceLocale),
-					value: null,
+					value: "system",
 					groupValue: ref.watch(settingsProvider.select((value) => value.locale)),
-					onChanged: (_) => ref.read(settingsProvider.notifier).resetLocale(),
+					onChanged: (_) => ref.read(settingsProvider.notifier).locale = "system",
 				),
 				for (final locale in AppLocalizations.supportedLocales)
-					RadioListTile<Locale?>(
+					RadioListTile<String>(
 						title: Text(lookupAppLocalizations(locale).localeDisplayName),
-						value: locale,
+						value: locale.toString(),
 						groupValue: ref.watch(settingsProvider.select((value) => value.locale)),
-						onChanged: (_) => ref.read(settingsProvider.notifier).locale = locale,
+						onChanged: (_) => ref.read(settingsProvider.notifier).locale = locale.toString(),
 					),
 				ListTile(
 					title: Text(context.tr.settingsNavLabel),

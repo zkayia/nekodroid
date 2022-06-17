@@ -35,9 +35,10 @@ class App extends ConsumerWidget {
 		themeMode: ref.watch(settingsProvider.select((value) => value.themeMode)),
 		localizationsDelegates: AppLocalizations.localizationsDelegates,
 		supportedLocales: AppLocalizations.supportedLocales,
-		locale: ref.watch(settingsProvider.select((value) => value.locale))
-			?? LocaleFromString.fromNullableString(Intl.systemLocale)
-			?? kFallbackLocale,
+		locale: LocaleFromString.fromSettingString(
+			ref.watch(settingsProvider.select((value) => value.locale)),
+		)
+			?? LocaleFromString.fromString(Intl.systemLocale),
 		builder: (context, child) => ScrollConfiguration(
 			behavior: _NoOverscrollIndicatorScrollBehavior(),
 			child: child!,

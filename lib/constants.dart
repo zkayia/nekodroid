@@ -8,7 +8,7 @@ import 'package:nekodroid/models/app_settings.dart';
 const kFallbackLocale = Locale("en");
 
 const kDefaultSettings = AppSettings(
-	locale: null,
+	locale: "system",
 	themeMode: ThemeMode.system,
 	useAmoled: false,
 	defaultPage: 0,

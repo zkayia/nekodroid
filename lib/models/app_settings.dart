@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/locale_fromstring.dart';
 import 'package:nekodroid/helpers/nav_labels_mode.dart';
 import 'package:nekodroid/helpers/resolve_thememode.dart';
 
@@ -11,7 +10,7 @@ import 'package:nekodroid/helpers/resolve_thememode.dart';
 @immutable
 class AppSettings {
 
-	final Locale? locale;
+	final String locale;
 	final ThemeMode themeMode;
 	final bool useAmoled;
 	final int defaultPage;
@@ -38,7 +37,7 @@ class AppSettings {
 	});
 
 	AppSettings copyWith({
-		Locale? locale,
+		String? locale,
 		ThemeMode? themeMode,
 		bool? useAmoled,
 		int? defaultPage,
@@ -64,7 +63,7 @@ class AppSettings {
 	);
 
 	Map<String, dynamic> toMap() => {
-		"locale": locale.toString(),
+		"locale": locale,
 		"themeMode": themeMode.name,
 		"useAmoled": useAmoled,
 		"defaultPage": defaultPage,
@@ -78,7 +77,7 @@ class AppSettings {
 	};
 
 	factory AppSettings.fromMap(Map<String, dynamic> map) => AppSettings(
-		locale: LocaleFromString.fromNullableString(map["locale"]) ?? kDefaultSettings.locale,
+		locale: map["locale"] ?? kDefaultSettings.locale,
 		themeMode: resolveThemeMode(map["themeMode"]) ?? kDefaultSettings.themeMode,
 		useAmoled: map["useAmoled"] ?? kDefaultSettings.useAmoled,
 		defaultPage: map["defaultPage"] ?? kDefaultSettings.defaultPage,

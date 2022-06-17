@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 extension LocaleFromString on Locale {
 
-	static Locale? fromNullableString(String? localeString) => (localeString?.length ?? 0) == 0
+	static Locale? fromSettingString(String localeString) => localeString == "system"
 		? null
-		: fromString(localeString!);
+		: fromString(localeString);
 	
 	static Locale fromString(String localeString) {
 		if (localeString.contains("_")) {
