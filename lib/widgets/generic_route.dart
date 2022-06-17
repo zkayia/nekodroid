@@ -8,6 +8,7 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 class GenericRoute extends StatelessWidget {
 
 	final String? title;
+	final bool hideExitFab;
 	final Widget? leading;
 	final Widget? trailing;
 	final Widget? body;
@@ -16,6 +17,7 @@ class GenericRoute extends StatelessWidget {
 	const GenericRoute({
 		super.key,
 		this.title,
+		this.hideExitFab=false,
 		this.leading,
 		this.trailing,
 		this.body,
@@ -31,23 +33,25 @@ class GenericRoute extends StatelessWidget {
 			child: Scaffold(
 				resizeToAvoidBottomInset: false,
 				floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-				floatingActionButton: SizedBox(
-					height: kFabSize,
-					width: kFabSize,
-					child: FittedBox(
-						child: FloatingActionButton(
-							child: const Icon(Boxicons.bx_x),
-							onPressed: () {
-								if (onExitTap == null) {
-									return Navigator.of(context).pop();
-								}
-								onExitTap!.call(context).then(
-									(value) => value ? Navigator.of(context).pop() : null,
-								);
-							},
+				floatingActionButton: hideExitFab
+					? null
+					: SizedBox(
+						height: kFabSize,
+						width: kFabSize,
+						child: FittedBox(
+							child: FloatingActionButton(
+								child: const Icon(Boxicons.bx_x),
+								onPressed: () {
+									if (onExitTap == null) {
+										return Navigator.of(context).pop();
+									}
+									onExitTap!.call(context).then(
+										(value) => value ? Navigator.of(context).pop() : null,
+									);
+								},
+							),
 						),
 					),
-				),
 				extendBodyBehindAppBar: true,
 				appBar: [title, leading, trailing].any((e) => e != null)
 					? _GenericRouteAppbar(
