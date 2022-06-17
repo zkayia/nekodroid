@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/extensions/locale_fromstring.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
@@ -25,7 +26,7 @@ class App extends ConsumerWidget {
 		// // next 2 lines are related to the layout testing tool
 		// useInheritedMediaQuery: true,
 		// builder: DevicePreview.appBuilder,
-		title: "Nekodroid",
+		onGenerateTitle: (context) => context.tr.appTitle,
 		debugShowCheckedModeBanner: false,
 		theme: lightTheme,
 		darkTheme: ref.watch(settingsProvider.select((value) => value.useAmoled))
