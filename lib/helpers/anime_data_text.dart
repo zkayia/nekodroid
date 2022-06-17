@@ -1,16 +1,21 @@
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekosama_dart/nekosama_dart.dart';
 
 
-String animeDataText(NSAnime anime) => "${
+String animeDataText(BuildContext context, NSAnimeExtendedBase anime) => "${
 	anime.type == NSTypes.movie
 		? ""
-		: "${"episodes.short".plural(anime.episodeCount)} \u2022 " 
+		: "${context.tr.episodeCountShort(anime.episodeCount)} \u2022 " 
 	}${
-		"types-statuses-list".tr(gender: anime.type.name)
+		context.tr.formats(anime.type.name)
 	} \u2022 ${
-		"types-statuses-list".tr(gender: anime.status.name)
+		context.tr.statuses(anime.status.name)
 	} \u2022 ${
-		anime.startDate?.year ?? "?"
+		(
+			anime is NSAnime
+				? anime.startDate?.year
+				: (anime as NSSearchAnime).year
+		) ?? "?"
 	}";

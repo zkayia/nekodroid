@@ -1,0 +1,184 @@
+{
+	"@@locale": "en",
+	"localeDisplayName": "English",
+
+	
+	"appTitle": "Nekodoid",
+
+	
+	"home": "Home",
+	"homeLatestEps": "Latest episodes",
+	"homeSeasonalAnimes": "Seasonal animes",
+	"homePopularAnimes": "Popular animes",
+
+	
+	"library": "Library",
+	"libraryHistory": "History",
+	"libraryEmptyHistory": "The history is empty",
+	"libraryFavorites": "Favorites",
+	"libraryEmptyFavorites": "No favorites",
+
+	
+	"search": "Search",
+	"searchNoResults": "No results",
+	
+	
+	"more": "More",
+	"morePrivateBrowsing": "Private browsing",
+	"morePrivateBrowsingDescription": "Pauses navigation history",
+	
+	
+	"statistics": "Statistics",
+	
+	
+	"backupRestore": "Backup & restore",
+
+	
+	"settings": "Settings",
+	
+	"settingsGeneral": "General",
+	"settingsTheme": "Theme",
+	"settingsThemes": "{theme, select, system{Device} dark{Dark} light{Light}}",
+	"@settingsThemes": {
+		"placeholders": {
+			"theme": {
+				"type": "String"
+			}
+		}
+	},
+	"settingsUseAmoled": "Use AMOLED",
+	"settingsLocale": "Language",
+	"settingsDeviceLocale": "Device language",
+	"settingsNavLabel": "Navigation labels",
+	"settingsNavLabels": "{navLabel, select, all{Always active} onlySelected{Only on selected} disabled{Never active}}",
+	"@settingsNavLabels": {
+		"placeholders": {
+			"navLabel": {
+				"type": "String"
+			}
+		}
+	},
+	"settingsDefaultPage": "Default page",
+	
+	"carouselItemCount": "Carousel item count",
+	
+	"blurThumbs": "Blur thumbnails",
+	"blurThumbsSigma": "Blur intensity",
+	"blurThumbsShowSwitch": "Show blur thumbnails switch",
+	
+	"settingsAdvanced": "Advanced",
+	
+	"settingsUpdate": "Update",
+	
+	"settingsAbout": "About",
+	
+	
+	"anime": "Anime",
+	"animeNoSynopsis": "No synopsis.",
+	
+	
+	"player": "Player",
+	"playerConfirmExit": "Press again to exit",
+	
+	
+	"genre": "Genre",
+	"genres": "{genre, select, action{action} adventure{adventure} comedy{comedy} drama{drama} ecchi{ecchi} fantasy{fantasy} hentai{hentai} horror{horror} magicalGirl{magical girl} mecha{mecha} music{music} mystery{mystery} psychological{psychological} romance{romance} sciFi{sci-fi} sliceOfLife{slice of life} sports{sports} supernatural{supernatural} thriller{thriller}}",
+	"@genres": {
+		"placeholders": {
+			"genre": {
+				"type": "String"
+			}
+		}
+	},
+	
+	"format": "Format",
+	"formats": "{format, select, movie{Movie} ova{OVA} special{Special} tv{TV}}",
+	"@formats": {
+		"placeholders": {
+			"format": {
+				"type": "String"
+			}
+		}
+	},
+	
+	"status": "Status",
+	"statuses": "{status, select, aired{Aired} airing{Airing} planned{Planned}}",
+	"@statuses": {
+		"placeholders": {
+			"status": {
+				"type": "String"
+			}
+		}
+	},
+	
+
+	"episodeShort": "Ep {count}",
+	"@episodeShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"episodeLong": "Episode {count}",
+	"@episodeLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	
+	"episodeCountShort": "{count, plural, zero{? eps} one{1 ep} other{{count} eps}}",
+	"@episodeCountShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"episodeCountLong": "{count, plural, zero{? episodes} one{1 episode} other{{count} episodes}}",
+	"@episodeCountLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	
+	
+	"minutesShort": "{count, plural, zero{? mins} one{1 min} other{{count} mins}}",
+	"@minutesShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"minutesLong": "{count, plural, zero{? minutes} one{1 minute} other{{count} minutes}}",
+	"@minutesLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	
+	
+	"monthsShort": "{month, select, 1{Jan} 2{Feb} 3{Mar} 4{Apr} 5{May} 6{Jun} 7{Jul} 8{Aug} 9{Sep} 10{Oct} 11{Nov} 12{Dec}}",
+	"@monthsShort": {
+		"placeholders": {
+			"month": {
+				"type": "int"
+			}
+		}
+	},
+	"monthsLong": "{month, select, 1{January} 2{February} 3{March} 4{April} 5{May} 6{June} 7{July} 8{August} 9{September} 10{October} 11{November} 12{December}}",
+	"@monthsLong": {
+		"placeholders": {
+			"month": {
+				"type": "int"
+			}
+		}
+	}
+}

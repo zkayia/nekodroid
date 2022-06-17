@@ -1,8 +1,8 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base/widgets/list_tile_icon.dart';
 
@@ -16,8 +16,8 @@ class PrivateBrowsingSwitch extends ConsumerWidget {
 		// TODO: implement private browsing
 		enabled: false,
 		leading: const ListTileIcon(Boxicons.bxs_low_vision),
-		title: const Text("private-browsing").tr(),
-		subtitle: const Text("private-browsing-desc").tr(),
+		title: Text(context.tr.morePrivateBrowsing),
+		subtitle: Text(context.tr.morePrivateBrowsingDescription),
 		// trailing: Switch(
 		// 	value: ref.watch(settingsProvider.select((value) => value.secrecyEnabled)),
 		// 	onChanged: (bool value) =>

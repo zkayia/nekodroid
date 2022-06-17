@@ -1,8 +1,8 @@
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/routes/base/providers/selectable_filters.dart';
 import 'package:nekodroid/widgets/genre_chip.dart';
 import 'package:nekodroid/widgets/genre_grid.dart';
@@ -19,7 +19,7 @@ class SearchGenresFilters extends ConsumerWidget {
 		crossAxisAlignment: CrossAxisAlignment.start,
 		children: [
 			SingleLineText(
-				"genre".tr(),
+				context.tr.genre,
 				style: Theme.of(context).textTheme.titleLarge,
 			),
 			const SizedBox(height: kPaddingSecond),
@@ -27,7 +27,7 @@ class SearchGenresFilters extends ConsumerWidget {
 				genres: [
 					...NSGenres.values.map(
 						(genre) => GenreChip.select(
-							label: "genres-list".tr(gender: genre.name),
+							label: context.tr.genres(genre.name),
 							selected: ref.watch(selectableFiltersProvider).contains(genre),
 							onTap: () =>
 								ref.read(selectableFiltersProvider.notifier).toggle(genre),

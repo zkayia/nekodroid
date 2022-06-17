@@ -1,8 +1,8 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/helpers/nav_labels_mode.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base/models/nav_bar_item.dart';
@@ -37,19 +37,19 @@ class BaseRoute extends ConsumerWidget {
 				items: [
 					NavBarItem(
 						icon: Boxicons.bx_home_alt,
-						label: "home".tr(),
+						label: context.tr.home,
 					),
 					NavBarItem(
 						icon: Boxicons.bx_library,
-						label: "library".tr(),
+						label: context.tr.library,
 					),
 					NavBarItem(
 						icon: Boxicons.bx_search,
-						label: "search".tr(),
+						label: context.tr.search,
 					),
 					NavBarItem(
 						icon: Boxicons.bx_dots_horizontal_rounded,
-						label: "more".tr(),
+						label: context.tr.more,
 					),
 				],
 				currentIndex: ref.watch(navIndexProvider),

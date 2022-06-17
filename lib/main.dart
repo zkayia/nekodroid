@@ -1,10 +1,9 @@
 
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:nekodroid/app.dart';
 
 // import 'dart:io';
@@ -20,8 +19,8 @@ void main() async {
 		DeviceOrientation.portraitDown,
 		DeviceOrientation.portraitUp,
 	]);
-
-	await EasyLocalization.ensureInitialized();
+	
+	await findSystemLocale();
 
 	await Hive.initFlutter();
 
@@ -30,9 +29,6 @@ void main() async {
 	// 	await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
 	// }
 
-	// // Suppresses (most) debug messages from easy_localization
-	// EasyLocalization.logger.printer = (object, {level, name, stackTrace}) {}; 
-	
 	// // Clears all Hive db storage at restart
 	// await Hive.openBox<int>("favorites");
 	// await Hive.openBox<Map>("history");
@@ -51,19 +47,7 @@ void main() async {
 		// // Layout testing tool
 		// DevicePreview(
 		// 	builder: (context) =>
-				ProviderScope(
-					child: EasyLocalization(
-						supportedLocales: const [
-							Locale("en"),
-							Locale("fr"),
-						],
-						fallbackLocale: const Locale("en"),
-						path: "assets/translations",
-						useOnlyLangCode: true,
-						useFallbackTranslations: true,
-						child: const App(),
-					),
-			),
+			const ProviderScope(child: App()),
 		// ),
 	);
 }

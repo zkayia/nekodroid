@@ -1,9 +1,10 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
+import 'package:nekodroid/helpers/anime_data_text.dart';
 import 'package:nekodroid/routes/base/providers/is_in_search.dart';
 import 'package:nekodroid/routes/base/providers/search_results.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
@@ -15,7 +16,6 @@ import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_image.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
-import 'package:nekosama_dart/nekosama_dart.dart';
 
 
 class SearchPage extends ConsumerWidget {
@@ -54,21 +54,17 @@ class SearchPage extends ConsumerWidget {
 						itemCount: data.length,
 						placeholder: LabelledIcon.vertical(
 							icon: const LargeIcon(Boxicons.bx_question_mark),
-							label: "no-results".tr(),
+							label: context.tr.searchNoResults,
 						),
 						onRefresh: () async => ref.refresh(searchResultsProvider),
 						itemBuilder: (context, index) {
 							final anime = data.elementAt(index);
 							return AnimeListTile(
 								title: anime.title,
-								subtitle: "${anime.type == NSTypes.movie
-									? ""
-									: "${"episodes.short".plural(anime.episodeCount)} \u2022 " 
-								}${
-									"types-statuses-list".tr(gender: anime.type.name)
-								} \u2022 ${
-									"types-statuses-list".tr(gender: anime.status.name)
-								} \u2022 ${anime.year}",
+								subtitle: animeDataText(
+									context,
+									anime,
+								),
 								leading: AnimeCard(image: GenericImage(anime.thumbnail)),
 								onTap: () => Navigator.of(context).pushNamed(
 									"/anime",

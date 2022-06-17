@@ -1,10 +1,10 @@
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/routes/base/widgets/list_tile_icon.dart';
 import 'package:nekodroid/routes/base/widgets/private_browsing_switch.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
@@ -45,18 +45,18 @@ class MorePage extends StatelessWidget {
 				ListTile(
 					enabled: false, //TODO: make /stats
 					leading: const ListTileIcon(Boxicons.bx_bar_chart),
-					title: const Text("stats").tr(),
+					title: Text(context.tr.statistics),
 					onTap: () {}, //TODO: goto /stats
 				),
 				ListTile(
 					enabled: false, //TODO: make /backup
 					leading: const ListTileIcon(Boxicons.bxs_save),
-					title: const Text("backup-restore").tr(),
+					title: Text(context.tr.backupRestore),
 					onTap: () {}, //TODO: goto /backup
 				),
 				ListTile(
 					leading: const ListTileIcon(Boxicons.bxs_cog),
-					title: const Text("settings").tr(),
+					title: Text(context.tr.settings),
 					onTap: () => Navigator.of(context).pushNamed("/settings"),
 				),
 				Center(

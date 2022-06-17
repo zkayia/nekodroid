@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/locale_fromstring.dart';
 import 'package:nekodroid/helpers/nav_labels_mode.dart';
 import 'package:nekodroid/helpers/resolve_thememode.dart';
 
@@ -10,6 +11,7 @@ import 'package:nekodroid/helpers/resolve_thememode.dart';
 @immutable
 class AppSettings {
 
+	final Locale? locale;
 	final ThemeMode themeMode;
 	final bool useAmoled;
 	final int defaultPage;
@@ -22,6 +24,7 @@ class AppSettings {
 	final int lazyLoadItemCount;
 	
 	const AppSettings({
+		required this.locale,
 		required this.themeMode,
 		required this.useAmoled,
 		required this.defaultPage,
@@ -35,6 +38,7 @@ class AppSettings {
 	});
 
 	AppSettings copyWith({
+		Locale? locale,
 		ThemeMode? themeMode,
 		bool? useAmoled,
 		int? defaultPage,
@@ -46,6 +50,7 @@ class AppSettings {
 		NavLabelsMode? navLabelsMode,
 		int? lazyLoadItemCount,
 	}) => AppSettings(
+		locale: locale ?? this.locale,
 		themeMode: themeMode ?? this.themeMode,
 		useAmoled: useAmoled ?? this.useAmoled,
 		defaultPage: defaultPage ?? this.defaultPage,
@@ -59,6 +64,7 @@ class AppSettings {
 	);
 
 	Map<String, dynamic> toMap() => {
+		"locale": locale.toString(),
 		"themeMode": themeMode.name,
 		"useAmoled": useAmoled,
 		"defaultPage": defaultPage,
@@ -72,6 +78,7 @@ class AppSettings {
 	};
 
 	factory AppSettings.fromMap(Map<String, dynamic> map) => AppSettings(
+		locale: LocaleFromString.fromNullableString(map["locale"]) ?? kDefaultSettings.locale,
 		themeMode: resolveThemeMode(map["themeMode"]) ?? kDefaultSettings.themeMode,
 		useAmoled: map["useAmoled"] ?? kDefaultSettings.useAmoled,
 		defaultPage: map["defaultPage"] ?? kDefaultSettings.defaultPage,
@@ -90,12 +97,13 @@ class AppSettings {
 
 	@override
 	String toString() =>
-		"AppSettings(themeMode: $themeMode, useAmoled: $useAmoled, defaultPage: $defaultPage, carouselItemCount: $carouselItemCount, privateBrowsingEnabled: $secrecyEnabled, blurThumbs: $blurThumbs, blurThumbsShowSwitch: $blurThumbsShowSwitch, blurThumbsSigma: $blurThumbsSigma, navLabelsMode: $navLabelsMode, lazyLoadItemCount: $lazyLoadItemCount)";
+		"AppSettings(locale: $locale, themeMode: $themeMode, useAmoled: $useAmoled, defaultPage: $defaultPage, carouselItemCount: $carouselItemCount, privateBrowsingEnabled: $secrecyEnabled, blurThumbs: $blurThumbs, blurThumbsShowSwitch: $blurThumbsShowSwitch, blurThumbsSigma: $blurThumbsSigma, navLabelsMode: $navLabelsMode, lazyLoadItemCount: $lazyLoadItemCount)";
 
 	@override
 	bool operator ==(Object other) {
 		if (identical(this, other)) return true;
 		return other is AppSettings
+			&& other.locale == locale
 			&& other.themeMode == themeMode
 			&& other.useAmoled == useAmoled
 			&& other.defaultPage == defaultPage
@@ -109,7 +117,8 @@ class AppSettings {
 	}
 
 	@override
-	int get hashCode => themeMode.hashCode
+	int get hashCode => locale.hashCode
+		^ themeMode.hashCode
 		^ useAmoled.hashCode
 		^ defaultPage.hashCode
 		^ carouselItemCount.hashCode

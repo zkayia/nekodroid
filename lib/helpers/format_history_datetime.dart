@@ -1,12 +1,13 @@
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/extensions/int.dart';
 
 
-String formatHistoryDatetime(DateTime dateTime) => "\n${
+String formatHistoryDatetime(BuildContext context, DateTime dateTime) => "\n${
 		dateTime.day
 	} ${
-		"months.short".tr(gender: dateTime.month.toString())
+		context.tr.monthsShort(dateTime.month)
 	}. ${
 		dateTime.year == DateTime.now().year
 			? ""

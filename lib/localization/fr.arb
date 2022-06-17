@@ -1,0 +1,185 @@
+{
+	"@@locale": "fr",
+	"localeDisplayName": "Français",
+
+	
+	"appTitle": "Nekodoid",
+
+	
+	"home": "Accueil",
+	"homeLatestEps": "Derniers épisodes",
+	"homeSeasonalAnimes": "Animes saisonniers",
+	"homePopularAnimes": "Animes populaires",
+
+	
+	"library": "Bibliothèque",
+	"libraryHistory": "Historique",
+	"libraryEmptyHistory": "L'historique est vide",
+	"libraryFavorites": "Favoris",
+	"libraryEmptyFavorites": "Aucun favori",
+
+	
+	"search": "Recherche",
+	"searchNoResults": "Aucun résultat",
+	
+	
+	"more": "Plus",
+	"morePrivateBrowsing": "Navigation privée",
+	"morePrivateBrowsingDescription": "Met en pause l'historique de navigation",
+	
+	
+	"statistics": "Statistiques",
+	
+	
+	"backupRestore": "Sauvegarder & restaurer",
+
+	
+	"settings": "Paramètres",
+	
+	"settingsGeneral": "Général",
+	"settingsTheme": "Thème",
+	"settingsThemes": "{theme, select, system{Appareil} dark{Sombre} light{Clair}}",
+	"@settingsThemes": {
+		"placeholders": {
+			"theme": {
+				"type": "String"
+			}
+		}
+	},
+	"settingsUseAmoled": "Utiliser l'AMOLED",
+	"settingsLocale": "Langage",
+	"settingsDeviceLocale": "Language de l'appareil",
+	"settingsNavLabel": "Etiquettes de navigation",
+	"settingsNavLabels": "{navLabel, select, all{Toujours activées} onlySelected{Seulement sur l'element selectionné} disabled{Jamais activées}}",
+	"@settingsNavLabels": {
+		"placeholders": {
+			"navLabel": {
+				"type": "String"
+			}
+		}
+	},
+	"settingsDefaultPage": "Page par défaut",
+	
+	"carouselItemCount": "Nombre d'élement du carousel",
+	
+	"blurThumbs": "Flouter les miniatures",
+	"blurThumbsSigma": "Force du flou",
+	"blurThumbsShowSwitch": "Afficher le switch de flou",
+	
+	"settingsAdvanced": "Avancé",
+	
+	"settingsUpdate": "Mise à jour",
+	
+	"settingsAbout": "A propos",
+	
+	
+	"anime": "Anime",
+	"animeNoSynopsis": "Aucun synopsis.",
+	
+	
+	"player": "Lecteur",
+	"playerConfirmExit": "Appuyer encore pour sortir",
+	
+	
+	"genre": "Genre",
+	"genres": "{genre, select, action{action} adventure{aventure} comedy{comédie} drama{drama} ecchi{ecchi} fantasy{fantastique} hentai{hentai} horror{horreur} magicalGirl{magical girl} mecha{mecha} music{musique} mystery{mystère} psychological{psychologique} romance{romance} sciFi{sci-fi} sliceOfLife{tranche de vie} sports{sports} supernatural{supernaturel} thriller{suspense}}",
+	"@genres": {
+		"placeholders": {
+			"genre": {
+				"type": "String"
+			}
+		}
+	},
+	
+	"format": "Format",
+	"formats": "{format, select, movie{Film} ova{OVA} special{Spécial} tv{TV}}",
+	"@formats": {
+		"placeholders": {
+			"format": {
+				"type": "String"
+			}
+		}
+	},
+	
+	"status": "Status",
+	"statuses": "{status, select, aired{Terminé} airing{En cours} planned{Pas commencé}}",
+	"@statuses": {
+		"placeholders": {
+			"status": {
+				"type": "String"
+			}
+		}
+	},
+	
+	
+	
+	"episodeShort": "Ep {count}",
+	"@episodeShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"episodeLong": "Episode {count}",
+	"@episodeLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	
+	"episodeCountShort": "{count, plural, zero{? éps} one{1 ép} other{{count} éps}}",
+	"@episodeCountShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"episodeCountLong": "{count, plural, zero{? épisodes} one{1 épisode} other{{count} épisodes}}",
+	"@episodeCountLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	
+	
+	"minutesShort": "{count, plural, zero{? mins} one{1 min} other{{count} mins}}",
+	"@minutesShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"minutesLong": "{count, plural, zero{? minutes} one{1 minute} other{{count} minutes}}",
+	"@minutesLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	
+	
+	"monthsShort": "{month, select, 1{Jan} 2{Fév} 3{Mar} 4{Avr} 5{Mai} 6{Jun} 7{Jul} 8{Aoû} 9{Sep} 10{Oct} 11{Nov} 12{Déc}}",
+	"@monthsShort": {
+		"placeholders": {
+			"month": {
+				"type": "int"
+			}
+		}
+	},
+	"monthsLong": "{month, select, 1{Janvier} 2{Février} 3{Mars} 4{Avril} 5{Mai} 6{Juin} 7{Juillet} 8{Août} 9{Septembre} 10{Octobre} 11{Novembre} 12{Décembre}}",
+	"@monthsLong": {
+		"placeholders": {
+			"month": {
+				"type": "int"
+			}
+		}
+	}
+}

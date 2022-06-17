@@ -1,8 +1,10 @@
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/locale_fromstring.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
 import 'package:nekodroid/routes/base/base.dart';
@@ -30,9 +32,11 @@ class App extends ConsumerWidget {
 			? amoledTheme
 			: darkTheme,
 		themeMode: ref.watch(settingsProvider.select((value) => value.themeMode)),
-		localizationsDelegates: context.localizationDelegates,
-		supportedLocales: context.supportedLocales,
-		locale: context.locale,
+		localizationsDelegates: AppLocalizations.localizationsDelegates,
+		supportedLocales: AppLocalizations.supportedLocales,
+		locale: ref.watch(settingsProvider.select((value) => value.locale))
+			?? LocaleFromString.fromNullableString(Intl.systemLocale)
+			?? kFallbackLocale,
 		builder: (context, child) => ScrollConfiguration(
 			behavior: _NoOverscrollIndicatorScrollBehavior(),
 			child: child!,
@@ -46,7 +50,7 @@ class App extends ConsumerWidget {
 			// "/detailled_history": (context) => const DetailledHistoryRoute(),
 			"/fullscreen_viewer": (context) => const FullscreenViewerRoute(),
 			"/player": (context) => const PlayerRoute(),
-			"/settings": (context) => SettingsRoute(),
+			"/settings": (context) => const SettingsRoute(),
 			// "/stats": (context) => const StatsRoute(),
 		},
 	);

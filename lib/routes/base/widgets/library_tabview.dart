@@ -1,10 +1,10 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/helpers/anime_data_text.dart';
 import 'package:nekodroid/helpers/format_history_datetime.dart';
 import 'package:nekodroid/provider/favorites.dart';
@@ -43,12 +43,13 @@ class LibraryTabview extends ConsumerWidget {
 								data: (data) => AnimeListTile(
 									title: data.title,
 									subtitle: formatHistoryDatetime(
+										context,
 										// will break on: `2106-02-07 07:28:15.000`
 										DateTime.fromMillisecondsSinceEpoch(box.keyAt(reverseIndex) * 1000),
 									),
 									leading: AnimeCard(
 										image: GenericCachedImage(data.thumbnail),
-										badge: "episode.short".plural(episode.episodeNumber),
+										badge: context.tr.episodeShort(episode.episodeNumber),
 										onImageTap: () =>
 											Navigator.of(context).pushNamed("/anime", arguments: data.url),
 									),
@@ -58,7 +59,7 @@ class LibraryTabview extends ConsumerWidget {
 						},
 						placeholder: LabelledIcon.vertical(
 							icon: const LargeIcon(Boxicons.bx_history),
-							label: "empty-history".tr(),
+							label: context.tr.libraryEmptyHistory,
 						),
 					),
 				),
@@ -71,7 +72,7 @@ class LibraryTabview extends ConsumerWidget {
 						error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
 						data: (data) => AnimeListTile(
 							title: data.title,
-							subtitle: animeDataText(data),
+							subtitle: animeDataText(context, data),
 							leading: AnimeCard(image: GenericCachedImage(data.thumbnail)),
 							trailing: FavoriteToggle(
 								anime: data,
@@ -84,7 +85,7 @@ class LibraryTabview extends ConsumerWidget {
 					onRefresh: () async => ref.refresh(favoritesProvider),
 					placeholder: LabelledIcon.vertical(
 						icon: const LargeIcon(Boxicons.bx_heart),
-						label: "empty-favorites".tr(),
+						label: context.tr.libraryEmptyFavorites,
 					),
 				),
 			],

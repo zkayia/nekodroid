@@ -1,12 +1,12 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/player/providers/video.dart';
 import 'package:nekodroid/routes/player/providers/webview_controller.dart';
@@ -45,7 +45,7 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
 					if (current - ref.read(webviewPopTimeProvider) > kWebviewPopDelay) {
 						ref.read(webviewPopTimeProvider.notifier).update((state) => current);
 						Fluttertoast.showToast(
-							msg: "confirm-exit".tr(),
+							msg: context.tr.playerConfirmExit,
 							toastLength: Toast.LENGTH_SHORT,
 							gravity: ToastGravity.BOTTOM,
 							backgroundColor: Theme.of(context).colorScheme.background,

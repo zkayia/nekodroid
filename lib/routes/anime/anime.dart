@@ -1,10 +1,10 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/helpers/format_history_datetime.dart';
 import 'package:nekodroid/provider/history.dart';
 import 'package:nekodroid/provider/settings.dart';
@@ -36,7 +36,7 @@ class AnimeRoute extends ConsumerWidget {
 						final synopsis = Hero(
 							tag: "anime_description",
 							child: Text(
-								data.synopsis ?? "no-synopsis".tr(),
+								data.synopsis ?? context.tr.animeNoSynopsis,
 								textAlign: TextAlign.justify,
 								style: Theme.of(context).textTheme.bodyMedium,
 							),
@@ -61,7 +61,7 @@ class AnimeRoute extends ConsumerWidget {
 											genres: [
 												for (final genre in data.genres)
 													GenreChip.click(
-														label: "genres-list".tr(gender: genre.name),
+														label: context.tr.genres(genre.name),
 														onTap: () {},  //TODO: open all anime with this genre
 													),
 											],
@@ -86,7 +86,7 @@ class AnimeRoute extends ConsumerWidget {
 										),
 										if (ref.watch(settingsProvider.select((value) => value.blurThumbsShowSwitch)))
 											SwitchListTile(
-												title: const Text("blur-thumbs").tr(),
+												title: Text(context.tr.blurThumbs),
 												value: ref.watch(blurThumbsProvider),
 												onChanged: (bool value) =>
 													ref.read(blurThumbsProvider.notifier).update((state) => value),
@@ -113,10 +113,11 @@ class AnimeRoute extends ConsumerWidget {
 													title: "Episode ${episode.episodeNumber}",
 													titleWrap: false,
 													subtitle: "${
-														"minutes.short".plural(episode.duration?.inMinutes ?? 0)
+														context.tr.minutesShort(episode.duration?.inMinutes ?? 0)
 													}${
 														wasWatched
 															? formatHistoryDatetime(
+																context,
 																DateTime.fromMillisecondsSinceEpoch(
 																	history[episode.episodeNumber] ?? 0,
 																),

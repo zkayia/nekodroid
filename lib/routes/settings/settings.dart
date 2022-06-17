@@ -1,9 +1,10 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/helpers/nav_labels_mode.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/settings/widgets/title_sliver_list_route.dart';
@@ -11,45 +12,46 @@ import 'package:nekodroid/routes/settings/widgets/title_sliver_list_route.dart';
 
 class SettingsRoute extends ConsumerWidget {
 
-	final Map<IconData, WidgetTitleMixin> settingsCategories = {
-		Boxicons.bxs_cog: _SettingsGeneralPage("general".tr()),
-		Boxicons.bxs_home_alt_2: _SettingsHomePage("home".tr()),
-		Boxicons.bx_library: _SettingsLibraryPage("library".tr()),
-		Boxicons.bxs_search: _SettingsSearchPage("search".tr()),
-		Boxicons.bx_dots_horizontal_rounded: _SettingsMorePage("more".tr()),
-		Boxicons.bxs_tv: _SettingsAnimePage("anime".tr()),
-		Boxicons.bx_play: _SettingsPlayerPage("player".tr()),
-		Boxicons.bx_code: _SettingsAdvancedPage("advanced".tr()),
-		Boxicons.bxs_mobile: _SettingsUpdatePage("update".tr()),
-		Boxicons.bxs_info_circle: _SettingsAboutPage("about".tr()),
-	};
-
-	SettingsRoute({super.key});
+	const SettingsRoute({super.key});
 
 	@override
-	Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
-		title: "settings".tr(),
-		onExitTap: (context) async {
-			await ref.read(settingsProvider.notifier).saveToHive();
-			return true;
-		},
-		children: [
-			for (final settingsCategory in settingsCategories.entries)
-				...[
-					ListTile(
-						title: Text(settingsCategory.value.title),
-						leading: Icon(settingsCategory.key),
-						trailing: const Icon(Boxicons.bxs_chevron_right),
-						onTap: () => _pushPageRoute(context, settingsCategory.value),
-					),
-					if (settingsCategory != settingsCategories.entries.last)
-						const SizedBox(height: kPaddingSecond),
-				],
-		],
-	);
+	Widget build(BuildContext context, WidgetRef ref) {
+		final Map<IconData, WidgetTitleMixin> settingsCategories = {
+			Boxicons.bxs_cog: _SettingsGeneralPage(context.tr.settingsGeneral),
+			Boxicons.bxs_home_alt_2: _SettingsHomePage(context.tr.home),
+			Boxicons.bx_library: _SettingsLibraryPage(context.tr.library),
+			Boxicons.bxs_search: _SettingsSearchPage(context.tr.search),
+			Boxicons.bx_dots_horizontal_rounded: _SettingsMorePage(context.tr.more),
+			Boxicons.bxs_tv: _SettingsAnimePage(context.tr.anime),
+			Boxicons.bx_play: _SettingsPlayerPage(context.tr.player),
+			Boxicons.bx_code: _SettingsAdvancedPage(context.tr.settingsAdvanced),
+			Boxicons.bxs_mobile: _SettingsUpdatePage(context.tr.settingsUpdate),
+			Boxicons.bxs_info_circle: _SettingsAboutPage(context.tr.settingsAbout),
+		};
+		return TitleSliverListRoute(
+			title: context.tr.settings,
+			onExitTap: (_) async {
+				await ref.read(settingsProvider.notifier).saveToHive();
+				return true;
+			},
+			children: [
+				for (final settingsCategory in settingsCategories.entries)
+					...[
+						ListTile(
+							title: Text(settingsCategory.value.title),
+							leading: Icon(settingsCategory.key),
+							trailing: const Icon(Boxicons.bxs_chevron_right),
+							onTap: () => _pushPageRoute(context, settingsCategory.value),
+						),
+						if (settingsCategory != settingsCategories.entries.last)
+							const SizedBox(height: kPaddingSecond),
+					],
+			],
+		);
+	}
 
 	void _pushPageRoute(BuildContext context, Widget page) => Navigator.of(context).push(
-		MaterialPageRoute(builder: (context) => page),
+		MaterialPageRoute(builder: (_) => page),
 	);
 }
 
@@ -63,127 +65,89 @@ mixin WidgetTitleMixin on Widget {
 
 class _SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
 
-	final themeModeText = {
-		ThemeMode.system: "system".tr(),
-		ThemeMode.dark: "dark".tr(),
-		ThemeMode.light: "light".tr(),
-	};
-	final navLabelsText = {
-		NavLabelsMode.all: "always-active".tr(),
-		NavLabelsMode.disabled: "never-active".tr(),
-		NavLabelsMode.onlySelected: "only-on-selected".tr(),
-	};
-	final pagesText = [
-		"home".tr(),
-		"library".tr(),
-		"search".tr(),
-		"more".tr(),
-	];
   @override
 	final String title;
 
-	_SettingsGeneralPage(this.title);
+	const _SettingsGeneralPage(this.title);
 
 	@override
-	Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
-		title: title,
-		children: [
-			ListTile(
-				title: const Text("theme").tr(),
-				leading: const Icon(Boxicons.bxs_palette),
-			),
-			Padding(
-				padding: const EdgeInsets.symmetric(horizontal: kPaddingSecond),
-				child: Column(
-					children: [
-						for (final themeMode in themeModeText.entries)
-							RadioListTile(
-								title: Text(themeMode.value),
-								value: themeMode.key,
-								groupValue: ref.watch(settingsProvider.select((value) => value.themeMode)),
-								onChanged: (ThemeMode? value) {
-									if (value != null) {
-										ref.read(settingsProvider.notifier).themeMode = value;
-									}
-								},
+	Widget build(BuildContext context, WidgetRef ref) {
+		final pagesText = [
+			context.tr.home,
+			context.tr.library,
+			context.tr.search,
+			context.tr.more,
+		];
+		return TitleSliverListRoute(
+			title: title,
+			children: [
+				ListTile(
+					title: Text(context.tr.settingsTheme),
+					leading: const Icon(Boxicons.bxs_palette),
+				),
+				Padding(
+					padding: const EdgeInsets.symmetric(horizontal: kPaddingSecond),
+					child: Column(
+						children: [
+							for (final themeMode in ThemeMode.values)
+								RadioListTile(
+									title: Text(context.tr.settingsThemes(themeMode.name)),
+									value: themeMode,
+									groupValue: ref.watch(settingsProvider.select((value) => value.themeMode)),
+									onChanged: (_) => ref.read(settingsProvider.notifier).themeMode = themeMode,
+								),
+							SwitchListTile(
+								title: Text(context.tr.settingsUseAmoled),
+								value: ref.watch(settingsProvider.select((value) => value.useAmoled)),
+								onChanged: (bool value) => ref.read(settingsProvider.notifier).useAmoled = value,
 							),
-						SwitchListTile(
-							title: const Text("use-amoled").tr(),
-							value: ref.watch(settingsProvider.select((value) => value.useAmoled)),
-							onChanged: (bool value) =>
-								ref.read(settingsProvider.notifier).useAmoled = value,
-						),
-					],
-				),
-			),
-			ListTile(
-				title: const Text("locale").tr(),
-				leading: const Icon(Boxicons.bx_text),
-			),
-			RadioListTile(
-				title: const Text("system").tr(),
-				value: context.deviceLocale,
-				groupValue: context.locale,
-				onChanged: (Locale? value) {
-					if (value != null) {
-						context.resetLocale();
-					}
-				},
-			),
-			RadioListTile(
-				title: const Text("Français"),
-				value: const Locale("fr"),
-				groupValue: context.locale,
-				onChanged: (Locale? value) {
-					if (value != null) {
-						context.setLocale(value);
-					}
-				},
-			),
-			RadioListTile(
-				title: const Text("English"),
-				value: const Locale("en"),
-				groupValue: context.locale,
-				onChanged: (Locale? value) {
-					if (value != null) {
-						context.setLocale(value);
-					}
-				},
-			),
-			ListTile(
-				title: const Text("nav-labels").tr(),
-				leading: const Icon(Boxicons.bxs_label),
-			),
-			for (final navLabelMode in navLabelsText.entries)
-				RadioListTile(
-					title: Text(navLabelMode.value),
-					value: navLabelMode.key,
-					groupValue: ref.watch(
-						settingsProvider.select((value) => value.navLabelsMode),
+						],
 					),
-					onChanged: (NavLabelsMode? value) {
-						if (value != null) {
-							ref.read(settingsProvider.notifier).navLabelsMode = value;
-						}
-					},
 				),
-			ListTile(
-				title: const Text("default-page").tr(),
-				leading: const Icon(Boxicons.bxs_home),
-			),
-			for (var i = 0; i < pagesText.length; i++)
-				RadioListTile(
-					title: Text(pagesText.elementAt(i)),
-					value: i,
-					groupValue: ref.watch(settingsProvider.select((value) => value.defaultPage)),
-					onChanged: (int? value) {
-						if (value != null) {
-							ref.read(settingsProvider.notifier).defaultPage = value;
-						}
-					},
+				ListTile(
+					title: Text(context.tr.settingsLocale),
+					leading: const Icon(Boxicons.bx_text),
 				),
-		],
-	);
+				RadioListTile<Locale?>(
+					title: Text(context.tr.settingsDeviceLocale),
+					value: null,
+					groupValue: ref.watch(settingsProvider.select((value) => value.locale)),
+					onChanged: (_) => ref.read(settingsProvider.notifier).resetLocale(),
+				),
+				for (final locale in AppLocalizations.supportedLocales)
+					RadioListTile<Locale?>(
+						title: Text(lookupAppLocalizations(locale).localeDisplayName),
+						value: locale,
+						groupValue: ref.watch(settingsProvider.select((value) => value.locale)),
+						onChanged: (_) => ref.read(settingsProvider.notifier).locale = locale,
+					),
+				ListTile(
+					title: Text(context.tr.settingsNavLabel),
+					leading: const Icon(Boxicons.bxs_label),
+				),
+				for (final navLabelMode in NavLabelsMode.values)
+					RadioListTile(
+						title: Text(context.tr.settingsNavLabels(navLabelMode.name)),
+						value: navLabelMode,
+						groupValue: ref.watch(
+							settingsProvider.select((value) => value.navLabelsMode),
+						),
+						onChanged: (_) => ref.read(settingsProvider.notifier).navLabelsMode = navLabelMode,
+					),
+				ListTile(
+					title: Text(context.tr.settingsDefaultPage),
+					leading: const Icon(Boxicons.bxs_home),
+				),
+				for (var i = 0; i < pagesText.length; i++)
+					RadioListTile(
+						title: Text(pagesText.elementAt(i)),
+						value: i,
+						groupValue: ref.watch(settingsProvider.select((value) => value.defaultPage)),
+						onChanged: (_) => ref.read(settingsProvider.notifier).defaultPage = i,
+					),
+			],
+		);
+	}
 }
 
 class _SettingsHomePage extends ConsumerWidget implements WidgetTitleMixin {
@@ -198,7 +162,7 @@ class _SettingsHomePage extends ConsumerWidget implements WidgetTitleMixin {
 		title: title,
 		children: [
 			ListTile(
-				title: const Text("carousel-item-count").tr(),
+				title: Text(context.tr.carouselItemCount),
 				leading: const Icon(Boxicons.bxs_carousel),
 			),
 			Slider(
@@ -252,7 +216,7 @@ class _SettingsMorePage extends ConsumerWidget implements WidgetTitleMixin {
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
-		title: "advanced".tr(),
+		title: context.tr.settingsAdvanced,
 		children: const [],
 	);
 }
@@ -269,18 +233,18 @@ class _SettingsAnimePage extends ConsumerWidget implements WidgetTitleMixin {
 		title: title,
 		children: [
 			SwitchListTile(
-				title: const Text("blur-thumbs").tr(),
+				title: Text(context.tr.blurThumbs),
 				value: ref.watch(settingsProvider.select((value) => value.blurThumbs)),
 				onChanged: (bool value) =>
 					ref.read(settingsProvider.notifier).blurThumbs = value,
 			),
 			SwitchListTile(
-				title: const Text("show-blur-thumbs-switch").tr(),
+				title: Text(context.tr.blurThumbsShowSwitch),
 				value: ref.watch(settingsProvider.select((value) => value.blurThumbsShowSwitch)),
 				onChanged: (bool value) =>
 					ref.read(settingsProvider.notifier).blurThumbsShowSwitch = value,
 			),
-			ListTile(title: const Text("blur-thumbs-sigma").tr()),
+			ListTile(title: Text(context.tr.blurThumbsSigma)),
 			Slider(
 				min: 1,
 				max: 20,
@@ -334,7 +298,7 @@ class _SettingsUpdatePage extends ConsumerWidget implements WidgetTitleMixin {
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
-		title: "update".tr(),
+		title: title,
 		children: const [],
 	);
 }
@@ -349,7 +313,7 @@ class _SettingsAboutPage extends ConsumerWidget implements WidgetTitleMixin {
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
-		title: "about".tr(),
+		title: title,
 		children: const [],
 	);
 }

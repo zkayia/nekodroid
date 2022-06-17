@@ -47,7 +47,7 @@ class AnimePageHeader extends StatelessWidget {
 								Flexible(
 									child: FittedBox(
 										child: SingleLineText.secondary(
-											animeDataText(anime),
+											animeDataText(context, anime),
 											textAlign: TextAlign.center,
 										),
 									),

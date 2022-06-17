@@ -1,9 +1,9 @@
 
 import 'package:boxicons/boxicons.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/models/carousel_more_parameters.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base/providers/home.dart';
@@ -26,9 +26,9 @@ class HomePage extends ConsumerWidget {
 				loading: () => const CircularProgressIndicator(),
 				data: (data) {
 					final carousels = {
-						"latest-eps".tr(): _buildAnimeCards(context, data.newEpisodes, true),
-						"seasonal-animes".tr(): _buildAnimeCards(context, data.seasonalAnimes),
-						"popular-animes".tr(): _buildAnimeCards(context, data.mostPopularAnimes),
+						context.tr.homeLatestEps: _buildAnimeCards(context, data.newEpisodes, true),
+						context.tr.homeSeasonalAnimes: _buildAnimeCards(context, data.seasonalAnimes),
+						context.tr.homePopularAnimes: _buildAnimeCards(context, data.mostPopularAnimes),
 					};
 					return ListView.separated(
 						physics: kDefaultScrollPhysics,
@@ -72,7 +72,7 @@ class HomePage extends ConsumerWidget {
 				image: GenericCachedImage(e.thumbnail),
 				isEpisode: isEpisode,
 				badge: isEpisode ?
-					"episode.short".tr(args: [e.episodeNumber.toString()])
+					context.tr.episodeShort(e.episodeNumber)
 					: null,
 				label: isEpisode ? e.episodeTitle : e.title,
 				onImageTap: () => isEpisode

@@ -1,8 +1,8 @@
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/app_localizations_context.dart';
 import 'package:nekodroid/routes/base/providers/selectable_filters.dart';
 import 'package:nekodroid/routes/base/widgets/checkbox_column.dart';
 import 'package:nekodroid/routes/base/widgets/checkbox_column_tile.dart';
@@ -18,29 +18,37 @@ class SearchFilters extends ConsumerWidget {
 		mainAxisAlignment: MainAxisAlignment.spaceBetween,
 		crossAxisAlignment: CrossAxisAlignment.start,
 		children: [
-			for (final column in [
-				["format".tr(), NSTypes.values],
-				null,
-				["status".tr(), NSStatuses.values],
-			])
-				if (column == null)
-					const SizedBox(width: kPaddingSecond)
-				else
-					Expanded(
-						child: CheckboxColumn(
-							title: column.first as String,
-							tiles: [
-								...(column.last as List<Enum>).map(
-									(e) => CheckboxColumnTile(
-										label: "types-statuses-list".tr(gender: e.name),
-										value: ref.watch(selectableFiltersProvider).contains(e),
-										onChanged: () =>
-											ref.read(selectableFiltersProvider.notifier).toggle(e),
-									),
-								),
-							],
+			Expanded(
+				child: CheckboxColumn(
+					title: context.tr.format,
+					tiles: [
+						...NSTypes.values.map(
+							(e) => CheckboxColumnTile(
+								label: context.tr.formats(e.name),
+								value: ref.watch(selectableFiltersProvider).contains(e),
+								onChanged: () =>
+									ref.read(selectableFiltersProvider.notifier).toggle(e),
+							),
 						),
-					),
+					],
+				),
+			),
+			const SizedBox(width: kPaddingSecond),
+			Expanded(
+				child: CheckboxColumn(
+					title: context.tr.status,
+					tiles: [
+						...NSStatuses.values.map(
+							(e) => CheckboxColumnTile(
+								label: context.tr.statuses(e.name),
+								value: ref.watch(selectableFiltersProvider).contains(e),
+								onChanged: () =>
+									ref.read(selectableFiltersProvider.notifier).toggle(e),
+							),
+						),
+					],
+				),
+			),
 		],
 	);
 }
