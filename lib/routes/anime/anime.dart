@@ -13,6 +13,7 @@ import 'package:nekodroid/routes/anime/providers/blur_thumbs.dart';
 import 'package:nekodroid/routes/anime/providers/lazy_load.dart';
 import 'package:nekodroid/routes/anime/widgets/anime_page_header.dart';
 import 'package:nekodroid/routes/anime/widgets/episode_thumbnail.dart';
+import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/genre_chip.dart';
 import 'package:nekodroid/widgets/genre_grid.dart';
@@ -126,7 +127,10 @@ class AnimeRoute extends ConsumerWidget {
 													}",
 													onTap: () => Navigator.of(context).pushNamed(
 														"/player",
-														arguments: episode,
+														arguments: PlayerRouteParameters(
+															episode: episode,
+															playerType: PlayerType.native,
+														),
 													),
 												);
 											},

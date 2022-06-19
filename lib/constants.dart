@@ -21,9 +21,9 @@ const kDefaultSettings = AppSettings(
 	lazyLoadItemCount: 5,
 );
 
-// in ms
+// all of the below are in ms
 const int kWebviewPopDelay = 3 * 1000;
-// in ms
+const int kHeadlessWebviewMaxLifetime = 20 * 60 * 1000;
 const int kSearchDbMaxLifetime = 12 * 60 * 60 * 1000;
 
 const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
@@ -56,7 +56,7 @@ const EdgeInsetsGeometry kAnimeCardBadgeTextPadding = EdgeInsets.symmetric(
 
 const Color _kAccentColor = Color(0xff1cb9f4);
 const Color _kOnAccentColor = Color(0xff000000);
-const Color kEpisodePlayButtonColor = Color(0xffffffff);
+const Color kOnImageColor = Color(0xffffffff);
 const Color kAnimeCardBadgeColor = Color(0xfff9f9f9);
 const Color kAnimeCardBadgeShadow = Color.fromARGB(160, 0, 0, 0);
 const Color kShadowThumbWithIcon = Color.fromARGB(100, 0, 0, 0);

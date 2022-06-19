@@ -8,6 +8,7 @@ import 'package:nekodroid/models/carousel_more_parameters.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base/providers/home.dart';
 import 'package:nekodroid/routes/base/widgets/anime_carousel.dart';
+import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
@@ -76,7 +77,13 @@ class HomePage extends ConsumerWidget {
 					: null,
 				label: isEpisode ? e.episodeTitle : e.title,
 				onImageTap: () => isEpisode
-					? Navigator.of(context).pushNamed("/player", arguments: e)
+					? Navigator.of(context).pushNamed(
+						"/player",
+						arguments: PlayerRouteParameters(
+							episode: e,
+							playerType: PlayerType.native,
+						),
+					)
 					: Navigator.of(context).pushNamed("/anime", arguments: e.url),
 				onLabelTap: () => Navigator.of(context).pushNamed(
 					"/anime",

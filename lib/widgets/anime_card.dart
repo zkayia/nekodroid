@@ -46,7 +46,7 @@ class AnimeCard extends StatelessWidget {
 											child: const Center(
 												child: Icon(
 													Boxicons.bx_play,
-													color: kEpisodePlayButtonColor,
+													color: kOnImageColor,
 												),
 											),
 										),

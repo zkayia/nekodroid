@@ -22,6 +22,7 @@ dependencies:
     git: https://github.com/zkayia/nekosama_dart
   android_intent_plus: ^3.1.1
   audio_video_progress_bar: ^0.10.0
+  better_player: ^0.0.83
   boxicons:
     git:
       url: https://github.com/zkayia/dartpacks
@@ -60,7 +61,7 @@ flutter_native_splash:
   image_dark: assets/images/nekodroid_logo_regular.png
 
 flutter:
-  uses-material-design: false
+  uses-material-design: true
   generate: true
   assets:
     - assets/player/
