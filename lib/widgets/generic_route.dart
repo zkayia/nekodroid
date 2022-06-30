@@ -9,6 +9,7 @@ class GenericRoute extends StatelessWidget {
 
 	final String? title;
 	final bool hideExitFab;
+	final bool useSafeArea;
 	final Widget? leading;
 	final Widget? trailing;
 	final Widget? body;
@@ -18,6 +19,7 @@ class GenericRoute extends StatelessWidget {
 		super.key,
 		this.title,
 		this.hideExitFab=false,
+		this.useSafeArea=true,
 		this.leading,
 		this.trailing,
 		this.body,
@@ -30,6 +32,10 @@ class GenericRoute extends StatelessWidget {
 			? Future.value(true)
 			: onExitTap!.call(context),
 		child: SafeArea(
+			top: useSafeArea,
+			left: useSafeArea,
+			right: useSafeArea,
+			bottom: useSafeArea,
 			child: Scaffold(
 				resizeToAvoidBottomInset: false,
 				floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
