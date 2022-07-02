@@ -142,7 +142,7 @@
 		}
 	},
 	
-	"episodeCountShort": "{count, plural, zero{? éps} one{1 ép} other{{count} éps}}",
+	"episodeCountShort": "{count, plural, zero{? ép} one{1 ép} other{{count} éps}}",
 	"@episodeCountShort": {
 		"placeholders": {
 			"count": {
@@ -150,7 +150,7 @@
 			}
 		}
 	},
-	"episodeCountLong": "{count, plural, zero{? épisodes} one{1 épisode} other{{count} épisodes}}",
+	"episodeCountLong": "{count, plural, zero{? épisode} one{1 épisode} other{{count} épisodes}}",
 	"@episodeCountLong": {
 		"placeholders": {
 			"count": {
@@ -160,7 +160,7 @@
 	},
 	
 	
-	"minutesShort": "{count, plural, zero{? mins} one{1 min} other{{count} mins}}",
+	"minutesShort": "{count, plural, zero{? min} one{1 min} other{{count} mins}}",
 	"@minutesShort": {
 		"placeholders": {
 			"count": {
@@ -168,7 +168,7 @@
 			}
 		}
 	},
-	"minutesLong": "{count, plural, zero{? minutes} one{1 minute} other{{count} minutes}}",
+	"minutesLong": "{count, plural, zero{? minute} one{1 minute} other{{count} minutes}}",
 	"@minutesLong": {
 		"placeholders": {
 			"count": {
