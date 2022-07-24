@@ -12,7 +12,8 @@ class AnimeListTile extends StatelessWidget {
 	final Widget? leading;
 	final Widget? trailing;
 	final bool titleWrap;
-	final void Function() onTap;
+	final void Function()? onTap;
+	final void Function()? onLongPress;
 
 	const AnimeListTile({
 		super.key,
@@ -21,7 +22,8 @@ class AnimeListTile extends StatelessWidget {
 		this.leading,
 		this.trailing,
 		this.titleWrap=true,
-		required this.onTap,
+		this.onTap,
+		this.onLongPress,
 	});
 
 	@override
@@ -33,6 +35,7 @@ class AnimeListTile extends StatelessWidget {
 			child: InkWell(
 				borderRadius: BorderRadius.circular(kBorderRadMain),
 				onTap: onTap,
+				onLongPress: onLongPress,
 				child: Row(
 					mainAxisAlignment: MainAxisAlignment.center,
 					children: [
