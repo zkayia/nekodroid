@@ -2,6 +2,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/app_localizations_context.dart';
@@ -27,7 +28,7 @@ class AnimeRoute extends ConsumerWidget {
 
 	@override
 	Widget build(BuildContext context, WidgetRef ref) {
-		final animeUrl = ModalRoute.of(context)?.settings.arguments as Uri?;
+		final animeUrl = ModalRoute.of(context)!.settings.arguments as Uri;
 		return GenericRoute(
 			body: Center(
 				child: ref.watch(animeProvider(animeUrl)).when(
@@ -46,7 +47,14 @@ class AnimeRoute extends ConsumerWidget {
 						return LazyLoadScrollView(
 							onEndOfPage: () => ref.read(lazyLoadProvider(data.episodes).notifier).loadMore(),
 							child: RefreshIndicator(
-								onRefresh: () async => ref.refresh(animeProvider(animeUrl)),
+								onRefresh: () async {
+									final stringUrl = animeUrl.toString();
+									final cacheBox = Hive.box<String>("anime-cache");
+									await cacheBox.delete(stringUrl);
+									ref.refresh(animeProvider(animeUrl)).whenData(
+										(value) => cacheBox.put(stringUrl, value.toJson()),
+									);
+								},
 								child: ListView(
 									padding: const EdgeInsets.only(
 										top: kPaddingSecond,

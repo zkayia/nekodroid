@@ -53,11 +53,11 @@ class _FavoritesProviderNotifier extends StateNotifier<Map<Uri, int>> {
 	Future<void> _boxUpdate(String urlString, int addedAtTimestamp, NSAnime anime) async {
 		if (_favsBox.containsKey(urlString)) {
 			if (!_recentHistoryBox.containsKey(urlString)) {
-				await _animeCacheBox.delete(anime.id);
+				await _animeCacheBox.delete(urlString);
 			}
 			return _favsBox.delete(urlString);
 		}
-		_animeCacheBox.put(anime.id, anime.toJson());
+		await _animeCacheBox.put(urlString, anime.toJson());
 		return _favsBox.put(urlString, addedAtTimestamp);
 	}
 }
