@@ -22,8 +22,8 @@ const kDefaultSettings = AppSettings(
 );
 
 // all of the below are in ms
-const int kWebviewPopDelay = 3 * 1000;
-const int kHeadlessWebviewMaxLifetime = 20 * 60 * 1000;
+const int kPlayerPopDelay = 3 * 1000;
+const int kHeadlessWebviewMaxLifetime = 20 * 1000;
 const int kSearchDbMaxLifetime = 12 * 60 * 60 * 1000;
 
 const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
@@ -109,6 +109,57 @@ ThemeData _buildTheme({
 }) {
 	final isDark = brightness == Brightness.dark;
 	final baseTheme = isDark ? ThemeData.dark() : ThemeData.light();
+	final textTheme = const TextTheme().copyWith(
+		displayMedium: const TextStyle().copyWith(
+			overflow: TextOverflow.fade,
+			color: polar,
+			fontSize: 30,
+			fontFamily: "Roboto",
+			fontWeight: FontWeight.w700,
+		),
+		displaySmall: const TextStyle().copyWith(
+			overflow: TextOverflow.fade,
+			color: polar,
+			fontSize: 24,
+			fontFamily: "Roboto",
+			fontWeight: FontWeight.w700,
+		),
+		titleLarge: const TextStyle().copyWith(
+			overflow: TextOverflow.fade,
+			color: polar,
+			fontSize: 18,
+			fontFamily: "Roboto",
+			fontWeight: FontWeight.w700,
+		),
+		titleMedium: const TextStyle().copyWith(
+			overflow: TextOverflow.fade,
+			color: polar,
+			fontSize: 16,
+			fontFamily: "Roboto",
+			fontWeight: FontWeight.w400,
+		),
+		bodyLarge: const TextStyle().copyWith(
+			overflow: TextOverflow.fade,
+			color: polar,
+			fontSize: 14,
+			fontFamily: "Roboto",
+			fontWeight: FontWeight.w400,
+		),
+		bodyMedium: const TextStyle().copyWith(
+			overflow: TextOverflow.fade,
+			color: polarAlt,
+			fontSize: 14,
+			fontFamily: "Roboto",
+			fontWeight: FontWeight.w400,
+		),
+		bodySmall: const TextStyle().copyWith(
+			overflow: TextOverflow.fade,
+			color: polarAlt,
+			fontSize: 12,
+			fontFamily: "Roboto",
+			fontWeight: FontWeight.w400,
+		),
+	);
 	return baseTheme.copyWith(
 		primaryColor: prim,
 		scaffoldBackgroundColor: primAlt,
@@ -179,6 +230,14 @@ ThemeData _buildTheme({
 				borderRadius: BorderRadius.circular(kBorderRadSecond),
 			),
 		),
+		dialogTheme: const DialogTheme().copyWith(
+			backgroundColor: primAlt,
+			elevation: kDefaultElevation,
+			shape: RoundedRectangleBorder(
+				borderRadius: BorderRadius.circular(kBorderRadMain),
+			),
+			titleTextStyle: textTheme.displaySmall,
+		),
 		dividerTheme: const DividerThemeData().copyWith(
 			thickness: 1,
 		),
@@ -214,6 +273,10 @@ ThemeData _buildTheme({
 					? accent
 					: polar,
 			),
+		),
+		scrollbarTheme: const ScrollbarThemeData().copyWith(
+			thumbColor: MaterialStateProperty.all(Colors.red),
+			thumbVisibility: MaterialStateProperty.all(true),
 		),
 		sliderTheme: const SliderThemeData().copyWith(
 			thumbColor: accent,
@@ -257,52 +320,17 @@ ThemeData _buildTheme({
 				),
 				tapTargetSize: MaterialTapTargetSize.shrinkWrap,
 				backgroundColor: MaterialStateProperty.all(prim),
+				foregroundColor: MaterialStateProperty.all(polar),
 				overlayColor: MaterialStateProperty.all(baseTheme.splashColor),
+				elevation: MaterialStateProperty.all(kDefaultElevation),
+				padding: MaterialStateProperty.all(
+					const EdgeInsets.symmetric(
+						horizontal: kPaddingMain,
+						vertical: kPaddingSecond,
+					),
+				),
 			),
 		),
-		textTheme: const TextTheme().copyWith(
-			displayMedium: const TextStyle().copyWith(
-				overflow: TextOverflow.fade,
-				color: polar,
-				fontSize: 30,
-				fontFamily: "Roboto",
-				fontWeight: FontWeight.w700,
-			),
-			titleLarge: const TextStyle().copyWith(
-				overflow: TextOverflow.fade,
-				color: polar,
-				fontSize: 16,
-				fontFamily: "Roboto",
-				fontWeight: FontWeight.w700,
-			),
-			titleMedium: const TextStyle().copyWith(
-				overflow: TextOverflow.fade,
-				color: polar,
-				fontSize: 16,
-				fontFamily: "Roboto",
-				fontWeight: FontWeight.w400,
-			),
-			bodyLarge: const TextStyle().copyWith(
-				overflow: TextOverflow.fade,
-				color: polar,
-				fontSize: 14,
-				fontFamily: "Roboto",
-				fontWeight: FontWeight.w400,
-			),
-			bodyMedium: const TextStyle().copyWith(
-				overflow: TextOverflow.fade,
-				color: polarAlt,
-				fontSize: 14,
-				fontFamily: "Roboto",
-				fontWeight: FontWeight.w400,
-			),
-			bodySmall: const TextStyle().copyWith(
-				overflow: TextOverflow.fade,
-				color: polarAlt,
-				fontSize: 12,
-				fontFamily: "Roboto",
-				fontWeight: FontWeight.w400,
-			),
-		),
+		textTheme: textTheme,
 	);
 }
