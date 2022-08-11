@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations_context.dart';
-import 'package:nekodroid/extensions/locale_fromstring.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/locale.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
 import 'package:nekodroid/routes/base/base.dart';
@@ -35,10 +35,10 @@ class App extends ConsumerWidget {
 		themeMode: ref.watch(settingsProvider.select((value) => value.themeMode)),
 		localizationsDelegates: AppLocalizations.localizationsDelegates,
 		supportedLocales: AppLocalizations.supportedLocales,
-		locale: LocaleFromString.fromSettingString(
+		locale: LocaleX.fromSettingString(
 			ref.watch(settingsProvider.select((value) => value.locale)),
 		)
-			?? LocaleFromString.fromString(Intl.systemLocale),
+			?? LocaleX.fromString(Intl.systemLocale),
 		builder: (context, child) => ScrollConfiguration(
 			behavior: _NoOverscrollIndicatorScrollBehavior(),
 			child: child!,

@@ -3,7 +3,7 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations_context.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/helpers/anime_data_text.dart';
 import 'package:nekodroid/routes/base/providers/is_in_search.dart';
 import 'package:nekodroid/routes/base/providers/search_results.dart';

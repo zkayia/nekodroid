@@ -4,7 +4,7 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations_context.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/routes/base/widgets/list_tile_icon.dart';
 import 'package:nekodroid/routes/base/widgets/private_browsing_switch.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';

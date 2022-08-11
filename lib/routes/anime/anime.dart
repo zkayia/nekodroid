@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations_context.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/helpers/format_history_datetime.dart';
 import 'package:nekodroid/provider/history.dart';
 import 'package:nekodroid/provider/settings.dart';

@@ -2,7 +2,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations_context.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 
 

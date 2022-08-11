@@ -2,7 +2,7 @@
 import 'dart:io';
 
 
-extension UriWithGet on Uri {
+extension UriX on Uri {
 
 	Future<HttpClientResponse> get({
 		HttpClient? httpClient,

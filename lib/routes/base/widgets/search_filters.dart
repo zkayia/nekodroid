@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations_context.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/routes/base/providers/selectable_filters.dart';
 import 'package:nekodroid/routes/base/widgets/checkbox_column.dart';
 import 'package:nekodroid/routes/base/widgets/checkbox_column_tile.dart';

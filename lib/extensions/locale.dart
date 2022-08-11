@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 
-extension LocaleFromString on Locale {
+extension LocaleX on Locale {
 
 	static Locale? fromSettingString(String localeString) => localeString == "system"
 		? null
