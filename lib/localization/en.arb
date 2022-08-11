@@ -79,18 +79,8 @@
 	
 	"player": "Player",
 	"playerConfirmExit": "Press again to exit",
-	"playerControlsLive": "LIVE",
-	"playerControlsNextVideoIn": "Next video in",
-	"playerGeneralDefault": "Default",
-	"playerGeneralDefaultError": "Video can't be played",
-	"playerGeneralNone": "None",
-	"playerGeneralRetry": "Retry",
-	"playerOverflowMenuAudioTracks": "Audio",
-	"playerOverflowMenuPlaybackSpeed": "Playback speed",
-	"playerOverflowMenuQuality": "Quality",
-	"playerOverflowMenuSubtitles": "Subtitles",
-	"playerPlaylistLoadingNextVideo": "Loading next video",
-	"playerQualityAuto": "Auto",
+	"playerPlaybackSpeed": "Playback speed",
+	"playerQuality": "Quality",
 	
 	
 	"genre": "Genre",

@@ -1,31 +1,21 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:path_provider/path_provider.dart';
 
 
-final hlsProvider = FutureProvider.autoDispose.family<Map<String, List<int>>, HlsProviderData>(
-	(ref, data) {
-		final completer = Completer<Map<String, List<int>>>();
-		final webview = _buildWebview(completer, data);
-		ref.onDispose(() => webview.dispose());
-		completer.future.then((_) => webview.dispose());
-		Future.delayed(
-			const Duration(milliseconds: kHeadlessWebviewMaxLifetime),
-		).then((_) {
-			webview.dispose();
-			if (!completer.isCompleted) {
-				completer.completeError(Exception("Unable to extract hls file url in time"));
-			}
-		});
-		webview.run();
-		return completer.future;
-	},
-); 
+/* CONSTANTS */
+
+
+
+
+/* MODELS */
 
 @immutable
 class HlsProviderData {
@@ -51,8 +41,60 @@ class HlsProviderData {
 	int get hashCode => videoUrl.hashCode ^ assetBundle.hashCode;
 }
 
-HeadlessInAppWebView _buildWebview(Completer<Map<String, List<int>>> completer, HlsProviderData data) {
-	int qualitiesCount = 0;
+
+/* PROVIDERS */
+
+final hlsProvider = FutureProvider.autoDispose.family<Map<String, File>, HlsProviderData>(
+	(ref, data) {
+		final bytesCompleter = Completer<Map<String, List<int>>>();
+		final filesCompleter = Completer<Map<String, File>>();
+		final webview = _buildWebview(bytesCompleter, data);
+		ref.onDispose(() => webview.dispose());
+		bytesCompleter.future
+			..then(
+				(value) async {
+					if (value.isEmpty) {
+						return filesCompleter.completeError(Exception("no hls stream found"));
+					}
+					final tempdir = await getTemporaryDirectory();
+					Map<String, File> result = {};
+					for (final entry in value.entries) {
+						final tempfile = File(
+							"${tempdir.path}/nekodroid_nativeplayer_${DateTime.now().millisecondsSinceEpoch}.m3u8",
+						);
+						await tempfile.writeAsBytes(entry.value, flush: true);
+						result.putIfAbsent(entry.key, () => tempfile);
+					}
+					filesCompleter.complete(result);
+				},
+				onError: (error, stackTrace) => filesCompleter.completeError(error, stackTrace),
+			)
+		..whenComplete(() => webview.dispose());
+		Future.delayed(
+			const Duration(milliseconds: kHeadlessWebviewMaxLifetime),
+		).then((_) {
+			final exception = Exception("HLS stream scrapper timed out.");
+			webview.dispose();
+			if (!bytesCompleter.isCompleted) {
+				bytesCompleter.completeError(exception);
+			}
+			if (!filesCompleter.isCompleted) {
+				filesCompleter.completeError(exception);
+			}
+		});
+		webview.run();
+		return filesCompleter.future;
+	},
+);
+
+
+/* MISC */
+
+HeadlessInAppWebView _buildWebview(
+	Completer<Map<String, List<int>>> bytesCompleter,
+	HlsProviderData data,
+) {
+	final qualitiesCount = Completer<int>();
 	Map<String, List<int>> qualities = {};
 	return HeadlessInAppWebView(
 		initialUrlRequest: URLRequest(url: data.videoUrl),
@@ -90,8 +132,7 @@ HeadlessInAppWebView _buildWebview(Completer<Map<String, List<int>>> completer, 
 		onAjaxProgress: (controller, request) async {
 			final url = request.url.toString();
 			if (
-				url.contains(RegExp("pstream.net/(m|h)/"))
-				&& url.contains(".m3u8")
+				url.contains(RegExp(r"pstream.net\/(m|h)\/.*\.m3u8"))
 				&& request.readyState == AjaxRequestReadyState.DONE
 			) {
 				final data = request.responseText;
@@ -101,24 +142,30 @@ HeadlessInAppWebView _buildWebview(Completer<Map<String, List<int>>> completer, 
 							request.url!.pathSegments.elementAt(1),
 							() => utf8.encode(data!),
 						);
-						if (qualitiesCount != 0 && qualities.length == qualitiesCount) {
-							completer.complete(qualities);
+						if (
+							qualitiesCount.isCompleted
+							&& !bytesCompleter.isCompleted
+							&& (await qualitiesCount.future) == qualities.length
+						) {
+							bytesCompleter.complete(qualities);
 						}
-					} else {
-						final streamCount =  RegExp("#EXT-X-STREAM-INF").allMatches(data!).length;
-						if (streamCount > 0) {
-							qualitiesCount = streamCount;
+					} else if (!qualitiesCount.isCompleted)  {
+						final streams = RegExp(r"https.*\/h\/(\d+).*").allMatches(data!);
+						if (streams.isNotEmpty) {
+							qualitiesCount.complete(streams.length);
 						}
 					}
 				}
 			}
 			return AjaxRequestAction.PROCEED;
 		},
-		onConsoleMessage: (_, __) {},
 		androidShouldInterceptRequest: (controller, request) async =>
-			request.url.host.contains("pstream.net") && !completer.isCompleted
+			request.url.host.contains("pstream.net") && !bytesCompleter.isCompleted
 				? null
 				: WebResourceResponse(),
 		shouldOverrideUrlLoading: (controller, action) async => NavigationActionPolicy.CANCEL,
 	);
 }
+
+
+/* WIDGETS */

@@ -79,18 +79,8 @@
 	
 	"player": "Lecteur",
 	"playerConfirmExit": "Appuyer encore pour sortir",
-	"playerControlsLive": "DIRECT",
-	"playerControlsNextVideoIn": "Prochaine vidéo dans",
-	"playerGeneralDefault": "Défaut",
-	"playerGeneralDefaultError": "Impossible de lire la vidéo",
-	"playerGeneralNone": "Aucun",
-	"playerGeneralRetry": "Réessayer",
-	"playerOverflowMenuAudioTracks": "Audio",
-	"playerOverflowMenuPlaybackSpeed": "Vitesse de lecture",
-	"playerOverflowMenuQuality": "Qualité",
-	"playerOverflowMenuSubtitles": "Sous-titres",
-	"playerPlaylistLoadingNextVideo": "Chargement de la vidéo suivante",
-	"playerQualityAuto": "Automatique",
+	"playerPlaybackSpeed": "Vitesse de lecture",
+	"playerQuality": "Qualité",
 	
 	
 	"genre": "Genre",

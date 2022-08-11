@@ -1,36 +1,105 @@
 
-import 'dart:convert';
-
-import 'package:better_player/better_player.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/player/providers/hls.dart';
-import 'package:nekodroid/routes/player/providers/video.dart';
-import 'package:nekodroid/routes/player/providers/webview_controller.dart';
-import 'package:nekodroid/routes/player/providers/webview_loading.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/provider/api.dart';
+import 'package:nekodroid/routes/player/players/native/native.dart';
+import 'package:nekodroid/routes/player/players/webview.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekosama_dart/nekosama_dart.dart';
 
 
+/* CONSTANTS */
+
 enum PlayerType {webview, native}
+
+// TODO: preferred quality setting
+enum Qualities {
+
+	// Best available
+	best("-1"),
+	// Full HD 1080p
+	fhd("1080"),
+	// HD 720p
+	hd("720"),
+	// Standard Definition 576p or 480p
+	sd("576"),
+	// Low Definition 360p
+	ld("360"),
+	// Very Low Definition 240p
+	vld("240");
+
+	final String value;
+
+	const Qualities(this.value);
+}
+
+
+/* MODELS */
 
 @immutable
 class PlayerRouteParameters {
 
-	final NSEpisode episode;
 	final PlayerType playerType;
+	final NSEpisode episode;
+	final NSAnime? anime;
+	final int? currentIndex;
 
 	const PlayerRouteParameters({
-		required this.episode,
 		required this.playerType,
-	});
+		required this.episode,
+		this.anime,
+		this.currentIndex,
+	}): assert(
+		(anime == null && currentIndex == null)
+		|| (anime != null && currentIndex != null),
+	);
+
+	PlayerRouteParameters copyWith({
+		PlayerType? playerType,
+		NSEpisode? episode,
+		NSAnime? anime,
+		int? currentIndex,
+	}) => PlayerRouteParameters(
+		playerType: playerType ?? this.playerType,
+		episode: episode ?? this.episode,
+		anime: anime ?? this.anime,
+		currentIndex: currentIndex ?? this.currentIndex,
+	);
 }
+
+
+/* PROVIDERS */
+
+final _playerPopTimeProvider = StateProvider.autoDispose<int>(
+	(ref) => 0,
+);
+
+final _playerParamsProvider = StateProvider.autoDispose.family<
+	PlayerRouteParameters,
+	PlayerRouteParameters
+>(
+	(ref, params) => params,
+);
+
+final _videoProvider = FutureProvider.autoDispose.family<Uri?, PlayerRouteParameters>(
+	(ref, params) => ref.watch(apiProvider).getVideoUrl(
+		ref.watch(_playerParamsProvider(params).select((e) => e.episode)),
+	),
+);
+
+
+/* MISC */
+
+
+
+
+/* WIDGETS */
 
 class PlayerRoute extends ConsumerStatefulWidget {
 
@@ -44,252 +113,96 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
 
 	@override
 	void initState() {
-		// SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-		// SystemChrome.setPreferredOrientations([
-		// 	DeviceOrientation.landscapeLeft,
-		// 	DeviceOrientation.landscapeRight,
-		// ]);
+		SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+		SystemChrome.setPreferredOrientations([
+			DeviceOrientation.landscapeLeft,
+			DeviceOrientation.landscapeRight,
+		]);
 		super.initState();
 	}
 
 	@override
 	void dispose() {
-		// SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-		// SystemChrome.setPreferredOrientations([
-		// 	DeviceOrientation.portraitDown,
-		// 	DeviceOrientation.portraitUp,
-		// ]);
+		SystemChrome.setEnabledSystemUIMode(
+			SystemUiMode.manual,
+			overlays: SystemUiOverlay.values,
+		);
+		SystemChrome.setPreferredOrientations(DeviceOrientation.values);
 		super.dispose();
 	}
 
+	void _offsetCurrentEpBy(int offset, PlayerRouteParameters parameters) =>
+		ref.read(_playerParamsProvider(parameters).notifier).update(
+			(state) {
+				final newIndex = state.currentIndex! + offset;
+				return state.copyWith(
+					episode: state.anime!.episodes.elementAt(newIndex),
+					currentIndex: newIndex,
+				);
+			},
+		);
+
 	@override
 	Widget build(BuildContext context) {
-		final args = ModalRoute.of(context)!.settings.arguments as PlayerRouteParameters;
+		final parameters = ModalRoute.of(context)!.settings.arguments as PlayerRouteParameters;
+		ref.watch(_playerPopTimeProvider);
 		return GenericRoute(
 			hideExitFab: true,
-			// onExitTap: (context) async {
-			// 	final current = DateTime.now().millisecondsSinceEpoch;
-			// 	if (current - ref.read(webviewPopTimeProvider) > kWebviewPopDelay) {
-			// 		ref.read(webviewPopTimeProvider.notifier).update((state) => current);
-			// 		Fluttertoast.showToast(
-			// 			msg: context.tr.playerConfirmExit,
-			// 			toastLength: Toast.LENGTH_SHORT,
-			// 			gravity: ToastGravity.BOTTOM,
-			// 			backgroundColor: Theme.of(context).colorScheme.background,
-			// 			textColor: Theme.of(context).textTheme.bodyMedium?.color,
-			// 		);
-			// 		return false;
-			// 	}
-			// 	ref.read(webviewControllerProvider)?.evaluateJavascript(source: "document.exitFullscreen();");
-			// 	await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-			// 	await SystemChrome.setPreferredOrientations([
-			// 		DeviceOrientation.portraitDown,
-			// 		DeviceOrientation.portraitUp,
-			// 	]);
-			// 	return true;
-			// },
+			// useSafeArea: parameters.playerType != PlayerType.native,
+			onExitTap: (context) async {
+				final current = DateTime.now().millisecondsSinceEpoch;
+				// TODO: playerPopDelay setting
+				if (current - ref.read(_playerPopTimeProvider) > kPlayerPopDelay) {
+					ref.read(_playerPopTimeProvider.notifier).update((state) => current);
+					Fluttertoast.showToast(
+						msg: context.tr.playerConfirmExit,
+						toastLength: Toast.LENGTH_SHORT,
+						gravity: ToastGravity.BOTTOM,
+						backgroundColor: Theme.of(context).colorScheme.background,
+						textColor: Theme.of(context).textTheme.bodyMedium?.color,
+					);
+					return false;
+				}
+				return true;
+			},
 			body: Center(
-				child: ref.watch(videoProvider(args.episode)).when(
+				child: ref.watch(_videoProvider(parameters)).when(
 					loading: () => const CircularProgressIndicator(),
 					error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
 					data: (videoUrl) {
 						if (videoUrl == null) {
 							return const LargeIcon(Boxicons.bxs_error_circle);
 						}
-						switch (args.playerType) {
+						switch (parameters.playerType) {
 							case PlayerType.webview:
-								return _WebviewPlayer(videoUrl);
+								return WebviewPlayer(videoUrl: videoUrl);
 							case PlayerType.native:
-								return _NativePlayerProvider(videoUrl);
+								return NativePlayer(
+									videoUrl: videoUrl,
+									playerRouteParameters: ref.watch(_playerParamsProvider(parameters)),
+									onPrevious: 
+										parameters.anime == null
+										|| (
+											ref.watch(
+												_playerParamsProvider(parameters).select((v) => v.currentIndex),
+											) ?? 0
+										) == 0
+											? null
+											: () => _offsetCurrentEpBy(-1, parameters),
+									onNext: 
+										parameters.anime != null
+										&& (
+											ref.watch(
+												_playerParamsProvider(parameters).select((v) => v.currentIndex),
+											) ?? false
+										) != parameters.anime!.episodes.length - 1
+											? () => _offsetCurrentEpBy(1, parameters)
+											: null,
+								);
 						}
 					},
 				),
 			),
 		);
 	}
-}
-
-
-class _WebviewPlayer extends ConsumerWidget {
-
-	final Uri videoUrl;
-
-	const _WebviewPlayer(this.videoUrl);
-
-	@override
-	Widget build(BuildContext context, WidgetRef ref) => Stack(
-		alignment: Alignment.center,
-		children: [
-			InAppWebView(
-				key: GlobalKey(),
-				initialUrlRequest: URLRequest(url: videoUrl),
-				initialOptions: InAppWebViewGroupOptions(
-					crossPlatform: InAppWebViewOptions(
-						disableHorizontalScroll: true,
-						disableVerticalScroll: true,
-						javaScriptCanOpenWindowsAutomatically: false,
-						incognito: true,
-						mediaPlaybackRequiresUserGesture: false,
-						supportZoom: false,
-						transparentBackground: true,
-						useShouldOverrideUrlLoading: true,
-					),
-					android: AndroidInAppWebViewOptions(
-						useHybridComposition: true,
-						thirdPartyCookiesEnabled: false,
-						displayZoomControls: false,
-						useWideViewPort: false,
-						useShouldInterceptRequest: true,
-						forceDark: _resolveForceDark(
-							ref.watch(settingsProvider.select((value) => value.themeMode)),
-						),
-					),
-				),
-				onWebViewCreated: (controller) async {
-					ref.read(webviewControllerProvider.notifier).update((state) => controller);
-					controller
-						..addUserScript(
-							userScript: UserScript(
-								injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
-								source: await DefaultAssetBundle.of(context).loadString(
-									"assets/player/nekosama_buttons.user.js",
-								),
-							),
-						)
-						..addUserScript(
-							userScript: UserScript(
-								injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
-								source: await DefaultAssetBundle.of(context).loadString(
-									"assets/player/adblock.js",
-								),
-							),
-						);
-				},
-				onLoadStop: (controller, url) =>
-					ref.read(webviewLoadingProvider.notifier).update((state) => false),
-				androidShouldInterceptRequest: (controller, request) async =>
-					_keepRequest(request) ? null : WebResourceResponse(),
-				shouldOverrideUrlLoading: (controller, action) async =>
-					_keepRequest(action.request)
-						? NavigationActionPolicy.ALLOW
-						: NavigationActionPolicy.CANCEL,
-			),
-			if (ref.watch(webviewLoadingProvider))
-				const CircularProgressIndicator(),
-		],
-	);
-
-	bool _keepRequest(dynamic request) =>
-		["pstream.net", "gcdn.me"].any((e) => request.url?.host?.contains(e) ?? false)
-			? !["prebid", "ads"].any((e) => request.url?.host?.contains(e) ?? false)
-			: request.headers?["origin"] == "https://www.pstream.net";
-	
-	AndroidForceDark _resolveForceDark(ThemeMode themeMode) {
-		switch (themeMode) {
-			case ThemeMode.dark:
-				return AndroidForceDark.FORCE_DARK_ON;
-			case ThemeMode.light:
-				return AndroidForceDark.FORCE_DARK_OFF;
-			case ThemeMode.system:
-				return AndroidForceDark.FORCE_DARK_AUTO;
-		}
-	}
-}
-
-class _NativePlayerProvider extends ConsumerWidget {
-
-	final Uri videoUrl;
-
-	const _NativePlayerProvider(this.videoUrl);
-
-	@override
-	Widget build(BuildContext context, WidgetRef ref) => ref.watch(
-		hlsProvider(
-			HlsProviderData(
-				assetBundle: DefaultAssetBundle.of(context),
-				videoUrl: videoUrl,
-			),
-		),
-	).when(
-		loading: () => const CircularProgressIndicator(),
-		error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
-		data: (hlsStreams) {
-			final theme = Theme.of(context);
-			return BetterPlayer(
-				controller: BetterPlayerController(
-					BetterPlayerConfiguration(
-						aspectRatio: 16 / 9,
-						fullScreenAspectRatio: 16 / 9,
-						allowedScreenSleep: false,
-						autoPlay: true,
-						fullScreenByDefault: true,
-						errorBuilder: (context, err) => const LargeIcon(Boxicons.bxs_error_circle),
-						controlsConfiguration: BetterPlayerControlsConfiguration(
-							iconsColor: kOnImageColor,
-							playIcon: Boxicons.bxs_right_arrow,
-							pauseIcon: Boxicons.bx_pause,
-							muteIcon: Boxicons.bx_volume_full,
-							unMuteIcon: Boxicons.bx_volume_mute,
-							pipMenuIcon: Boxicons.bx_error,
-							skipBackIcon: Boxicons.bx_rewind,
-							skipForwardIcon: Boxicons.bx_fast_forward,
-							audioTracksIcon: Boxicons.bx_equalizer,
-							qualitiesIcon: Boxicons.bxs_videos,
-							subtitlesIcon: Boxicons.bx_captions,
-							overflowMenuIcon: Boxicons.bx_dots_vertical_rounded,
-							playbackSpeedIcon: Boxicons.bx_timer,
-							fullscreenEnableIcon: Boxicons.bx_fullscreen,
-							fullscreenDisableIcon: Boxicons.bx_exit_fullscreen,
-							backgroundColor: theme.colorScheme.background,
-							enableAudioTracks: false,
-							enableSubtitles: false,
-							loadingColor: theme.colorScheme.primary,
-							overflowModalColor: theme.colorScheme.surface,
-							overflowModalTextColor: theme.textTheme.bodyLarge!.color!,
-							overflowMenuIconsColor: theme.iconTheme.color!,
-							progressBarHandleColor: theme.colorScheme.primary,
-							progressBarPlayedColor: theme.colorScheme.primary,
-							
-							// TODO: custom controls
-							// playerTheme: BetterPlayerTheme.custom,
-							// customControlsBuilder: (controller, a) => const Icon(
-							// 	Boxicons.bx_alarm,
-							// ),
-							
-							// TODO: history & watched tracking items
-							// overflowMenuCustomItems: 
-						),
-						translations: [
-							...AppLocalizations.supportedLocales.map((locale) {
-								final tr = lookupAppLocalizations(locale);
-								return BetterPlayerTranslations(
-									languageCode: locale.languageCode,
-									controlsLive: tr.playerControlsLive,
-									controlsNextVideoIn: tr.playerControlsNextVideoIn,
-									generalDefault: tr.playerGeneralDefault,
-									generalDefaultError: tr.playerGeneralDefaultError,
-									generalNone: tr.playerGeneralNone,
-									generalRetry: tr.playerGeneralRetry,
-									overflowMenuAudioTracks: tr.playerOverflowMenuAudioTracks,
-									overflowMenuPlaybackSpeed: tr.playerOverflowMenuPlaybackSpeed,
-									overflowMenuQuality: tr.playerOverflowMenuQuality,
-									overflowMenuSubtitles: tr.playerOverflowMenuSubtitles,
-									playlistLoadingNextVideo: tr.playerPlaylistLoadingNextVideo,
-									qualityAuto: tr.playerQualityAuto,
-								);
-							}),
-						],
-					),
-					betterPlayerDataSource: BetterPlayerDataSource.memory(
-						hlsStreams.values.last,
-						videoExtension: "m3u8",
-						useAsmsSubtitles: false,
-						qualities: hlsStreams.map(
-							(key, value) => MapEntry(key, utf8.decode(value)),
-						),
-					),
-				),
-			);
-		},
-	);
 }

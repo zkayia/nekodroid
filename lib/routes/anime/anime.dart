@@ -108,6 +108,15 @@ class AnimeRoute extends ConsumerWidget {
 											separatorBuilder: (context, index) => const SizedBox(height: kPaddingSecond),
 											itemBuilder: (context, index) {
 												final episode = ref.read(lazyLoadProvider(data.episodes)).elementAt(index);
+												void openPlayer(PlayerType playerType) => Navigator.of(context).pushNamed(
+													"/player",
+													arguments: PlayerRouteParameters(
+														playerType: playerType,
+														episode: episode,
+														anime: data,
+														currentIndex: index,
+													),
+												);
 												final wasWatched = history.containsKey(episode.episodeNumber);
 												return AnimeListTile(
 													leading: EpisodeThumbnail(episode.thumbnail),
@@ -133,13 +142,8 @@ class AnimeRoute extends ConsumerWidget {
 															)
 															: ""
 													}",
-													onTap: () => Navigator.of(context).pushNamed(
-														"/player",
-														arguments: PlayerRouteParameters(
-															episode: episode,
-															playerType: PlayerType.native,
-														),
-													),
+													onTap: () => openPlayer(PlayerType.native),
+													onLongPress: () => openPlayer(PlayerType.webview),
 												);
 											},
 										),
