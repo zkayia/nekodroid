@@ -2,5 +2,5 @@
 
 extension ExtendedX on int {
 
-	String toPaddedString() => "${this < 10 ? "0" : ""}$this";
+	String toPaddedString() => toString().padLeft(2, "0");
 }

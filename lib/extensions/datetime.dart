@@ -1,6 +1,22 @@
 
 
-extension DateTimeX on DateTime? {
+import 'package:flutter/widgets.dart';
+import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/int.dart';
 
-	Duration nowDiffOrZero() => this?.difference(DateTime.now()).abs() ?? Duration.zero;
+extension DateTimeX on DateTime {
+
+	Duration diffToNow() => difference(DateTime.now()).abs();
+
+	String formatHistory(BuildContext context) => "\n$day ${
+		context.tr.monthsShort(month)
+	}. ${
+		year == DateTime.now().year
+			? ""
+			: year
+	} ${
+		hour.toPaddedString()
+	}:${
+		minute.toPaddedString()
+	}";
 }

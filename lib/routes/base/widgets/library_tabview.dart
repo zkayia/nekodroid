@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/datetime.dart';
 import 'package:nekodroid/helpers/anime_data_text.dart';
-import 'package:nekodroid/helpers/format_history_datetime.dart';
 import 'package:nekodroid/provider/favorites.dart';
 import 'package:nekodroid/provider/anime.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
@@ -42,11 +42,10 @@ class LibraryTabview extends ConsumerWidget {
 								error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
 								data: (data) => AnimeListTile(
 									title: data.title,
-									subtitle: formatHistoryDatetime(
-										context,
+									subtitle: DateTime.fromMillisecondsSinceEpoch(
 										// will break on: `2106-02-07 07:28:15.000`
-										DateTime.fromMillisecondsSinceEpoch(box.keyAt(reverseIndex) * 1000),
-									),
+										box.keyAt(reverseIndex) * 1000,
+									).formatHistory(context),
 									leading: AnimeCard(
 										image: GenericCachedImage(data.thumbnail),
 										badge: context.tr.episodeShort(episode.episodeNumber),

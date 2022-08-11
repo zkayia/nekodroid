@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
-import 'package:nekodroid/helpers/format_history_datetime.dart';
+import 'package:nekodroid/extensions/datetime.dart';
 import 'package:nekodroid/provider/history.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/provider/anime.dart';
@@ -134,12 +134,9 @@ class AnimeRoute extends ConsumerWidget {
 														context.tr.minutesShort(episode.duration?.inMinutes ?? 0)
 													}${
 														wasWatched
-															? formatHistoryDatetime(
-																context,
-																DateTime.fromMillisecondsSinceEpoch(
-																	history[episode.episodeNumber] ?? 0,
-																),
-															)
+															? DateTime.fromMillisecondsSinceEpoch(
+																history[episode.episodeNumber] ?? 0,
+															).formatHistory(context)
 															: ""
 													}",
 													onTap: () => openPlayer(PlayerType.native),

@@ -110,14 +110,14 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
 		if (
 			state.controlsDisplay
 			&& isPlaying && !isDone && !isSeeking && !inAction
-			&& _lastActionTime.nowDiffOrZero() >= _playerControlsDisplayDuration
+			&& (_lastActionTime?.diffToNow() ?? Duration.zero) >= _playerControlsDisplayDuration
 		) {
 			toggleControls(false);
 		}
 		// TODO: quick skip button display time
 		if (
 			state.dtDisplay != null
-			&& _dtLastTime.nowDiffOrZero() >= _playerQuickSkipDisplayDuration
+			&& (_dtLastTime?.diffToNow() ?? Duration.zero) >= _playerQuickSkipDisplayDuration
 		) {
 			dtDisplay = null;
 		}
