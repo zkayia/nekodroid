@@ -2,16 +2,40 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/helpers/anime_data_text.dart';
+import 'package:nekodroid/provider/favorites.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_title.dart';
-import 'package:nekodroid/widgets/favorite_toggle.dart';
+import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/generic_image.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 import 'package:nekosama_dart/nekosama_dart.dart';
 import 'package:share_plus/share_plus.dart';
 
+
+/* CONSTANTS */
+
+
+
+
+/* MODELS */
+
+
+
+
+/* PROVIDERS */
+
+
+
+
+/* MISC */
+
+
+
+
+/* WIDGETS */
 
 class AnimePageHeader extends StatelessWidget {
 
@@ -63,47 +87,21 @@ class AnimePageHeader extends StatelessWidget {
 									child: Row(
 										mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 										children: [
-											Material(
-												color: Theme.of(context).colorScheme.surface,
-												borderRadius: BorderRadius.circular(kBorderRadMain),
-												child: InkWell(
-													borderRadius: BorderRadius.circular(kBorderRadMain),
-													child: ConstrainedBox(
-														constraints: const BoxConstraints(
-															minHeight: kMinInteractiveDimension,
-															minWidth: kMinInteractiveDimension,
-														),
-														child: const Icon(Boxicons.bx_link_external),
-													),
-													onTap: () => AndroidIntent(
-														action: "action_view",
-														data: anime.url.toString(),
-													).launch(),
+											GenericButton(
+												onTap: () => AndroidIntent(
+													action: "action_view",
+													data: anime.url.toString(),
+												).launch(),
+												icon: Boxicons.bx_link_external,
+											),
+											GenericButton(
+												onTap: () => Share.share(
+													anime.url.toString(),
+													subject: anime.title,
 												),
+												icon: Boxicons.bx_share_alt,
 											),
-											Material(
-												color: Theme.of(context).colorScheme.surface,
-												borderRadius: BorderRadius.circular(kBorderRadMain),
-												child: InkWell(
-													borderRadius: BorderRadius.circular(kBorderRadMain),
-													child: ConstrainedBox(
-														constraints: const BoxConstraints(
-															minHeight: kMinInteractiveDimension,
-															minWidth: kMinInteractiveDimension,
-														),
-														child: const Icon(Boxicons.bx_share_alt),
-													),
-													onTap: () => Share.share(
-														anime.url.toString(),
-														subject: anime.title,
-													),
-												),
-											),
-											Material(
-												color: Theme.of(context).colorScheme.surface,
-												borderRadius: BorderRadius.circular(kBorderRadMain),
-												child: FavoriteToggle(anime: anime),
-											),
+											_FavoriteButton(anime),
 										],
 									),
 								),
@@ -114,4 +112,24 @@ class AnimePageHeader extends StatelessWidget {
 			),
 		);
 	}
+}
+
+class _FavoriteButton extends ConsumerWidget {
+
+	final NSAnime anime;
+
+	const _FavoriteButton(this.anime);
+
+	@override
+	Widget build(BuildContext context, WidgetRef ref) => GenericButton(
+		onTap: () => ref.read(favoritesProvider.notifier).toggleFav(
+			anime.url,
+			DateTime.now(),
+			anime,
+		),
+		active: ref.watch(favoritesProvider).containsKey(anime.url),
+		activeColor: Colors.red,
+		icon: Boxicons.bx_heart,
+		activeIcon: Boxicons.bxs_heart,
+	);
 }

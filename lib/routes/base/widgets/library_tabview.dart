@@ -12,7 +12,7 @@ import 'package:nekodroid/provider/anime.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
-import 'package:nekodroid/widgets/favorite_toggle.dart';
+import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
@@ -69,16 +69,23 @@ class LibraryTabview extends ConsumerWidget {
 					).when(
 						loading: () => const Center(child: CircularProgressIndicator()),
 						error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
-						data: (data) => AnimeListTile(
-							title: data.title,
-							subtitle: animeDataText(context, data),
-							leading: AnimeCard(image: GenericCachedImage(data.thumbnail)),
-							trailing: FavoriteToggle(
-								anime: data,
-								boxOnly: true,
+						data: (anime) => AnimeListTile(
+							title: anime.title,
+							subtitle: animeDataText(context, anime),
+							leading: AnimeCard(image: GenericCachedImage(anime.thumbnail)),
+							trailing: GenericButton(
+								onTap: () => ref.read(favoritesProvider.notifier).toggleFavBoxOnly(
+									anime.url,
+									DateTime.now(),
+									anime,
+								),
+								active: ref.watch(favoritesProvider.notifier).isFavoritedBox(anime.url),
+								activeColor: Colors.red,
+								icon: Boxicons.bx_heart,
+								activeIcon: Boxicons.bxs_heart,
 							),
 							onTap: () =>
-								Navigator.of(context).pushNamed("/anime", arguments: data.url),
+								Navigator.of(context).pushNamed("/anime", arguments: anime.url),
 						),
 					),
 					onRefresh: () async => ref.refresh(favoritesProvider),
