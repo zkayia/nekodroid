@@ -65,11 +65,6 @@ class _SettingsProviderNotifier extends StateNotifier<AppSettings> {
 	void resetBlurThumbs() =>
 		state = state.copyWith(blurThumbs: kDefaultSettings.blurThumbs);
 
-	set blurThumbsShowSwitch(bool value) =>
-		state = state.copyWith(blurThumbsShowSwitch: value);
-	void resetblurThumbsShowSwitch() =>
-		state = state.copyWith(blurThumbsShowSwitch: kDefaultSettings.blurThumbsShowSwitch);
-	
 	set blurThumbsSigma(double value) =>
 		state = state.copyWith(blurThumbsSigma: value);
 	void resetBlurThumbsSigma() =>

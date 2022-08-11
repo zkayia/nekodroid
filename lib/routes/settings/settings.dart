@@ -238,12 +238,6 @@ class _SettingsAnimePage extends ConsumerWidget implements WidgetTitleMixin {
 				onChanged: (bool value) =>
 					ref.read(settingsProvider.notifier).blurThumbs = value,
 			),
-			SwitchListTile(
-				title: Text(context.tr.blurThumbsShowSwitch),
-				value: ref.watch(settingsProvider.select((value) => value.blurThumbsShowSwitch)),
-				onChanged: (bool value) =>
-					ref.read(settingsProvider.notifier).blurThumbsShowSwitch = value,
-			),
 			ListTile(title: Text(context.tr.blurThumbsSigma)),
 			Slider(
 				min: 1,

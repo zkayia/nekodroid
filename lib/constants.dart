@@ -15,7 +15,6 @@ const kDefaultSettings = AppSettings(
 	carouselItemCount: 5,
 	secrecyEnabled: false,
 	blurThumbs: true,
-	blurThumbsShowSwitch: true,
 	blurThumbsSigma: 12,
 	navLabelsMode: NavLabelsMode.all,
 	lazyLoadItemCount: 5,

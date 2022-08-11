@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,10 +17,12 @@ import 'package:nekodroid/routes/anime/widgets/anime_page_header.dart';
 import 'package:nekodroid/routes/anime/widgets/episode_thumbnail.dart';
 import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
+import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/genre_chip.dart';
 import 'package:nekodroid/widgets/genre_grid.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
+import 'package:nekodroid/widgets/single_line_text.dart';
 
 
 /* CONSTANTS */
@@ -54,26 +58,27 @@ class AnimeRoute extends ConsumerWidget {
 	@override
 	Widget build(BuildContext context, WidgetRef ref) {
 		final animeUrl = ModalRoute.of(context)!.settings.arguments as Uri;
+		final theme = Theme.of(context);
 		return GenericRoute(
 			body: Center(
 				child: ref.watch(animeProvider(animeUrl)).when(
 					loading: () => const CircularProgressIndicator(),
 					error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
-					data: (data) {
+					data: (anime) {
 						final synopsis = Hero(
 							tag: "anime_description",
 							child: Text(
-								data.synopsis ?? context.tr.animeNoSynopsis,
+								anime.synopsis ?? context.tr.animeNoSynopsis,
 								textAlign: TextAlign.justify,
-								style: Theme.of(context).textTheme.bodyMedium,
+								style: theme.textTheme.bodyMedium,
 							),
 						);
-						final history = ref.watch(historyProvider).get(data.url.toString()) ?? {};
+						final history = ref.watch(historyProvider).get(anime.url.toString()) ?? {};
 						return LazyLoadScrollView(
-							onEndOfPage: () => ref.read(lazyLoadProvider(data.episodes.length).notifier).update(
+							onEndOfPage: () => ref.read(lazyLoadProvider(anime.episodes.length).notifier).update(
 								(state) => (
 									state + ref.watch(settingsProvider).lazyLoadItemCount
-								).clamp(0, data.episodes.length).toInt(),
+								).clamp(0, anime.episodes.length).toInt(),
 							),
 							child: RefreshIndicator(
 								onRefresh: () async {
@@ -93,11 +98,11 @@ class AnimeRoute extends ConsumerWidget {
 									),
 									physics: kDefaultScrollPhysics,
 									children: [
-										AnimePageHeader(data),
+										AnimePageHeader(anime),
 										const SizedBox(height: kPaddingSecond),
 										GenreGrid(
 											genres: [
-												for (final genre in data.genres)
+												for (final genre in anime.genres)
 													GenreChip.click(
 														label: context.tr.genres(genre.name),
 														onTap: () {},  //TODO: open all anime with this genre
@@ -108,7 +113,7 @@ class AnimeRoute extends ConsumerWidget {
 										LimitedBox(
 											maxHeight: kAnimePageGroupMaxHeight,
 											child: TextButton(
-												onPressed: data.synopsis == null
+												onPressed: anime.synopsis == null
 													? null
 													: () => Navigator.of(context).pushNamed(
 														"/fullscreen_viewer",
@@ -116,33 +121,58 @@ class AnimeRoute extends ConsumerWidget {
 													),
 												style: const ButtonStyle().copyWith(
 													backgroundColor: MaterialStateProperty.all(
-														Theme.of(context).scaffoldBackgroundColor,
+														theme.scaffoldBackgroundColor,
 													),
 												),
 												child: synopsis,
 											),
 										),
-										if (ref.watch(settingsProvider.select((value) => value.blurThumbsShowSwitch)))
-											SwitchListTile(
-												title: Text(context.tr.blurThumbs),
-												value: ref.watch(blurThumbsProvider),
-												onChanged: (bool value) =>
-													ref.read(blurThumbsProvider.notifier).update((state) => value),
-											),
+										Row(
+											mainAxisAlignment: MainAxisAlignment.spaceBetween,
+											children: [
+												GenericButton(
+													onTap: () =>
+														ref.read(blurThumbsProvider.notifier).update((state) => !state),
+													active: ref.watch(blurThumbsProvider),
+													icon: Boxicons.bxs_low_vision,
+												),
+												SingleLineText(
+													"Episodes",
+													style: theme.textTheme.titleLarge,
+												),
+												GenericButton(
+													icon: Boxicons.bx_play,
+													onTap: () {
+														final latest = history.isEmpty
+															? 0
+															: history.keys.cast<int>().reduce(max);
+														Navigator.of(context).pushNamed(
+															"/player",
+															arguments: PlayerRouteParameters(
+																playerType: PlayerType.native,
+																episode: anime.episodes.elementAt(latest),
+																anime: anime,
+																currentIndex: latest,
+															),
+														);
+													},
+												),
+											],
+										),
 										const SizedBox(height: kPaddingMain),
 										ListView.separated(
 											shrinkWrap: true,
 											physics: const NeverScrollableScrollPhysics(),
-											itemCount: ref.watch(lazyLoadProvider(data.episodes.length)),
+											itemCount: ref.watch(lazyLoadProvider(anime.episodes.length)),
 											separatorBuilder: (context, index) => const SizedBox(height: kPaddingSecond),
 											itemBuilder: (context, index) {
-												final episode = data.episodes.elementAt(index);
+												final episode = anime.episodes.elementAt(index);
 												void openPlayer(PlayerType playerType) => Navigator.of(context).pushNamed(
 													"/player",
 													arguments: PlayerRouteParameters(
 														playerType: playerType,
 														episode: episode,
-														anime: data,
+														anime: anime,
 														currentIndex: index,
 													),
 												);
@@ -152,7 +182,7 @@ class AnimeRoute extends ConsumerWidget {
 													trailing: Checkbox(
 														value: wasWatched,
 														onChanged: (value) async => ref.read(historyProvider.notifier).toggleEntry(
-															data.toJson(),
+															anime.toJson(),
 															episode,
 															DateTime.now().millisecondsSinceEpoch,
 														),
