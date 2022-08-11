@@ -33,8 +33,10 @@ import 'package:nekodroid/widgets/large_icon.dart';
 
 /* PROVIDERS */
 
-final lazyLoadProvider = StateProvider.autoDispose<int>(
-	(ref) => ref.watch(settingsProvider.select((v) => v.lazyLoadItemCount)),
+final lazyLoadProvider = StateProvider.autoDispose.family<int, int>(
+	(ref, total) => ref.watch(
+		settingsProvider.select((v) => v.lazyLoadItemCount),
+	).clamp(0, total).toInt(),
 );
 
 
@@ -68,10 +70,10 @@ class AnimeRoute extends ConsumerWidget {
 						);
 						final history = ref.watch(historyProvider).get(data.url.toString()) ?? {};
 						return LazyLoadScrollView(
-							onEndOfPage: () => ref.read(lazyLoadProvider.notifier).update(
+							onEndOfPage: () => ref.read(lazyLoadProvider(data.episodes.length).notifier).update(
 								(state) => (
 									state + ref.watch(settingsProvider).lazyLoadItemCount
-								).clamp(0, data.episodes.length),
+								).clamp(0, data.episodes.length).toInt(),
 							),
 							child: RefreshIndicator(
 								onRefresh: () async {
@@ -131,7 +133,7 @@ class AnimeRoute extends ConsumerWidget {
 										ListView.separated(
 											shrinkWrap: true,
 											physics: const NeverScrollableScrollPhysics(),
-											itemCount: ref.watch(lazyLoadProvider),
+											itemCount: ref.watch(lazyLoadProvider(data.episodes.length)),
 											separatorBuilder: (context, index) => const SizedBox(height: kPaddingSecond),
 											itemBuilder: (context, index) {
 												final episode = data.episodes.elementAt(index);
