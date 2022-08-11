@@ -11,7 +11,6 @@ import 'package:nekodroid/provider/history.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/provider/anime.dart';
 import 'package:nekodroid/routes/anime/providers/blur_thumbs.dart';
-import 'package:nekodroid/routes/anime/providers/lazy_load.dart';
 import 'package:nekodroid/routes/anime/widgets/anime_page_header.dart';
 import 'package:nekodroid/routes/anime/widgets/episode_thumbnail.dart';
 import 'package:nekodroid/routes/player/player.dart';
@@ -21,6 +20,30 @@ import 'package:nekodroid/widgets/genre_grid.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 
+
+/* CONSTANTS */
+
+
+
+
+/* MODELS */
+
+
+
+
+/* PROVIDERS */
+
+final lazyLoadProvider = StateProvider.autoDispose<int>(
+	(ref) => ref.watch(settingsProvider.select((v) => v.lazyLoadItemCount)),
+);
+
+
+/* MISC */
+
+
+
+
+/* WIDGETS */
 
 class AnimeRoute extends ConsumerWidget {
 
@@ -45,7 +68,11 @@ class AnimeRoute extends ConsumerWidget {
 						);
 						final history = ref.watch(historyProvider).get(data.url.toString()) ?? {};
 						return LazyLoadScrollView(
-							onEndOfPage: () => ref.read(lazyLoadProvider(data.episodes).notifier).loadMore(),
+							onEndOfPage: () => ref.read(lazyLoadProvider.notifier).update(
+								(state) => (
+									state + ref.watch(settingsProvider).lazyLoadItemCount
+								).clamp(0, data.episodes.length),
+							),
 							child: RefreshIndicator(
 								onRefresh: () async {
 									final stringUrl = animeUrl.toString();
@@ -104,10 +131,10 @@ class AnimeRoute extends ConsumerWidget {
 										ListView.separated(
 											shrinkWrap: true,
 											physics: const NeverScrollableScrollPhysics(),
-											itemCount: ref.watch(lazyLoadProvider(data.episodes)).length,
+											itemCount: ref.watch(lazyLoadProvider),
 											separatorBuilder: (context, index) => const SizedBox(height: kPaddingSecond),
 											itemBuilder: (context, index) {
-												final episode = ref.read(lazyLoadProvider(data.episodes)).elementAt(index);
+												final episode = data.episodes.elementAt(index);
 												void openPlayer(PlayerType playerType) => Navigator.of(context).pushNamed(
 													"/player",
 													arguments: PlayerRouteParameters(
