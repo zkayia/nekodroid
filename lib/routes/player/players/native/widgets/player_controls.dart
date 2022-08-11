@@ -215,11 +215,11 @@ class _PlayerControlsMainUi extends ConsumerWidget {
 							IconButton(
 								onPressed: () async {
 									ref.read(playerControlsProvider.notifier).inAction = true;
-									final newSpeed = await showDialog(
+									final newSpeed = await showDialog<double>(
 										context: context,
 										builder: (context) => GenericDialog.radio(
 											title: context.tr.playerPlaybackSpeed,
-											children: [
+											elements: [
 												for (final speed in [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0])
 													GenericDialogElement(
 														label: speed.toString(),
@@ -243,11 +243,11 @@ class _PlayerControlsMainUi extends ConsumerWidget {
 									? null
 									: () async {
 										ref.read(playerControlsProvider.notifier).inAction = true;
-										final newQuality = await showDialog(
+										final newQuality = await showDialog<File>(
 											context: context,
 											builder: (context) => GenericDialog.radio(
 												title: context.tr.playerQuality,
-												children: [
+												elements: [
 													for (final quality in qualities.entries)
 														GenericDialogElement(
 															label: quality.key,
