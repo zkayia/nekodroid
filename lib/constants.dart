@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nekodroid/extensions/iterable.dart';
 import 'package:nekodroid/helpers/nav_labels_mode.dart';
 import 'package:nekodroid/models/app_settings.dart';
 
@@ -108,6 +109,36 @@ ThemeData _buildTheme({
 }) {
 	final isDark = brightness == Brightness.dark;
 	final baseTheme = isDark ? ThemeData.dark() : ThemeData.light();
+	final buttonStyle = const ButtonStyle().copyWith(
+		tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+		minimumSize: MaterialStateProperty.all(const Size.square(kMinInteractiveDimension)),
+		overlayColor: MaterialStateProperty.all(baseTheme.splashColor),
+		elevation: MaterialStateProperty.resolveWith(
+			(states) => states.contains(MaterialState.disabled)
+				? 0
+				: kDefaultElevation,
+		),
+		backgroundColor: MaterialStateProperty.resolveWith(
+			(states) => {
+				MaterialState.disabled: primAlt,
+				MaterialState.selected: accent,
+			}.entries.firstWhereOrNull((e) => states.contains(e.key))?.value ?? prim,
+		),
+		foregroundColor: MaterialStateProperty.resolveWith(
+			(states) => {
+				MaterialState.disabled: baseTheme.disabledColor,
+				MaterialState.selected: onAccent,
+			}.entries.firstWhereOrNull((e) => states.contains(e.key))?.value ?? polar,
+		),
+		shape: MaterialStateProperty.all(
+			RoundedRectangleBorder(
+				borderRadius: BorderRadius.circular(kBorderRadMain),
+			),
+		),
+		padding: MaterialStateProperty.all(
+			const EdgeInsets.all(kPaddingSecond),
+		),
+	);
 	final textTheme = const TextTheme().copyWith(
 		displayMedium: const TextStyle().copyWith(
 			overflow: TextOverflow.fade,
@@ -197,6 +228,9 @@ ThemeData _buildTheme({
 			selectedItemColor: accent,
 			unselectedItemColor: polarAlt,
 		),
+		buttonTheme: const ButtonThemeData().copyWith(
+			alignedDropdown: true,
+		),
 		cardTheme: const CardTheme().copyWith(
 			color: prim,
 			elevation: kDefaultElevation,
@@ -240,6 +274,7 @@ ThemeData _buildTheme({
 		dividerTheme: const DividerThemeData().copyWith(
 			thickness: 1,
 		),
+		elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
 		floatingActionButtonTheme: const FloatingActionButtonThemeData().copyWith(
 			backgroundColor: prim,
 			foregroundColor: polar,
@@ -266,6 +301,7 @@ ThemeData _buildTheme({
 			horizontalTitleGap: 4,
 			selectedColor: accent,
 		),
+		outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
 		radioTheme: const RadioThemeData().copyWith(
 			fillColor: MaterialStateColor.resolveWith(
 				(states) => states.contains(MaterialState.selected)
@@ -310,26 +346,7 @@ ThemeData _buildTheme({
 				),
 			),
 		),
-		textButtonTheme: TextButtonThemeData(
-			style: const ButtonStyle().copyWith(
-				shape: MaterialStateProperty.all(
-					RoundedRectangleBorder(
-						borderRadius: BorderRadius.circular(kBorderRadMain),
-					),
-				),
-				tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-				backgroundColor: MaterialStateProperty.all(prim),
-				foregroundColor: MaterialStateProperty.all(polar),
-				overlayColor: MaterialStateProperty.all(baseTheme.splashColor),
-				elevation: MaterialStateProperty.all(kDefaultElevation),
-				padding: MaterialStateProperty.all(
-					const EdgeInsets.symmetric(
-						horizontal: kPaddingMain,
-						vertical: kPaddingSecond,
-					),
-				),
-			),
-		),
+		textButtonTheme: TextButtonThemeData(style: buttonStyle),
 		textTheme: textTheme,
 	);
 }

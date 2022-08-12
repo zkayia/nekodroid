@@ -2,6 +2,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekodroid/widgets/overflow_text.dart';
@@ -123,23 +124,20 @@ class _GenericDialogState<T> extends State<GenericDialog> {
 				Row(
 					children: [
 						Expanded(
-							child: TextButton(
+							child: GenericButton.text(
 								onPressed: () => Navigator.of(context).pop(),
 								child: const SingleLineText("Cancel"),
 							),
 						),
 						const SizedBox(width: kPaddingMain),
 						Expanded(
-							child: TextButton(
-								style: theme.textButtonTheme.style?.copyWith(
-									backgroundColor: MaterialStateProperty.all(theme.colorScheme.primary),
-									foregroundColor: MaterialStateProperty.all(theme.colorScheme.onPrimary),
-								),
+							child: GenericButton.text(
 								onPressed: () => Navigator.of(context).pop(
 									widget._type == _DialogType.radio
 										? _value?.first
 										: _value,
 								),
+								primary: true,
 								child: const SingleLineText("Ok"),
 							),
 						),

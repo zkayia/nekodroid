@@ -73,16 +73,18 @@ class LibraryTabview extends ConsumerWidget {
 							title: anime.title,
 							subtitle: animeDataText(context, anime),
 							leading: AnimeCard(image: GenericCachedImage(anime.thumbnail)),
-							trailing: GenericButton(
-								onTap: () => ref.read(favoritesProvider.notifier).toggleFavBoxOnly(
+							trailing: GenericButton.elevated(
+								onPressed: () => ref.read(favoritesProvider.notifier).toggleFavBoxOnly(
 									anime.url,
 									DateTime.now(),
 									anime,
 								),
-								active: ref.watch(favoritesProvider.notifier).isFavoritedBox(anime.url),
-								activeColor: Colors.red,
-								icon: Boxicons.bx_heart,
-								activeIcon: Boxicons.bxs_heart,
+								child: ref.watch(favoritesProvider.notifier).isFavoritedBox(anime.url)
+									? const Icon(
+										Boxicons.bxs_heart,
+										color: Colors.red,
+									)
+									: const Icon(Boxicons.bx_heart),
 							),
 							onTap: () =>
 								Navigator.of(context).pushNamed("/anime", arguments: anime.url),

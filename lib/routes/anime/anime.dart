@@ -112,37 +112,36 @@ class AnimeRoute extends ConsumerWidget {
 										const SizedBox(height: kPaddingSecond),
 										LimitedBox(
 											maxHeight: kAnimePageGroupMaxHeight,
-											child: TextButton(
-												onPressed: anime.synopsis == null
+											child: InkWell(
+												onTap: anime.synopsis == null
 													? null
 													: () => Navigator.of(context).pushNamed(
 														"/fullscreen_viewer",
 														arguments: synopsis,
 													),
-												style: const ButtonStyle().copyWith(
-													backgroundColor: MaterialStateProperty.all(
-														theme.scaffoldBackgroundColor,
-													),
+												borderRadius: BorderRadius.circular(kBorderRadMain),
+												child: Padding(
+												  padding: const EdgeInsets.all(kPaddingSecond),
+												  child: synopsis,
 												),
-												child: synopsis,
 											),
 										),
 										Row(
 											mainAxisAlignment: MainAxisAlignment.spaceBetween,
 											children: [
-												GenericButton(
-													onTap: () =>
+												GenericButton.elevated(
+													onPressed: () =>
 														ref.read(blurThumbsProvider.notifier).update((state) => !state),
-													active: ref.watch(blurThumbsProvider),
-													icon: Boxicons.bxs_low_vision,
+													primary: ref.watch(blurThumbsProvider),
+													primaryOnForeground: true,
+													child: const Icon(Boxicons.bxs_low_vision),
 												),
 												SingleLineText(
 													"Episodes",
 													style: theme.textTheme.titleLarge,
 												),
-												GenericButton(
-													icon: Boxicons.bx_play,
-													onTap: () {
+												GenericButton.elevated(
+													onPressed: () {
 														final latest = history.isEmpty
 															? 0
 															: history.keys.cast<int>().reduce(max);
@@ -156,6 +155,7 @@ class AnimeRoute extends ConsumerWidget {
 															),
 														);
 													},
+													child: const Icon(Boxicons.bx_play),
 												),
 											],
 										),

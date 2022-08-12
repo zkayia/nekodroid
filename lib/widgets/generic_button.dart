@@ -1,11 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:nekodroid/constants.dart';
 
 
 /* CONSTANTS */
 
-
+enum _GenericButtonType {icon, elevated, outlined, text}
 
 
 /* MODELS */
@@ -27,52 +26,79 @@ import 'package:nekodroid/constants.dart';
 
 class GenericButton extends StatelessWidget {
 
-	final IconData? icon;
-	final void Function()? onTap;
+	final _GenericButtonType _type;
+	final Widget child;
+	final void Function()? onPressed;
 	final void Function()? onLongPress;
-	final bool active;
-	final IconData? activeIcon;
-	final Color? activeColor;
-	final Color? inactiveColor;
-	final Widget? child;
+	final bool primary;
+	final bool primaryOnForeground;
 
-	const GenericButton({
-		required this.icon,
-		required this.onTap,
+	const GenericButton.elevated({
+		required this.onPressed,
+		required this.child,
 		this.onLongPress,
-		this.active=false,
-		this.activeIcon,
-		this.activeColor,
-		this.inactiveColor,
-		this.child,
+		this.primary=false,
+		this.primaryOnForeground=false,
 		super.key,
-	});
+	}) : _type = _GenericButtonType.elevated;
+	
+	const GenericButton.outlined({
+		required this.onPressed,
+		required this.child,
+		this.onLongPress,
+		this.primary=false,
+		this.primaryOnForeground=false,
+		super.key,
+	}) : _type = _GenericButtonType.outlined;
+
+	const GenericButton.text({
+		required this.onPressed,
+		required this.child,
+		this.onLongPress,
+		this.primary=false,
+		this.primaryOnForeground=false,
+		super.key,
+	}) : _type = _GenericButtonType.text;
 
 	@override
 	Widget build(BuildContext context) {
-		final theme = Theme.of(context);
-		return Material(
-			color: theme.colorScheme.surface,
-			borderRadius: BorderRadius.circular(kBorderRadMain),
-			child: InkWell(
-				borderRadius: BorderRadius.circular(kBorderRadMain),
-				onTap: onTap,
-				onLongPress: onLongPress,
-				child: ConstrainedBox(
-					constraints: const BoxConstraints(
-						minHeight: kMinInteractiveDimension,
-						minWidth: kMinInteractiveDimension,
-					),
-					child: child ?? Icon(
-						active ? activeIcon ?? icon : icon,
-						color: onTap == null && onLongPress == null
-							? theme.disabledColor
-							: active
-								? activeColor ?? theme.colorScheme.primary
-								: inactiveColor,
-					),
+		final colorScheme = Theme.of(context).colorScheme;
+		final buttonStyle = ButtonStyle(
+			backgroundColor: primaryOnForeground
+				? null
+				: MaterialStateProperty.resolveWith(
+					(states) => states.contains(MaterialState.disabled) || !primary
+						? null
+						: colorScheme.primary,
 				),
+			foregroundColor: MaterialStateProperty.resolveWith(
+				(states) => states.contains(MaterialState.disabled) || !primary
+					? null
+					: primaryOnForeground
+						? colorScheme.primary
+						: colorScheme.onPrimary,
 			),
 		);
+		switch (_type) {
+			case _GenericButtonType.icon:
+			case _GenericButtonType.elevated:
+				return ElevatedButton(
+					onPressed: onPressed,
+					style: buttonStyle,
+					child: child,
+				);
+			case _GenericButtonType.outlined:
+				return OutlinedButton(
+					onPressed: onPressed,
+					style: buttonStyle,
+					child: child,
+				);
+			case _GenericButtonType.text:
+				return TextButton(
+					onPressed: onPressed,
+					style: buttonStyle,
+					child: child,
+				);
+		}
 	}
 }

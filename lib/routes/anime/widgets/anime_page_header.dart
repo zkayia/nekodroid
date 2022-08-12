@@ -87,19 +87,19 @@ class AnimePageHeader extends StatelessWidget {
 									child: Row(
 										mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 										children: [
-											GenericButton(
-												onTap: () => AndroidIntent(
+											GenericButton.elevated(
+												onPressed: () => AndroidIntent(
 													action: "action_view",
 													data: anime.url.toString(),
 												).launch(),
-												icon: Boxicons.bx_link_external,
+												child: const Icon(Boxicons.bx_link_external),
 											),
-											GenericButton(
-												onTap: () => Share.share(
+											GenericButton.elevated(
+												onPressed: () => Share.share(
 													anime.url.toString(),
 													subject: anime.title,
 												),
-												icon: Boxicons.bx_share_alt,
+												child: const Icon(Boxicons.bx_share_alt),
 											),
 											_FavoriteButton(anime),
 										],
@@ -121,15 +121,17 @@ class _FavoriteButton extends ConsumerWidget {
 	const _FavoriteButton(this.anime);
 
 	@override
-	Widget build(BuildContext context, WidgetRef ref) => GenericButton(
-		onTap: () => ref.read(favoritesProvider.notifier).toggleFav(
+	Widget build(BuildContext context, WidgetRef ref) => GenericButton.elevated(
+		onPressed: () => ref.read(favoritesProvider.notifier).toggleFav(
 			anime.url,
 			DateTime.now(),
 			anime,
 		),
-		active: ref.watch(favoritesProvider).containsKey(anime.url),
-		activeColor: Colors.red,
-		icon: Boxicons.bx_heart,
-		activeIcon: Boxicons.bxs_heart,
+		child: ref.watch(favoritesProvider).containsKey(anime.url)
+			? const Icon(
+				Boxicons.bxs_heart,
+				color: Colors.red,
+			)
+			: const Icon(Boxicons.bx_heart),
 	);
 }
