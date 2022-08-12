@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/provider/api.dart';
+import 'package:nekodroid/provider/history.dart';
 import 'package:nekodroid/routes/player/players/native/native.dart';
 import 'package:nekodroid/routes/player/players/webview.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
@@ -145,6 +146,7 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
 	@override
 	Widget build(BuildContext context) {
 		final parameters = ModalRoute.of(context)!.settings.arguments as PlayerRouteParameters;
+		final theme = Theme.of(context);
 		ref.watch(_playerPopTimeProvider);
 		return GenericRoute(
 			hideExitFab: true,
@@ -158,8 +160,8 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
 						msg: context.tr.playerConfirmExit,
 						toastLength: Toast.LENGTH_SHORT,
 						gravity: ToastGravity.BOTTOM,
-						backgroundColor: Theme.of(context).colorScheme.background,
-						textColor: Theme.of(context).textTheme.bodyMedium?.color,
+						backgroundColor: theme.colorScheme.background,
+						textColor: theme.textTheme.bodyMedium?.color,
 					);
 					return false;
 				}
@@ -196,7 +198,26 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
 												_playerParamsProvider(parameters).select((v) => v.currentIndex),
 											) ?? false
 										) != parameters.anime!.episodes.length - 1
-											? () => _offsetCurrentEpBy(1, parameters)
+											? () {
+												final currentEp = ref.read(_playerParamsProvider(parameters)).episode;
+												_offsetCurrentEpBy(1, parameters);
+												ref.read(historyProvider.notifier).addEntry(
+													parameters.anime!.toJson(),
+													currentEp,
+													DateTime.now().millisecondsSinceEpoch,
+												).then(
+													(success) => Fluttertoast.showToast(
+														msg: context.tr.playerEpStatus(
+															success,
+															currentEp.episodeNumber,
+														),
+														toastLength: Toast.LENGTH_SHORT,
+														gravity: ToastGravity.BOTTOM,
+														backgroundColor: theme.colorScheme.background,
+														textColor: theme.textTheme.bodyMedium?.color,
+													),
+												);
+											}
 											: null,
 								);
 						}

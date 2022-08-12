@@ -81,6 +81,17 @@
 	"playerConfirmExit": "Press again to exit",
 	"playerPlaybackSpeed": "Playback speed",
 	"playerQuality": "Quality",
+	"playerEpStatus": "{success, select, true{Episode {epNumber} marked as completed} false{Episode {epNumber} is already marked as completed}}",
+	"@playerEpStatus": {
+		"placeholders": {
+			"success": {
+				"type": "bool"
+			},
+			"epNumber": {
+				"type": "int"
+			}
+		}
+	},
 	
 	
 	"genre": "Genre",
