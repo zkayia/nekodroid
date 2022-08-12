@@ -8,8 +8,8 @@ class GenreGrid extends StatelessWidget {
 	final List<Widget> genres;
 
 	const GenreGrid({
-		super.key,
 		required this.genres,
+		super.key,
 	});
 
 	@override

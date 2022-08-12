@@ -12,18 +12,18 @@ class GenreChip extends StatelessWidget {
 	final bool selected;
 
 	const GenreChip.click({
-		super.key,
 		required this.label,
 		required this.onTap,
+		super.key,
 	}) :
 		_isSelectable = false,
 		selected = false;
 
 	const GenreChip.select({
-		super.key,
 		required this.label,
 		required this.selected,
 		required this.onTap,
+		super.key,
 	}) :
 		_isSelectable = true;
 

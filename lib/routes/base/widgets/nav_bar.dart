@@ -9,19 +9,19 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 class NavBar extends ConsumerWidget {
 
 	final List<NavBarItem> items;
+	final void Function(int index) onTap;
 	final int currentIndex;
 	final bool showSelectedDot;
 	final bool showSelectedLabels;
 	final bool showUnselectedLabels;
-	final void Function(int index) onTap;
 
 	const NavBar({
 		required this.items,
+		required this.onTap,
 		this.currentIndex=0,
 		this.showSelectedDot=true,
 		this.showSelectedLabels=true,
 		this.showUnselectedLabels=true,
-		required this.onTap,
 		super.key,
 	});
 

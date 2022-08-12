@@ -16,7 +16,6 @@ class AnimeListTile extends StatelessWidget {
 	final void Function()? onLongPress;
 
 	const AnimeListTile({
-		super.key,
 		required this.title,
 		this.subtitle,
 		this.leading,
@@ -24,6 +23,7 @@ class AnimeListTile extends StatelessWidget {
 		this.titleWrap=true,
 		this.onTap,
 		this.onLongPress,
+		super.key,
 	});
 
 	@override

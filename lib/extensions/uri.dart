@@ -26,7 +26,7 @@ extension UriX on Uri {
 				}
 			}
 			return request.close();
-		} catch (e) {
+		} on Exception catch (e) {
 			throw SocketException(
 				"failed to get or parse uri '${toString()}', $e",
 				address: InternetAddress(toString()),

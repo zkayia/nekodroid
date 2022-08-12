@@ -33,7 +33,9 @@ class HlsProviderData {
 
 	@override
 	bool operator ==(Object other) {
-		if (identical(this, other)) return true;
+		if (identical(this, other)) {
+			return true;
+		}
 		return other is HlsProviderData && other.videoUrl == videoUrl && other.assetBundle == assetBundle;
 	}
 
@@ -49,7 +51,7 @@ final hlsProvider = FutureProvider.autoDispose.family<Map<String, File>, HlsProv
 		final bytesCompleter = Completer<Map<String, List<int>>>();
 		final filesCompleter = Completer<Map<String, File>>();
 		final webview = _buildWebview(bytesCompleter, data);
-		ref.onDispose(() => webview.dispose());
+		ref.onDispose(webview.dispose);
 		bytesCompleter.future
 			..then(
 				(value) async {
@@ -57,7 +59,7 @@ final hlsProvider = FutureProvider.autoDispose.family<Map<String, File>, HlsProv
 						return filesCompleter.completeError(Exception("no hls stream found"));
 					}
 					final tempdir = await getTemporaryDirectory();
-					Map<String, File> result = {};
+					final Map<String, File> result = {};
 					for (final entry in value.entries) {
 						final tempfile = File(
 							"${tempdir.path}/nekodroid_nativeplayer_${DateTime.now().millisecondsSinceEpoch}.m3u8",
@@ -69,7 +71,7 @@ final hlsProvider = FutureProvider.autoDispose.family<Map<String, File>, HlsProv
 				},
 				onError: (error, stackTrace) => filesCompleter.completeError(error, stackTrace),
 			)
-		..whenComplete(() => webview.dispose());
+		..whenComplete(webview.dispose);
 		Future.delayed(
 			const Duration(milliseconds: kHeadlessWebviewMaxLifetime),
 		).then((_) {
@@ -95,7 +97,7 @@ HeadlessInAppWebView _buildWebview(
 	HlsProviderData data,
 ) {
 	final qualitiesCount = Completer<int>();
-	Map<String, List<int>> qualities = {};
+	final Map<String, List<int>> qualities = {};
 	return HeadlessInAppWebView(
 		initialUrlRequest: URLRequest(url: data.videoUrl),
 		initialOptions: InAppWebViewGroupOptions(

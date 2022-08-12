@@ -8,16 +8,16 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 
 class AnimeCard extends StatelessWidget {
 
-	final String? badge;
 	final Widget image;
+	final String? badge;
 	final bool isEpisode;
 	final String? label;
 	final void Function()? onImageTap;
 	final void Function()? onLabelTap;
 
 	const AnimeCard({
-		this.badge,
 		required this.image,
+		this.badge,
 		this.isEpisode=false,
 		this.label,
 		this.onImageTap,
@@ -41,9 +41,9 @@ class AnimeCard extends StatelessWidget {
 								children: [
 									image,
 									if (isEpisode)
-										Container(
+										const ColoredBox(
 											color: kShadowThumbWithIcon,
-											child: const Center(
+											child: Center(
 												child: Icon(
 													Boxicons.bx_play,
 													color: kOnImageColor,

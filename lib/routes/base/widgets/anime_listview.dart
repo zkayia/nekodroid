@@ -14,11 +14,11 @@ class AnimeListview extends ConsumerWidget {
 	final Widget? placeholder;
 
 	const AnimeListview({
-		super.key,
 		required this.itemCount,
 		required this.itemBuilder,
 		this.onRefresh,
 		this.placeholder,
+		super.key,
 	});
 
 	@override

@@ -27,25 +27,25 @@ import 'package:nekodroid/constants.dart';
 
 class GenericButton extends StatelessWidget {
 
-	final bool active;
-	final Color? activeColor;
-	final Color? inactiveColor;
+	final IconData? icon;
 	final void Function()? onTap;
 	final void Function()? onLongPress;
-	final IconData? icon;
+	final bool active;
 	final IconData? activeIcon;
+	final Color? activeColor;
+	final Color? inactiveColor;
 	final Widget? child;
 
 	const GenericButton({
-		super.key,
-		this.active=false,
-		this.activeColor,
-		this.inactiveColor,
+		required this.icon,
 		required this.onTap,
 		this.onLongPress,
-		required this.icon,
+		this.active=false,
 		this.activeIcon,
+		this.activeColor,
+		this.inactiveColor,
 		this.child,
+		super.key,
 	});
 
 	@override

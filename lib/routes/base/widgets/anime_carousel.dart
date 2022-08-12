@@ -11,14 +11,14 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 class AnimeCarousel extends StatelessWidget {
 
 	final String title;
-	final Object? titleHeroTag;
 	final List<AnimeCard> items;
+	final Object? titleHeroTag;
 	final void Function()? onMoreTapped;
 
 	const AnimeCarousel({
 		required this.title,
-		this.titleHeroTag,
 		required this.items,
+		this.titleHeroTag,
 		this.onMoreTapped,
 		super.key,
 	});

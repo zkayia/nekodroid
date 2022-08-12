@@ -42,7 +42,7 @@ final playerControlsProvider = StateNotifierProvider.autoDispose<
 	_PlayerControlsProviderNotifier,
 	PlayerControlsData
 >(
-	(ref) => _PlayerControlsProviderNotifier(ref),
+	_PlayerControlsProviderNotifier.new,
 );
 
 
@@ -80,10 +80,10 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
 
 	void videoDone() {
 		isDone = true;
-		toggleControls(true);
+		toggleControls(force: true);
 	}
 
-	void toggleControls([bool? force]) => state = state.copyWith(
+	void toggleControls({bool? force}) => state = state.copyWith(
 		controlsDisplay: force ?? !state.controlsDisplay,
 	);
 
@@ -112,7 +112,7 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
 			&& isPlaying && !isDone && !isSeeking && !inAction
 			&& (_lastActionTime?.diffToNow() ?? Duration.zero) >= _playerControlsDisplayDuration
 		) {
-			toggleControls(false);
+			toggleControls(force: false);
 		}
 		// TODO: quick skip button display time
 		if (

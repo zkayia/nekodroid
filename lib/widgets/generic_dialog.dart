@@ -19,14 +19,14 @@ enum _DialogType {custom, checkbox, radio}
 class GenericDialogElement<T> {
 
 	final String label;
+	final T value;
 	final String? details;
 	final bool selected;
-	final T value;
 
 	const GenericDialogElement({
 		required this.label,
-		this.details,
 		required this.value,
+		this.details,
 		this.selected=false,
 	});
 }
@@ -47,38 +47,38 @@ class GenericDialogElement<T> {
 class GenericDialog<T> extends StatefulWidget {
 
 	final _DialogType _type;
-	final String? title;
 	final List<Widget>? children;
 	final List<GenericDialogElement<T>>? elements;
+	final String? title;
 	final String? placeholderLabel;
 	final IconData placeholderIcon;
 	
 	const GenericDialog({
-		super.key,
-		this.title,
 		required this.children,
+		this.title,
 		this.placeholderLabel,
 		this.placeholderIcon=Boxicons.bx_error_circle,
+		super.key,
 	}) :
 		_type = _DialogType.custom,
 		elements = null;
 
 	const GenericDialog.checkbox({
-		super.key,
-		this.title,
 		required this.elements,
+		this.title,
 		this.placeholderLabel,
 		this.placeholderIcon=Boxicons.bx_error_circle,
+		super.key,
 	}) :
 		_type = _DialogType.checkbox,
 		children = null;
 	
 	const GenericDialog.radio({
-		super.key,
-		this.title,
 		required this.elements,
+		this.title,
 		this.placeholderLabel,
 		this.placeholderIcon=Boxicons.bx_error_circle,
+		super.key,
 	}) :
 		_type = _DialogType.radio,
 		children = null;

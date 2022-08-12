@@ -25,7 +25,7 @@ class _HistoryProviderNotifier extends StateNotifier<Box<Map>> {
 		int completedTimestamp,
 	) async {
 		final animeUrl = episode.animeUrl.toString();
-		Map<int, int> current = state.get(animeUrl)?.cast<int, int>() ?? {};
+		final current = state.get(animeUrl)?.cast<int, int>() ?? {};
 		if (current.containsKey(episode.episodeNumber)) {
 			return false;
 		}
@@ -41,7 +41,7 @@ class _HistoryProviderNotifier extends StateNotifier<Box<Map>> {
 		NSEpisode episode,
 	) async {
 		final animeUrl = episode.animeUrl.toString();
-		Map<int, int> current = state.get(animeUrl)?.cast<int, int>() ?? {};
+		final current = state.get(animeUrl)?.cast<int, int>() ?? {};
 		if (!current.containsKey(episode.episodeNumber)) {
 			return false;
 		}

@@ -8,14 +8,14 @@ import 'package:nekodroid/widgets/generic_route.dart';
 class TitleSliverListRoute extends ConsumerWidget {
 
 	final String title;
-	final Future<bool> Function(BuildContext context)? onExitTap;
 	final List<Widget> children;
+	final Future<bool> Function(BuildContext context)? onExitTap;
 
 	const TitleSliverListRoute({
-		super.key,
 		required this.title,
-		this.onExitTap,
 		required this.children,
+		this.onExitTap,
+		super.key,
 	});
 
 	@override
@@ -57,7 +57,7 @@ final _scrollControllerProvider = Provider.autoDispose.family<ScrollController, 
 				(state) => controller.offset.clamp(0, kTopBarHeight) / kTopBarHeight,
 			),
 		);
-		ref.onDispose(() => controller.dispose());
+		ref.onDispose(controller.dispose);
 		return controller;
 	},
 );

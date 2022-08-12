@@ -40,7 +40,7 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 final lazyLoadProvider = StateProvider.autoDispose.family<int, int>(
 	(ref, total) => ref.watch(
 		settingsProvider.select((v) => v.lazyLoadItemCount),
-	).clamp(0, total).toInt(),
+	).clamp(0, total),
 );
 
 
@@ -78,7 +78,7 @@ class AnimeRoute extends ConsumerWidget {
 							onEndOfPage: () => ref.read(lazyLoadProvider(anime.episodes.length).notifier).update(
 								(state) => (
 									state + ref.watch(settingsProvider).lazyLoadItemCount
-								).clamp(0, anime.episodes.length).toInt(),
+								).clamp(0, anime.episodes.length),
 							),
 							child: RefreshIndicator(
 								onRefresh: () async {

@@ -14,12 +14,6 @@ environment:
 
 
 dependencies:
-  flutter:
-    sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-  nekosama_dart:
-    git: https://github.com/zkayia/nekosama_dart
   android_intent_plus: ^3.1.1
   audio_video_progress_bar: ^0.10.0
   boxicons:
@@ -27,13 +21,19 @@ dependencies:
       url: https://github.com/zkayia/dartpacks
       path: boxicons
   cached_network_image: ^3.2.0
+  flutter:
+    sdk: flutter
   flutter_inappwebview: ^5.4.1+1
+  flutter_localizations:
+    sdk: flutter
   flutter_riverpod: ^1.0.3
   flutter_svg: ^1.0.3
   fluttertoast: ^8.0.9
   hive_flutter: ^1.1.0
   intl: ^0.17.0
   lazy_load_scrollview: ^1.3.0
+  nekosama_dart:
+    git: https://github.com/zkayia/nekosama_dart
   package_info_plus: ^1.4.2
   path_provider: ^2.0.11
   share_plus: ^4.0.4
@@ -41,13 +41,13 @@ dependencies:
   video_player: ^2.4.5
 
 dev_dependencies:
+  dart_code_metrics: ^4.15.2
+  device_preview: ^1.1.0
+  flutter_launcher_icons: ^0.9.2
+  flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.1.6
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
-  flutter_launcher_icons: ^0.9.2
-  flutter_native_splash: ^2.1.6
-  device_preview: ^1.1.0
-  dart_code_metrics: ^4.15.2
 
 flutter_icons:
   android: "launcher_icon"

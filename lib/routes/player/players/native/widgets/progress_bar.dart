@@ -43,10 +43,10 @@ class ProgressBar extends ConsumerWidget {
   final void Function(Duration newPos)? onSeek;
 
 	const ProgressBar({
-		super.key,
 		required this.position,
 		required this.duration,
 		this.onSeek,
+		super.key,
 	});
 
 	@override

@@ -50,11 +50,11 @@ class NativePlayer extends ConsumerWidget {
 	final void Function()? onNext;
 
 	const NativePlayer({
-		super.key,
 		required this.playerRouteParameters,
 		required this.videoUrl,
 		this.onPrevious,
 		this.onNext,
+		super.key,
 	});
 
 	@override

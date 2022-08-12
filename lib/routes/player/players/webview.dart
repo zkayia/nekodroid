@@ -38,8 +38,8 @@ class WebviewPlayer extends ConsumerStatefulWidget {
 	final Uri videoUrl;
 
 	const WebviewPlayer({
-		super.key,
 		required this.videoUrl,
+		super.key,
 	});
 
 	@override

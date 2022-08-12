@@ -47,7 +47,6 @@ class PlayerControls extends ConsumerWidget {
 	final void Function()? onNext;
 
 	const PlayerControls({
-		super.key,
 		required this.controller,
 		required this.playerValProvider,
 		required this.qualities,
@@ -56,6 +55,7 @@ class PlayerControls extends ConsumerWidget {
 		required this.changeVideo,
 		this.onPrevious,
 		this.onNext,
+		super.key,
 	});
 
 	@override
