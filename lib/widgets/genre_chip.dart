@@ -73,6 +73,9 @@ class GenreChip extends StatelessWidget {
 						elevation: MaterialStateProperty.all(
 							kDefaultElevation / (selected ? 2 : 8),
 						),
+						minimumSize: MaterialStateProperty.all(
+							const Size(kMinInteractiveDimension, kMinInteractiveDimension / 1.5),
+						),
 						backgroundColor: MaterialStateProperty.all(
 							selected
 								? theme.colorScheme.primary
