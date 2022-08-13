@@ -25,9 +25,10 @@ class AnimeCarousel extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
+		final titleLarge = Theme.of(context).textTheme.titleLarge;
 		final titleEl = SingleLineText(
 			title,
-			style: Theme.of(context).textTheme.titleLarge,
+			style: titleLarge,
 		);
 		final mediaQueryData = MediaQuery.of(context);
 		return LimitedBox(
@@ -39,28 +40,34 @@ class AnimeCarousel extends StatelessWidget {
 				mainAxisSize: MainAxisSize.max,
 				mainAxisAlignment: MainAxisAlignment.spaceBetween,
 				children: [
-					InkWell(
-						onTap: onMoreTapped,
-						borderRadius: BorderRadius.circular(kBorderRadMain),
-						child: Padding(
-							padding: const EdgeInsets.symmetric(horizontal: kPaddingMain),
-							child: Row(
-								mainAxisAlignment: MainAxisAlignment.spaceBetween,
-								children: [
-									Expanded(
-										child: titleHeroTag == null
-											? titleEl
-											: Hero(
-												tag: titleHeroTag!,
-												child: titleEl,
+					Padding(
+						padding: const EdgeInsets.symmetric(horizontal: kPaddingMain / 2),
+						child: InkWell(
+							onTap: onMoreTapped,
+							borderRadius: BorderRadius.circular(kBorderRadMain),
+							child: Padding(
+								padding: const EdgeInsets.symmetric(horizontal: kPaddingMain / 2),
+								child: Row(
+									mainAxisAlignment: MainAxisAlignment.spaceBetween,
+									children: [
+										Expanded(
+											child: titleHeroTag == null
+												? titleEl
+												: Hero(
+													tag: titleHeroTag!,
+													child: titleEl,
+												),
+										),
+										const SizedBox(width: kPaddingSecond),
+										IconButton(
+											onPressed: null,
+											icon: Icon(
+												Boxicons.bxs_chevron_right,
+												color: titleLarge?.color,
 											),
-									),
-									const SizedBox(width: kPaddingSecond),
-									IconButton(
-										icon: const Icon(Boxicons.bxs_chevron_right),
-										onPressed: onMoreTapped,
-									),
-								],
+										),
+									],
+								),
 							),
 						),
 					),

@@ -121,11 +121,12 @@ class AnimeRoute extends ConsumerWidget {
 													),
 												borderRadius: BorderRadius.circular(kBorderRadMain),
 												child: Padding(
-												  padding: const EdgeInsets.all(kPaddingSecond),
+												  padding: const EdgeInsets.all(kPaddingSecond / 2),
 												  child: synopsis,
 												),
 											),
 										),
+										const SizedBox(height: kPaddingSecond),
 										Row(
 											mainAxisAlignment: MainAxisAlignment.spaceBetween,
 											children: [
@@ -159,7 +160,7 @@ class AnimeRoute extends ConsumerWidget {
 												),
 											],
 										),
-										const SizedBox(height: kPaddingMain),
+										const SizedBox(height: kPaddingSecond),
 										ListView.separated(
 											shrinkWrap: true,
 											physics: const NeverScrollableScrollPhysics(),
