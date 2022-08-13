@@ -73,9 +73,9 @@ class _VerticalPaddingPersistantHeaderDelegate extends SliverPersistentHeaderDel
 	const _VerticalPaddingPersistantHeaderDelegate({required this.padding});
 
 	@override
-  double get maxExtent => padding;
+	double get maxExtent => padding;
 	@override
-  double get minExtent => padding;
+	double get minExtent => padding;
 
 	@override
 	bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => false;

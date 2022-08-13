@@ -151,7 +151,7 @@ HeadlessInAppWebView _buildWebview(
 						) {
 							bytesCompleter.complete(qualities);
 						}
-					} else if (!qualitiesCount.isCompleted)  {
+					} else if (!qualitiesCount.isCompleted) {
 						final streams = RegExp(r"https.*\/h\/(\d+).*").allMatches(data!);
 						if (streams.isNotEmpty) {
 							qualitiesCount.complete(streams.length);

@@ -85,7 +85,7 @@ class _GenericRouteAppbar extends StatelessWidget implements PreferredSizeWidget
 	});
 
 	@override
-  Size get preferredSize => const Size.fromHeight(kTopBarHeight + kPaddingSecond);
+	Size get preferredSize => const Size.fromHeight(kTopBarHeight + kPaddingSecond);
 
 	@override
 	Widget build(BuildContext context) => Card(

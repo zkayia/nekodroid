@@ -38,9 +38,9 @@ final _isChangingProvider = StateProvider.autoDispose<bool>(
 // TODO: buffer bar
 class ProgressBar extends ConsumerWidget {
 
-  final Duration position;
-  final Duration duration;
-  final void Function(Duration newPos)? onSeek;
+	final Duration position;
+	final Duration duration;
+	final void Function(Duration newPos)? onSeek;
 
 	const ProgressBar({
 		required this.position,

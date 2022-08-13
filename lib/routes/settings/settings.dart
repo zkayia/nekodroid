@@ -65,7 +65,7 @@ mixin WidgetTitleMixin on Widget {
 
 class _SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
 
-  @override
+	@override
 	final String title;
 
 	const _SettingsGeneralPage(this.title);

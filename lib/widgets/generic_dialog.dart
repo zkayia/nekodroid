@@ -113,104 +113,101 @@ class _GenericDialogState<T> extends State<GenericDialog> {
 	}
 
 	@override
-	Widget build(BuildContext context) {
-		final theme = Theme.of(context);
-		return AlertDialog(
-			title: widget.title == null
-				? null
-				: SingleLineText(widget.title!),
-			actionsAlignment: MainAxisAlignment.center,
-			actions: [
-				Row(
-					children: [
-						Expanded(
-							child: GenericButton.text(
-								onPressed: () => Navigator.of(context).pop(),
-								child: const SingleLineText("Cancel"),
-							),
+	Widget build(BuildContext context) => AlertDialog(
+		title: widget.title == null
+			? null
+			: SingleLineText(widget.title!),
+		actionsAlignment: MainAxisAlignment.center,
+		actions: [
+			Row(
+				children: [
+					Expanded(
+						child: GenericButton.text(
+							onPressed: () => Navigator.of(context).pop(),
+							child: const SingleLineText("Cancel"),
 						),
-						const SizedBox(width: kPaddingMain),
-						Expanded(
-							child: GenericButton.text(
-								onPressed: () => Navigator.of(context).pop(
-									widget._type == _DialogType.radio
-										? _value?.first
-										: _value,
-								),
-								primary: true,
-								child: const SingleLineText("Ok"),
+					),
+					const SizedBox(width: kPaddingMain),
+					Expanded(
+						child: GenericButton.text(
+							onPressed: () => Navigator.of(context).pop(
+								widget._type == _DialogType.radio
+									? _value?.first
+									: _value,
 							),
+							primary: true,
+							child: const SingleLineText("Ok"),
 						),
-					],
-				)
-			],
-			contentPadding: const EdgeInsets.symmetric(
-				horizontal: kPaddingMain,
-				vertical: kPaddingSecond,
-			),
-			content: (
-				widget._type == _DialogType.custom
-					? widget.children
-					: widget.elements
-			)?.isEmpty ?? true
-				? Center(
-					child: LabelledIcon.vertical(
-						icon: LargeIcon(widget.placeholderIcon),
-						label: widget.placeholderLabel,
 					),
-				)
-				: SizedBox(
-					width: double.maxFinite,
-					child: ListView.builder(
-						shrinkWrap: true,
-						physics: kDefaultScrollPhysics,
-						itemCount: widget._type == _DialogType.custom
-							? widget.children!.length
-							: widget.elements!.length,
-						padding: const EdgeInsets.all(kPaddingSecond),
-						itemBuilder: (context, index) {
-							if (widget._type == _DialogType.custom) {
-								return widget.children!.elementAt(index);
-							}
-							final element = widget.elements!.elementAt(index);
-							switch (widget._type) {
-								case _DialogType.checkbox:
-									return CheckboxListTile(
-										title: SingleLineText(element.label),
-										subtitle: element.details == null 
-											? null
-											: OverflowText(element.details!),
-										value: _value?.contains(element.value),
-										onChanged: (value) {
-											if (value != _value?.contains(element.value)) {
-												setState(
-													() => value!
-														? _value?.add(element.value)
-														: _value?.remove(element.value),
-												);
-											}
-										},
-									);
-								case _DialogType.radio:
-									return RadioListTile<T>(
-										title: SingleLineText(element.label),
-										subtitle: element.details == null 
-											? null
-											: OverflowText(element.details!),
-										value: element.value,
-										groupValue: _value?.first,
-										onChanged: (T? value) {
-											if (value != null) {
-												setState(() => _value = [value]);
-											}
-										},
-									);
-								default:
-									return const SizedBox.shrink();
-							}
-						},
-					),
+				],
+			)
+		],
+		contentPadding: const EdgeInsets.symmetric(
+			horizontal: kPaddingMain,
+			vertical: kPaddingSecond,
+		),
+		content: (
+			widget._type == _DialogType.custom
+				? widget.children
+				: widget.elements
+		)?.isEmpty ?? true
+			? Center(
+				child: LabelledIcon.vertical(
+					icon: LargeIcon(widget.placeholderIcon),
+					label: widget.placeholderLabel,
 				),
-		);
-	}
+			)
+			: SizedBox(
+				width: double.maxFinite,
+				child: ListView.builder(
+					shrinkWrap: true,
+					physics: kDefaultScrollPhysics,
+					itemCount: widget._type == _DialogType.custom
+						? widget.children!.length
+						: widget.elements!.length,
+					padding: const EdgeInsets.all(kPaddingSecond),
+					itemBuilder: (context, index) {
+						if (widget._type == _DialogType.custom) {
+							return widget.children!.elementAt(index);
+						}
+						final element = widget.elements!.elementAt(index);
+						switch (widget._type) {
+							case _DialogType.checkbox:
+								return CheckboxListTile(
+									title: SingleLineText(element.label),
+									subtitle: element.details == null 
+										? null
+										: OverflowText(element.details!),
+									value: _value?.contains(element.value),
+									onChanged: (value) {
+										if (value != _value?.contains(element.value)) {
+											setState(
+												() => value!
+													? _value?.add(element.value)
+													: _value?.remove(element.value),
+											);
+										}
+									},
+								);
+							case _DialogType.radio:
+								return RadioListTile<T>(
+									title: SingleLineText(element.label),
+									subtitle: element.details == null 
+										? null
+										: OverflowText(element.details!),
+									value: element.value,
+									groupValue: _value?.first,
+									onChanged: (T? value) {
+										if (value != null) {
+											setState(() => _value = [value]);
+										}
+									},
+								);
+							default:
+								return const SizedBox.shrink();
+						}
+					},
+				),
+			),
+	);
 }

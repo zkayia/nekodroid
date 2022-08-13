@@ -106,7 +106,7 @@ class AnimeRoute extends ConsumerWidget {
 												for (final genre in anime.genres)
 													GenreChip.click(
 														label: context.tr.genres(genre.name),
-														onTap: () {},  //TODO: open all anime with this genre
+														onTap: () {}, //TODO: open all anime with this genre
 													),
 											],
 										),
@@ -122,8 +122,8 @@ class AnimeRoute extends ConsumerWidget {
 													),
 												borderRadius: BorderRadius.circular(kBorderRadMain),
 												child: Padding(
-												  padding: const EdgeInsets.all(kPaddingSecond / 2),
-												  child: synopsis,
+													padding: const EdgeInsets.all(kPaddingSecond / 2),
+													child: synopsis,
 												),
 											),
 										),
