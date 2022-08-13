@@ -99,7 +99,7 @@ class AnimeRoute extends ConsumerWidget {
 									physics: kDefaultScrollPhysics,
 									children: [
 										AnimePageHeader(anime),
-										const SizedBox(height: kPaddingSecond),
+										const SizedBox(height: kPaddingMain),
 										GenreGrid(
 											genres: [
 												for (final genre in anime.genres)
@@ -109,7 +109,7 @@ class AnimeRoute extends ConsumerWidget {
 													),
 											],
 										),
-										const SizedBox(height: kPaddingSecond),
+										const SizedBox(height: kPaddingMain),
 										LimitedBox(
 											maxHeight: kAnimePageGroupMaxHeight,
 											child: InkWell(
@@ -126,7 +126,7 @@ class AnimeRoute extends ConsumerWidget {
 												),
 											),
 										),
-										const SizedBox(height: kPaddingSecond),
+										const SizedBox(height: kPaddingMain),
 										Row(
 											mainAxisAlignment: MainAxisAlignment.spaceBetween,
 											children: [
@@ -160,7 +160,7 @@ class AnimeRoute extends ConsumerWidget {
 												),
 											],
 										),
-										const SizedBox(height: kPaddingSecond),
+										const SizedBox(height: kPaddingMain),
 										ListView.separated(
 											shrinkWrap: true,
 											physics: const NeverScrollableScrollPhysics(),
