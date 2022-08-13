@@ -4,9 +4,31 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
 
+/* CONSTANTS */
+
+enum _GenreChipType {click, select}
+
+
+/* MODELS */
+
+
+
+
+/* PROVIDERS */
+
+
+
+
+/* MISC */
+
+
+
+
+/* WIDGETS */
+
 class GenreChip extends StatelessWidget {
 
-	final bool _isSelectable;
+	final _GenreChipType _type;
 	final String label;
 	final void Function() onTap;
 	final bool selected;
@@ -16,7 +38,7 @@ class GenreChip extends StatelessWidget {
 		required this.onTap,
 		super.key,
 	}) :
-		_isSelectable = false,
+		_type = _GenreChipType.click,
 		selected = false;
 
 	const GenreChip.select({
@@ -25,12 +47,24 @@ class GenreChip extends StatelessWidget {
 		required this.onTap,
 		super.key,
 	}) :
-		_isSelectable = true;
+		_type = _GenreChipType.select;
 
 	@override
-	Widget build(BuildContext context) => _isSelectable
-		? Builder(
-			builder: (context) {
+	Widget build(BuildContext context) {
+		switch (_type) {
+			case _GenreChipType.click:
+				return TextButton(
+					clipBehavior: Clip.hardEdge,
+					onPressed: onTap,
+					style: const ButtonStyle().copyWith(
+						elevation: MaterialStateProperty.all(kDefaultElevation / 8),
+						minimumSize: MaterialStateProperty.all(
+							const Size(kMinInteractiveDimension, kMinInteractiveDimension / 1.5),
+						),
+					),
+					child: SingleLineText.secondary(label),
+				);
+			case _GenreChipType.select:
 				final theme = Theme.of(context);
 				return TextButton(
 					clipBehavior: Clip.hardEdge,
@@ -54,14 +88,6 @@ class GenreChip extends StatelessWidget {
 							: theme.textTheme.bodyMedium,
 					),
 				);
-			},
-		)
-		: TextButton(
-			clipBehavior: Clip.hardEdge,
-			onPressed: onTap,
-			style: const ButtonStyle().copyWith(
-				elevation: MaterialStateProperty.all(kDefaultElevation / 8),
-			),
-			child: SingleLineText.secondary(label),
-		);
+		}
+	}
 }
