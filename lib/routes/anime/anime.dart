@@ -9,6 +9,7 @@ import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/extensions/datetime.dart';
+import 'package:nekodroid/extensions/duration.dart';
 import 'package:nekodroid/provider/history.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/provider/anime.dart';
@@ -191,7 +192,8 @@ class AnimeRoute extends ConsumerWidget {
 													title: "Episode ${episode.episodeNumber}",
 													titleWrap: false,
 													subtitle: "${
-														context.tr.minutesShort(episode.duration?.inMinutes ?? 0)
+														episode.duration?.toUnitsString(unitsTranslations: context.tr)
+															?? context.tr.animeUnknownEpDuration
 													}${
 														wasWatched
 															? DateTime.fromMillisecondsSinceEpoch(

@@ -86,6 +86,7 @@
 	
 	"anime": "Anime",
 	"animeNoSynopsis": "Aucun synopsis.",
+	"animeUnknownEpDuration": "Durée inconnue",
 	
 	
 	"player": "Lecteur",
@@ -161,7 +162,24 @@
 	},
 	
 	
-	"minutesShort": "{count, plural, zero{? min} one{1 min} other{{count} mins}}",
+	"hoursShort": "{count} h",
+	"@hoursShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"hoursLong": "{count, plural, zero{0 heure} one{1 heure} other{{count} heures}}",
+	"@hoursLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+
+	"minutesShort": "{count, plural, zero{0 min} one{1 min} other{{count} mins}}",
 	"@minutesShort": {
 		"placeholders": {
 			"count": {
@@ -169,8 +187,25 @@
 			}
 		}
 	},
-	"minutesLong": "{count, plural, zero{? minute} one{1 minute} other{{count} minutes}}",
+	"minutesLong": "{count, plural, zero{0 minute} one{1 minute} other{{count} minutes}}",
 	"@minutesLong": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+
+	"secondsShort": "{count} s",
+	"@secondsShort": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"secondsLong": "{count, plural, zero{0 seconde} one{1 seconde} other{{count} secondes}}",
+	"@secondsLong": {
 		"placeholders": {
 			"count": {
 				"type": "int"
