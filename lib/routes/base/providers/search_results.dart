@@ -8,17 +8,17 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 
 final searchResultsProvider = FutureProvider.autoDispose<List<NSSearchAnime>?>(
-	(ref) async {
-		if (!ref.watch(isInSearchProvider)) {
-			return null;
-		}
-		final filters = ref.watch(selectableFiltersProvider);
-		final text = ref.watch(searchTextControllerProvider).value.text;
-		return (await ref.watch(searchdbProvider.future)).searchAnimes(
-			title: text.isEmpty ? null : NSStringQuery.contains(text),
-			genresHasAll: filters.whereType<NSGenres>(),
-			statusesIsAny: filters.whereType<NSStatuses>(),
-			typesIsAny: filters.whereType<NSTypes>(),
-		);
-	},
+  (ref) async {
+    if (!ref.watch(isInSearchProvider)) {
+      return null;
+    }
+    final filters = ref.watch(selectableFiltersProvider);
+    final text = ref.watch(searchTextControllerProvider).value.text;
+    return (await ref.watch(searchdbProvider.future)).searchAnimes(
+      title: text.isEmpty ? null : NSStringQuery.contains(text),
+      genresHasAll: filters.whereType<NSGenres>(),
+      statusesIsAny: filters.whereType<NSStatuses>(),
+      typesIsAny: filters.whereType<NSTypes>(),
+    );
+  },
 );

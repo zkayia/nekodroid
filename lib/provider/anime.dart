@@ -6,10 +6,10 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 
 final animeProvider = FutureProvider.autoDispose.family<NSAnime, Uri>(
-	(ref, animeUrl) {
-		final animeCacheBox = Hive.box<String>("anime-cache");
-		return animeCacheBox.containsKey(animeUrl.toString())
-			? Future.value(NSAnime.fromJson(animeCacheBox.get(animeUrl.toString())!))
-			: ref.watch(apiProvider).getAnime(animeUrl);
-	},
+  (ref, animeUrl) {
+    final animeCacheBox = Hive.box<String>("anime-cache");
+    return animeCacheBox.containsKey(animeUrl.toString())
+      ? Future.value(NSAnime.fromJson(animeCacheBox.get(animeUrl.toString())!))
+      : ref.watch(apiProvider).getAnime(animeUrl);
+  },
 );

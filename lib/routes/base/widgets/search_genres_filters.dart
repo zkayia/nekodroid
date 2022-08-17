@@ -12,29 +12,29 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 class SearchGenresFilters extends ConsumerWidget {
 
-	const SearchGenresFilters({super.key});
+  const SearchGenresFilters({super.key});
 
-	@override
-	Widget build(BuildContext context, WidgetRef ref) => Column(
-		crossAxisAlignment: CrossAxisAlignment.start,
-		children: [
-			SingleLineText(
-				context.tr.genre,
-				style: Theme.of(context).textTheme.titleLarge,
-			),
-			const SizedBox(height: kPaddingSecond),
-			GenreGrid(
-				genres: [
-					...NSGenres.values.map(
-						(genre) => GenreChip.select(
-							label: context.tr.genres(genre.name),
-							selected: ref.watch(selectableFiltersProvider).contains(genre),
-							onTap: () =>
-								ref.read(selectableFiltersProvider.notifier).toggle(genre),
-						),
-					),
-				],
-			),
-		],
-	);
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SingleLineText(
+        context.tr.genre,
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+      const SizedBox(height: kPaddingSecond),
+      GenreGrid(
+        genres: [
+          ...NSGenres.values.map(
+            (genre) => GenreChip.select(
+              label: context.tr.genres(genre.name),
+              selected: ref.watch(selectableFiltersProvider).contains(genre),
+              onTap: () =>
+                ref.read(selectableFiltersProvider.notifier).toggle(genre),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

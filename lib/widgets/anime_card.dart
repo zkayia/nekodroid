@@ -8,82 +8,82 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 
 class AnimeCard extends StatelessWidget {
 
-	final Widget image;
-	final String? badge;
-	final bool isEpisode;
-	final String? label;
-	final void Function()? onImageTap;
-	final void Function()? onLabelTap;
+  final Widget image;
+  final String? badge;
+  final bool isEpisode;
+  final String? label;
+  final void Function()? onImageTap;
+  final void Function()? onLabelTap;
 
-	const AnimeCard({
-		required this.image,
-		this.badge,
-		this.isEpisode=false,
-		this.label,
-		this.onImageTap,
-		this.onLabelTap,
-		super.key,
-	});
+  const AnimeCard({
+    required this.image,
+    this.badge,
+    this.isEpisode=false,
+    this.label,
+    this.onImageTap,
+    this.onLabelTap,
+    super.key,
+  });
 
-	@override
-	Widget build(BuildContext context) => AspectRatio(
-		aspectRatio: 5 / 7,
-		child: Column(
-			children: [
-				Expanded(
-					child: ClipRRect(
-						borderRadius: BorderRadius.circular(kBorderRadMain),
-						child: InkWell(
-							onTap: onImageTap,
-							child: Stack(
-								fit: StackFit.expand,
-								alignment: Alignment.center,
-								children: [
-									image,
-									if (isEpisode)
-										const ColoredBox(
-											color: kShadowThumbWithIcon,
-											child: Center(
-												child: Icon(
-													Boxicons.bx_play,
-													color: kOnImageColor,
-												),
-											),
-										),
-									if (badge != null)
-										Align(
-											alignment: AlignmentDirectional.bottomEnd,
-											child: ClipRRect(
-												borderRadius: const BorderRadius.only(
-													topLeft: Radius.circular(kBorderRadMain),
-												),
-												child: Material(
-													color: kAnimeCardBadgeShadow,
-													child: Padding(
-														padding: kAnimeCardBadgeTextPadding,
-														child: FittedBox(
-															child: SingleLineText(
-																badge ?? "",
-																style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-																	color: kAnimeCardBadgeColor,
-																),
-															),
-														),
-													),
-												),
-											),
-										),
-								],
-							),
-						),
-					),
-				),
-				if (label != null)
-					InkWell(
-						onTap: onLabelTap,
-						child: AnimeTitle(label ?? "", isExtended: false),
-					),
-			],
-		),
-	);
+  @override
+  Widget build(BuildContext context) => AspectRatio(
+    aspectRatio: 5 / 7,
+    child: Column(
+      children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(kBorderRadMain),
+            child: InkWell(
+              onTap: onImageTap,
+              child: Stack(
+                fit: StackFit.expand,
+                alignment: Alignment.center,
+                children: [
+                  image,
+                  if (isEpisode)
+                    const ColoredBox(
+                      color: kShadowThumbWithIcon,
+                      child: Center(
+                        child: Icon(
+                          Boxicons.bx_play,
+                          color: kOnImageColor,
+                        ),
+                      ),
+                    ),
+                  if (badge != null)
+                    Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(kBorderRadMain),
+                        ),
+                        child: Material(
+                          color: kAnimeCardBadgeShadow,
+                          child: Padding(
+                            padding: kAnimeCardBadgeTextPadding,
+                            child: FittedBox(
+                              child: SingleLineText(
+                                badge ?? "",
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: kAnimeCardBadgeColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (label != null)
+          InkWell(
+            onTap: onLabelTap,
+            child: AnimeTitle(label ?? "", isExtended: false),
+          ),
+      ],
+    ),
+  );
 }

@@ -20,65 +20,65 @@ import 'package:nekodroid/widgets/large_icon.dart';
 
 class SearchPage extends ConsumerWidget {
 
-	const SearchPage({super.key});
+  const SearchPage({super.key});
 
-	@override
-	Widget build(BuildContext context, WidgetRef ref) => Stack(
-		children: [
-			ref.watch(searchResultsProvider).when(
-				loading: () => const Center(child: CircularProgressIndicator()),
-				error: (err, stackTrace) => const Center(
-					child: LargeIcon(Boxicons.bxs_error_circle),
-				),
-				data: (data) {
-					if (data == null) {
-						return ref.read(isInSearchProvider)
-							? const LargeIcon(Boxicons.bxs_error_circle)
-							: ListView(
-								physics: kDefaultScrollPhysics,
-								padding: EdgeInsets.only(
-									top: kPaddingSecond * 2
-										+ kTopBarHeight * MediaQuery.of(context).textScaleFactor,
-									left: kPaddingMain,
-									right: kPaddingMain,
-									bottom: kPaddingSecond * 2 + kBottomBarHeight,
-								),
-								children: const [
-									SearchGenresFilters(),
-									SizedBox(height: kPaddingMain),
-									SearchFilters(),
-								],
-							);
-					}
-					return AnimeListview(
-						itemCount: data.length,
-						placeholder: LabelledIcon.vertical(
-							icon: const LargeIcon(Boxicons.bx_question_mark),
-							label: context.tr.searchNoResults,
-						),
-						onRefresh: () async => ref.refresh(searchResultsProvider),
-						itemBuilder: (context, index) {
-							final anime = data.elementAt(index);
-							return AnimeListTile(
-								title: anime.title,
-								subtitle: animeDataText(
-									context,
-									anime,
-								),
-								leading: AnimeCard(image: GenericImage(anime.thumbnail)),
-								onTap: () => Navigator.of(context).pushNamed(
-									"/anime",
-									arguments: anime.url,
-								),
-							);
-						},
-					);
-				},
-			),
-			const Align(
-				alignment: Alignment.topCenter,
-				child: SearchBar(),
-			),
-		],
-	);
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => Stack(
+    children: [
+      ref.watch(searchResultsProvider).when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stackTrace) => const Center(
+          child: LargeIcon(Boxicons.bxs_error_circle),
+        ),
+        data: (data) {
+          if (data == null) {
+            return ref.read(isInSearchProvider)
+              ? const LargeIcon(Boxicons.bxs_error_circle)
+              : ListView(
+                physics: kDefaultScrollPhysics,
+                padding: EdgeInsets.only(
+                  top: kPaddingSecond * 2
+                    + kTopBarHeight * MediaQuery.of(context).textScaleFactor,
+                  left: kPaddingMain,
+                  right: kPaddingMain,
+                  bottom: kPaddingSecond * 2 + kBottomBarHeight,
+                ),
+                children: const [
+                  SearchGenresFilters(),
+                  SizedBox(height: kPaddingMain),
+                  SearchFilters(),
+                ],
+              );
+          }
+          return AnimeListview(
+            itemCount: data.length,
+            placeholder: LabelledIcon.vertical(
+              icon: const LargeIcon(Boxicons.bx_question_mark),
+              label: context.tr.searchNoResults,
+            ),
+            onRefresh: () async => ref.refresh(searchResultsProvider),
+            itemBuilder: (context, index) {
+              final anime = data.elementAt(index);
+              return AnimeListTile(
+                title: anime.title,
+                subtitle: animeDataText(
+                  context,
+                  anime,
+                ),
+                leading: AnimeCard(image: GenericImage(anime.thumbnail)),
+                onTap: () => Navigator.of(context).pushNamed(
+                  "/anime",
+                  arguments: anime.url,
+                ),
+              );
+            },
+          );
+        },
+      ),
+      const Align(
+        alignment: Alignment.topCenter,
+        child: SearchBar(),
+      ),
+    ],
+  );
 }

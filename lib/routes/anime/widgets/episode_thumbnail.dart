@@ -11,37 +11,37 @@ import 'package:nekodroid/widgets/generic_image.dart';
 
 class EpisodeThumbnail extends ConsumerWidget {
 
-	final Uri imageUrl;
-	
-	const EpisodeThumbnail(this.imageUrl, {super.key});
+  final Uri imageUrl;
+  
+  const EpisodeThumbnail(this.imageUrl, {super.key});
 
-	@override
-	Widget build(BuildContext context, WidgetRef ref) => ConstrainedBox(
-		constraints: const BoxConstraints(
-			maxWidth: kEpisodeThumbnailMaxWidth,
-		),
-		child: AspectRatio(
-			aspectRatio: 16 / 9,
-			child: ClipRRect(
-				borderRadius: BorderRadius.circular(kBorderRadMain),
-				child: GenericImage(
-					imageUrl,
-					childBuilder: (context, child) {
-						final blurThumbsSigma = ref.watch(
-							settingsProvider.select((value) => value.blurThumbsSigma),
-						);
-						return ref.read(blurThumbsProvider)
-							? ImageFiltered(
-								imageFilter: ImageFilter.blur(
-									sigmaX: blurThumbsSigma,
-									sigmaY: blurThumbsSigma,
-								),
-								child: child,
-							)
-							: child;
-					},
-				),
-			),
-		),
-	);
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => ConstrainedBox(
+    constraints: const BoxConstraints(
+      maxWidth: kEpisodeThumbnailMaxWidth,
+    ),
+    child: AspectRatio(
+      aspectRatio: 16 / 9,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(kBorderRadMain),
+        child: GenericImage(
+          imageUrl,
+          childBuilder: (context, child) {
+            final blurThumbsSigma = ref.watch(
+              settingsProvider.select((value) => value.blurThumbsSigma),
+            );
+            return ref.read(blurThumbsProvider)
+              ? ImageFiltered(
+                imageFilter: ImageFilter.blur(
+                  sigmaX: blurThumbsSigma,
+                  sigmaY: blurThumbsSigma,
+                ),
+                child: child,
+              )
+              : child;
+          },
+        ),
+      ),
+    ),
+  );
 }

@@ -6,15 +6,15 @@ import 'package:nekosama_dart/nekosama_dart.dart';
 
 
 final searchdbProvider = FutureProvider<NSSearchDb>(
-	(ref) async {
-		final db = ref.watch(apiProvider).searchDb;
-		await db.init();
-		if (
-			db.lastPopulated == null
-			|| (db.lastPopulated?.millisecondsSinceEpoch ?? 0) > kSearchDbMaxLifetime
-		) {
-			await db.populate();
-		}
-		return db;
-	},
+  (ref) async {
+    final db = ref.watch(apiProvider).searchDb;
+    await db.init();
+    if (
+      db.lastPopulated == null
+      || (db.lastPopulated?.millisecondsSinceEpoch ?? 0) > kSearchDbMaxLifetime
+    ) {
+      await db.populate();
+    }
+    return db;
+  },
 );

@@ -6,19 +6,19 @@ import 'package:nekodroid/routes/base/widgets/library_tabview.dart';
 
 class LibraryPage extends StatelessWidget {
 
-	const LibraryPage({super.key});
+  const LibraryPage({super.key});
 
-	@override
-	Widget build(BuildContext context) => DefaultTabController(
-		length: 2,
-		child: Stack(
-			children: const [
-				LibraryTabview(),
-				Align(
-					alignment: Alignment.topCenter,
-					child: LibraryAppBar(),
-				),
-			],
-		),
-	);
+  @override
+  Widget build(BuildContext context) => DefaultTabController(
+    length: 2,
+    child: Stack(
+      children: const [
+        LibraryTabview(),
+        Align(
+          alignment: Alignment.topCenter,
+          child: LibraryAppBar(),
+        ),
+      ],
+    ),
+  );
 }

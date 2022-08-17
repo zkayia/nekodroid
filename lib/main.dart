@@ -14,43 +14,43 @@ import 'package:nekodroid/constants.dart';
 
 
 void main() async {
-	
-	WidgetsFlutterBinding.ensureInitialized();
+  
+  WidgetsFlutterBinding.ensureInitialized();
 
-	await SystemChrome.setPreferredOrientations([
-		DeviceOrientation.portraitDown,
-		DeviceOrientation.portraitUp,
-	]);
-	
-	Intl.defaultLocale = kFallbackLocale.toString();
-	await findSystemLocale();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
+  
+  Intl.defaultLocale = kFallbackLocale.toString();
+  await findSystemLocale();
 
-	await Hive.initFlutter();
+  await Hive.initFlutter();
 
-	// // Webview debug mode
-	// if (Platform.isAndroid) {
-	// 	await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
-	// }
+  // // Webview debug mode
+  // if (Platform.isAndroid) {
+  //   await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  // }
 
-	// // Clears all Hive db storage at restart
-	// await Hive.openBox<int>("favorites");
-	// await Hive.openBox<Map>("history");
-	// await Hive.openBox<String>("recent-history");
-	// await Hive.openBox<String>("anime-cache");
-	// await Hive.openBox("settings");
-	// await Hive.deleteFromDisk();
+  // // Clears all Hive db storage at restart
+  // await Hive.openBox<int>("favorites");
+  // await Hive.openBox<Map>("history");
+  // await Hive.openBox<String>("recent-history");
+  // await Hive.openBox<String>("anime-cache");
+  // await Hive.openBox("settings");
+  // await Hive.deleteFromDisk();
 
-	await Hive.openBox<int>("favorites");
-	await Hive.openBox<Map>("history");
-	await Hive.openBox<String>("recent-history");
-	await Hive.openBox<String>("anime-cache");
-	await Hive.openBox("settings");
+  await Hive.openBox<int>("favorites");
+  await Hive.openBox<Map>("history");
+  await Hive.openBox<String>("recent-history");
+  await Hive.openBox<String>("anime-cache");
+  await Hive.openBox("settings");
 
-	runApp(
-		// // Layout testing tool
-		// DevicePreview(
-		// 	builder: (context) =>
-			const ProviderScope(child: App()),
-		// ),
-	);
+  runApp(
+    // // Layout testing tool
+    // DevicePreview(
+    //   builder: (context) =>
+      const ProviderScope(child: App()),
+    // ),
+  );
 }

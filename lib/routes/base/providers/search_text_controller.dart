@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 final searchTextControllerProvider = StateProvider.autoDispose<TextEditingController>(
-	(ref) {
-		final controller = TextEditingController();
-		ref.onDispose(controller.dispose);
-		return controller;
-	},
+  (ref) {
+    final controller = TextEditingController();
+    ref.onDispose(controller.dispose);
+    return controller;
+  },
 );

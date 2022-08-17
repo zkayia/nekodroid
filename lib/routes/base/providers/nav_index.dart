@@ -4,5 +4,5 @@ import 'package:nekodroid/provider/settings.dart';
 
 
 final navIndexProvider = StateProvider.autoDispose<int>(
-	(ref) => ref.watch(settingsProvider.select((value) => value.defaultPage)),
+  (ref) => ref.watch(settingsProvider.select((value) => value.defaultPage)),
 );
