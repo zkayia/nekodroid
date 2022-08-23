@@ -4,11 +4,15 @@
 
 Unofficial android client for [neko-sama.fr](https://neko-sama.fr).
 
+This app is still in active developpement, a stable release is soon to come.
+
 [Screenshots](screenshots/ "Screenshots")
 
 ## Installation
 
-Download and install the [Latest APK](https://github.com/zkayia/nekodroid/releases/latest) or [Build](#Build) one.
+<!-- Download and install the [Latest APK](https://github.com/zkayia/nekodroid/releases/latest) or [Build](#Build) one. -->
+
+You can [Build](#Build) a working app but be aware that it wont be able to update to the stable release without data loss and possible incompatibilities.
 
 ## Build
 
