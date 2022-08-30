@@ -55,7 +55,7 @@ class AnimePageHeader extends StatelessWidget {
         children: [
           AnimeCard(
             image: thumbnail,
-            onImageTap: () => Navigator.of(context).pushNamed(
+            onTap: () => Navigator.of(context).pushNamed(
               "/fullscreen_viewer",
               arguments: InteractiveViewer(
                 child: thumbnail,

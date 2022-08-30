@@ -49,7 +49,7 @@ class LibraryTabview extends ConsumerWidget {
                   leading: AnimeCard(
                     image: GenericCachedImage(data.thumbnail),
                     badge: context.tr.episodeShort(episode.episodeNumber),
-                    onImageTap: () =>
+                    onTap: () =>
                       Navigator.of(context).pushNamed("/anime", arguments: data.url),
                   ),
                   onTap: () {}, //TODO: open detailled history page

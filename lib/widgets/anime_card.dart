@@ -12,16 +12,16 @@ class AnimeCard extends StatelessWidget {
   final String? badge;
   final bool isEpisode;
   final String? label;
-  final void Function()? onImageTap;
-  final void Function()? onLabelTap;
+  final void Function()? onTap;
+  final void Function()? onLongPress;
 
   const AnimeCard({
     required this.image,
     this.badge,
     this.isEpisode=false,
     this.label,
-    this.onImageTap,
-    this.onLabelTap,
+    this.onTap,
+    this.onLongPress,
     super.key,
   });
 
@@ -34,7 +34,8 @@ class AnimeCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(kBorderRadMain),
             child: InkWell(
-              onTap: onImageTap,
+              onTap: onTap,
+              onLongPress: onLongPress,
               child: Stack(
                 fit: StackFit.expand,
                 alignment: Alignment.center,
@@ -79,10 +80,7 @@ class AnimeCard extends StatelessWidget {
           ),
         ),
         if (label != null)
-          InkWell(
-            onTap: onLabelTap,
-            child: AnimeTitle(label ?? "", isExtended: false),
-          ),
+          AnimeTitle(label ?? "", isExtended: false),
       ],
     ),
   );

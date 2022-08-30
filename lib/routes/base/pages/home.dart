@@ -80,19 +80,21 @@ class HomePage extends ConsumerWidget {
           context.tr.episodeShort(e.episodeNumber)
           : null,
         label: isEpisode ? e.episodeTitle : e.title,
-        onImageTap: () => isEpisode
-          ? Navigator.of(context).pushNamed(
+        onTap: isEpisode
+          ? () => Navigator.of(context).pushNamed(
             "/player",
             arguments: PlayerRouteParameters(
               episode: e,
               playerType: PlayerType.native,
             ),
           )
-          : Navigator.of(context).pushNamed("/anime", arguments: e.url),
-        onLabelTap: () => Navigator.of(context).pushNamed(
-          "/anime",
-          arguments: isEpisode ? e.animeUrl : e.url,
-        ),
+          : () => Navigator.of(context).pushNamed("/anime", arguments: e.url),
+        onLongPress: isEpisode
+          ? () => Navigator.of(context).pushNamed(
+            "/anime",
+            arguments: isEpisode ? e.animeUrl : e.url,
+          )
+          : null,
       ),
     ),
   ];
