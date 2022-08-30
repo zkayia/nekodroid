@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/helpers/nav_labels_mode.dart';
+import 'package:nekodroid/constants/nav_labels_mode.dart';
 import 'package:nekodroid/models/app_settings.dart';
 
 

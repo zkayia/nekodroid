@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/extensions/datetime.dart';
-import 'package:nekodroid/helpers/anime_data_text.dart';
+import 'package:nekodroid/extensions/ns_anime_extended_base.dart';
 import 'package:nekodroid/provider/favorites.dart';
 import 'package:nekodroid/provider/anime.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
@@ -71,7 +71,7 @@ class LibraryTabview extends ConsumerWidget {
             error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
             data: (anime) => AnimeListTile(
               title: anime.title,
-              subtitle: animeDataText(context, anime),
+              subtitle: anime.dataText(context),
               leading: AnimeCard(image: GenericCachedImage(anime.thumbnail)),
               trailing: GenericButton.elevated(
                 onPressed: () => ref.read(favoritesProvider.notifier).toggleFavBoxOnly(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
-import 'package:nekodroid/helpers/anime_data_text.dart';
+import 'package:nekodroid/extensions/ns_anime_extended_base.dart';
 import 'package:nekodroid/routes/base/providers/is_in_search.dart';
 import 'package:nekodroid/routes/base/providers/search_results.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
@@ -61,10 +61,7 @@ class SearchPage extends ConsumerWidget {
               final anime = data.elementAt(index);
               return AnimeListTile(
                 title: anime.title,
-                subtitle: animeDataText(
-                  context,
-                  anime,
-                ),
+                subtitle: anime.dataText(context),
                 leading: AnimeCard(image: GenericImage(anime.thumbnail)),
                 onTap: () => Navigator.of(context).pushNamed(
                   "/anime",

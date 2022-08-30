@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/helpers/nav_labels_mode.dart';
-import 'package:nekodroid/helpers/resolve_thememode.dart';
+import 'package:nekodroid/constants/nav_labels_mode.dart';
 
 
 @immutable
@@ -59,27 +58,31 @@ class AppSettings {
 
   Map<String, dynamic> toMap() => {
     "locale": locale,
-    "themeMode": themeMode.name,
+    "themeMode": themeMode.index,
     "useAmoled": useAmoled,
     "defaultPage": defaultPage,
     "carouselItemCount": carouselItemCount,
     "secrecyEnabled": secrecyEnabled,
     "blurThumbs": blurThumbs,
     "blurThumbsSigma": blurThumbsSigma,
-    "navLabelsMode": navLabelsMode.name,
+    "navLabelsMode": navLabelsMode.index,
     "lazyLoadItemCount": lazyLoadItemCount,
   };
 
   factory AppSettings.fromMap(Map<String, dynamic> map) => AppSettings(
     locale: map["locale"] ?? kDefaultSettings.locale,
-    themeMode: resolveThemeMode(map["themeMode"]) ?? kDefaultSettings.themeMode,
+    themeMode: ThemeMode.values.elementAt(
+      map["themeMode"] ?? kDefaultSettings.themeMode.index,
+    ),
     useAmoled: map["useAmoled"] ?? kDefaultSettings.useAmoled,
     defaultPage: map["defaultPage"] ?? kDefaultSettings.defaultPage,
     carouselItemCount: map["carouselItemCount"] ?? kDefaultSettings.carouselItemCount,
     secrecyEnabled: map["secrecyEnabled"] ?? kDefaultSettings.secrecyEnabled,
     blurThumbs: map["blurThumbs"] ?? kDefaultSettings.blurThumbs,
     blurThumbsSigma: map["blurThumbsSigma"] ?? kDefaultSettings.blurThumbsSigma,
-    navLabelsMode: resolveNavLabelsMode(map["navLabelsMode"]) ?? kDefaultSettings.navLabelsMode,
+    navLabelsMode: NavLabelsMode.values.elementAt(
+      map["navLabelsMode"] ?? kDefaultSettings.navLabelsMode.index,
+    ),
     lazyLoadItemCount: map["lazyLoadItemCount"] ?? kDefaultSettings.lazyLoadItemCount,
   );
 }

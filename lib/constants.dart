@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nekodroid/constants/nav_labels_mode.dart';
 import 'package:nekodroid/extensions/iterable.dart';
-import 'package:nekodroid/helpers/nav_labels_mode.dart';
 import 'package:nekodroid/models/app_settings.dart';
 
 

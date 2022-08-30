@@ -4,7 +4,7 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/helpers/anime_data_text.dart';
+import 'package:nekodroid/extensions/ns_anime_extended_base.dart';
 import 'package:nekodroid/provider/favorites.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_title.dart';
@@ -71,7 +71,7 @@ class AnimePageHeader extends StatelessWidget {
                 Flexible(
                   child: FittedBox(
                     child: SingleLineText.secondary(
-                      animeDataText(context, anime),
+                      anime.dataText(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
