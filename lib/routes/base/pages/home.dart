@@ -50,9 +50,13 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
                 title: carousel.key,
-                items: [...carousel.value.take(
-                  ref.read(settingsProvider).carouselItemCount,
-                )],
+                items: [
+                  ...carousel.value.take(
+                    ref.read(settingsProvider).carouselItemCount
+                      * (index == 0 ? 2 : 1),
+                  ),
+                ],
+                isEpisode: index == 0,
               );
             },
           );

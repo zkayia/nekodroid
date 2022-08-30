@@ -4,15 +4,15 @@ import 'dart:math';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
 
 class AnimeCarousel extends StatelessWidget {
 
   final String title;
-  final List<AnimeCard> items;
+  final List<Widget> items;
   final Object? titleHeroTag;
+  final bool isEpisode;
   final void Function()? onMoreTapped;
 
   const AnimeCarousel({
@@ -20,6 +20,7 @@ class AnimeCarousel extends StatelessWidget {
     required this.items,
     this.titleHeroTag,
     this.onMoreTapped,
+    this.isEpisode=false,
     super.key,
   });
 
@@ -30,18 +31,31 @@ class AnimeCarousel extends StatelessWidget {
       title,
       style: titleLarge,
     );
-    final mediaQueryData = MediaQuery.of(context);
+    final mediaQuery = MediaQuery.of(context);
+    final baseWidth = mediaQuery.size.width - kPaddingMain * 2;
     return LimitedBox(
       maxHeight: max(
-        kAnimeCarouselBaseHeight * mediaQueryData.textScaleFactor,
-        (mediaQueryData.size.height - kBottomBarHeight - kPaddingSecond * 3) / 3,
-      ),
+        (
+          isEpisode
+            ? (baseWidth - kPaddingSecond) / 2
+              * 10 / 16
+              * 2
+              + kPaddingSecond
+            : (baseWidth - kPaddingSecond * 2) / 3
+              * 7 / 5
+        ) + (titleLarge?.fontSize ?? 14),
+        kAnimeCarouselMinHeight,
+      ) * mediaQuery.textScaleFactor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kPaddingMain / 2),
+            padding: const EdgeInsets.only(
+              left: kPaddingMain / 2,
+              right: kPaddingMain / 2,
+              bottom: kPaddingSecond,
+            ),
             child: InkWell(
               onTap: onMoreTapped,
               borderRadius: BorderRadius.circular(kBorderRadMain),
@@ -71,7 +85,6 @@ class AnimeCarousel extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: kPaddingSecond),
           Expanded(
             child: ShaderMask(
               shaderCallback: (Rect rect) => const LinearGradient(
@@ -81,14 +94,16 @@ class AnimeCarousel extends StatelessWidget {
                 stops: kShadowStops,
               ).createShader(rect),
               blendMode: BlendMode.dstOut,
-              child: ListView.separated(
+              child: GridView.count(
+                crossAxisCount: isEpisode ? 2 : 1,
+                childAspectRatio: isEpisode ? 10 / 16 : 7 / 5,
+                mainAxisSpacing: kPaddingSecond,
+                crossAxisSpacing: kPaddingSecond,
                 padding: const EdgeInsets.symmetric(horizontal: kPaddingMain),
                 shrinkWrap: true,
                 physics: kDefaultScrollPhysics,
                 scrollDirection: Axis.horizontal,
-                itemCount: items.length,
-                itemBuilder: (context, index) => items.elementAt(index),
-                separatorBuilder: (context, index) => const SizedBox(width: kPaddingSecond),
+                children: items,
               ),
             ),
           ),
