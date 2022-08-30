@@ -5,15 +5,15 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 
 
-class TitleSliverListRoute extends ConsumerWidget {
+class SliverTitleScrollviewRoute extends ConsumerWidget {
 
   final String title;
-  final List<Widget> children;
+  final Widget? sliver;
   final Future<bool> Function(BuildContext context)? onExitTap;
 
-  const TitleSliverListRoute({
+  const SliverTitleScrollviewRoute({
     required this.title,
-    required this.children,
+    required this.sliver,
     this.onExitTap,
     super.key,
   });
@@ -40,9 +40,7 @@ class TitleSliverListRoute extends ConsumerWidget {
             right: kPaddingMain,
             bottom: kPaddingSecond + kFabSize + 16,
           ),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate.fixed(children),
-          ),
+          sliver: sliver,
         ),
       ],
     ),
@@ -99,7 +97,7 @@ class _SettingsSliverHeader extends ConsumerWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final ratio = ref.watch(_scrollOffsetRatioProvider(title));
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: kPaddingSecond * ratio),
+      padding: EdgeInsets.symmetric(horizontal: kPaddingMain * 1 + ratio),
       sliver: SliverAppBar(
         automaticallyImplyLeading: false,
         pinned: true,

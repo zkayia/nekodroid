@@ -7,7 +7,7 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/constants/nav_labels_mode.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/settings/widgets/title_sliver_list_route.dart';
+import 'package:nekodroid/routes/settings/widgets/settings_sliver_title_route.dart';
 
 
 class SettingsRoute extends ConsumerWidget {
@@ -28,7 +28,7 @@ class SettingsRoute extends ConsumerWidget {
       Boxicons.bxs_mobile: _SettingsUpdatePage(context.tr.settingsUpdate),
       Boxicons.bxs_info_circle: _SettingsAboutPage(context.tr.settingsAbout),
     };
-    return TitleSliverListRoute(
+    return SettingsSliverTitleRoute(
       title: context.tr.settings,
       onExitTap: (_) async {
         await ref.read(settingsProvider.notifier).saveToHive();
@@ -78,7 +78,7 @@ class _SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
       context.tr.search,
       context.tr.more,
     ];
-    return TitleSliverListRoute(
+    return SettingsSliverTitleRoute(
       title: title,
       children: [
         ListTile(
@@ -158,7 +158,7 @@ class _SettingsHomePage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsHomePage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: [
       ListTile(
@@ -187,7 +187,7 @@ class _SettingsLibraryPage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsLibraryPage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: const [],
   );
@@ -201,7 +201,7 @@ class _SettingsSearchPage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsSearchPage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: const [],
   );
@@ -215,7 +215,7 @@ class _SettingsMorePage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsMorePage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: context.tr.settingsAdvanced,
     children: const [],
   );
@@ -229,7 +229,7 @@ class _SettingsAnimePage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsAnimePage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: [
       SwitchListTile(
@@ -262,7 +262,7 @@ class _SettingsPlayerPage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsPlayerPage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: const [],
   );
@@ -276,7 +276,7 @@ class _SettingsAdvancedPage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsAdvancedPage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: const [],
   );
@@ -291,7 +291,7 @@ class _SettingsUpdatePage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsUpdatePage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: const [],
   );
@@ -306,7 +306,7 @@ class _SettingsAboutPage extends ConsumerWidget implements WidgetTitleMixin {
   const _SettingsAboutPage(this.title);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => TitleSliverListRoute(
+  Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
     title: title,
     children: const [],
   );

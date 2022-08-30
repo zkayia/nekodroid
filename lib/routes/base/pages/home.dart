@@ -43,7 +43,7 @@ class HomePage extends ConsumerWidget {
               final carousel = carousels.entries.elementAt(index);
               return AnimeCarousel(
                 onMoreTapped: () => Navigator.of(context).pushNamed(
-                  "/carousel_more",
+                  "/base/carousel_more",
                   arguments: CarouselMoreParameters(
                     title: carousel.key,
                     cards: carousel.value,

@@ -9,7 +9,7 @@ import 'package:nekodroid/extensions/locale.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
 import 'package:nekodroid/routes/base/base.dart';
-import 'package:nekodroid/routes/carousel_more/carousel_more.dart';
+import 'package:nekodroid/routes/base.carousel_more/carousel_more.dart';
 import 'package:nekodroid/routes/fullscreen_viewer/fullscreen_viewer.dart';
 import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/routes/settings/settings.dart';
@@ -43,12 +43,12 @@ class App extends ConsumerWidget {
       behavior: _NoOverscrollIndicatorScrollBehavior(),
       child: child!,
     ),
-    initialRoute: "/",
+    initialRoute: "/base",
     routes: {
-      "/": (context) => const BaseRoute(),
+      "/base": (context) => const BaseRoute(),
+      "/base/carousel_more": (context) => const CarouselMoreRoute(),
       "/anime": (context) => const AnimeRoute(),
       // "/backup_restore": (context) => const BackupRoute(),
-      "/carousel_more": (context) => const CarouselMoreRoute(),
       // "/detailled_history": (context) => const DetailledHistoryRoute(),
       "/fullscreen_viewer": (context) => const FullscreenViewerRoute(),
       "/player": (context) => const PlayerRoute(),
