@@ -7,7 +7,7 @@ import 'package:nekodroid/routes/base/providers/selectable_filters.dart';
 import 'package:nekodroid/widgets/genre_chip.dart';
 import 'package:nekodroid/widgets/genre_grid.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
-import 'package:nekosama_dart/nekosama_dart.dart';
+import 'package:nekosama_hive/nekosama_hive.dart';
 
 
 class SearchGenresFilters extends ConsumerWidget {

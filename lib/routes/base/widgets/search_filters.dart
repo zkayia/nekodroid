@@ -6,7 +6,7 @@ import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/routes/base/providers/selectable_filters.dart';
 import 'package:nekodroid/routes/base/widgets/checkbox_column.dart';
 import 'package:nekodroid/routes/base/widgets/checkbox_column_tile.dart';
-import 'package:nekosama_dart/nekosama_dart.dart';
+import 'package:nekosama_hive/nekosama_hive.dart';
 
 
 class SearchFilters extends ConsumerWidget {

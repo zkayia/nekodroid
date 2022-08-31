@@ -96,7 +96,7 @@
   
   
   "genre": "Genre",
-  "genres": "{genre, select, action{action} adventure{aventure} comedy{comédie} drama{drama} ecchi{ecchi} fantasy{fantastique} hentai{hentai} horror{horreur} magicalGirl{magical girl} mecha{mecha} music{musique} mystery{mystère} psychological{psychologique} romance{romance} sciFi{sci-fi} sliceOfLife{tranche de vie} sports{sports} supernatural{supernaturel} thriller{suspense}}",
+  "genres": "{genre, select, action{action} adventure{aventure} battleRoyale{battle royale} comedy{comédie} cyberpunk{cyberpunk} drama{drama} ecchi{ecchi} fantasy{fantastique} hentai{hentai} horror{horreur} isekai{isekai} mafia{mafia} magic{magique} magicalGirl{magical girl} mecha{mecha} military{militaire} music{musique} mystery{mystère} psychological{psychologique} romance{romance} sciFi{sci-fi} sliceOfLife{tranche de vie} sports{sports} supernatural{supernaturel} thriller{suspense}}",
   "@genres": {
     "placeholders": {
       "genre": {

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nekodroid/extensions/app_localizations.dart';
-import 'package:nekosama_dart/nekosama_dart.dart';
+import 'package:nekosama_hive/nekosama_hive.dart';
 
 
 extension NSAnimeExtendedBaseX on NSAnimeExtendedBase {

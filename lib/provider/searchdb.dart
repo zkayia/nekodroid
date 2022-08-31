@@ -2,12 +2,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/provider/api.dart';
-import 'package:nekosama_dart/nekosama_dart.dart';
+import 'package:nekosama_hive/nekosama_hive.dart';
 
 
-final searchdbProvider = FutureProvider<NSSearchDb>(
+final searchdbProvider = FutureProvider<NSHiveSearchDb>(
   (ref) async {
-    final db = ref.watch(apiProvider).searchDb;
+    final db = ref.watch(apiProvider).hiveSearchDb;
     await db.init();
     if (
       db.lastPopulated == null

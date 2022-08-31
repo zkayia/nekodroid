@@ -16,7 +16,7 @@ import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
-import 'package:nekosama_dart/nekosama_dart.dart';
+import 'package:nekosama_hive/nekosama_hive.dart';
 
 
 class LibraryTabview extends ConsumerWidget {

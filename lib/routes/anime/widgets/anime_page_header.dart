@@ -11,7 +11,7 @@ import 'package:nekodroid/widgets/anime_title.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/generic_image.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
-import 'package:nekosama_dart/nekosama_dart.dart';
+import 'package:nekosama_hive/nekosama_hive.dart';
 import 'package:share_plus/share_plus.dart';
 
 
