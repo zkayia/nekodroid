@@ -423,18 +423,9 @@ packages:
     source: hosted
     version: "1.0.2"
   nekosama:
-    dependency: transitive
-    description:
-      path: "packages/nekosama"
-      ref: HEAD
-      resolved-ref: "23bfbe34dc4ee56843d039790096d0555cdf1505"
-      url: "https://github.com/zkayia/nekosama_dart"
-    source: git
-    version: "2.2.1"
-  nekosama_hive:
     dependency: "direct main"
     description:
-      path: "packages/nekosama_hive"
+      path: "packages/nekosama"
       ref: HEAD
       resolved-ref: "23bfbe34dc4ee56843d039790096d0555cdf1505"
       url: "https://github.com/zkayia/nekosama_dart"

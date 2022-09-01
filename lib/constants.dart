@@ -24,7 +24,6 @@ const kDefaultSettings = AppSettings(
 // all of the below are in ms
 const int kPlayerPopDelay = 3 * 1000;
 const int kHeadlessWebviewMaxLifetime = 20 * 1000;
-const int kSearchDbMaxLifetime = 12 * 60 * 60 * 1000;
 
 const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
 const Curve kDefaultAnimCurve = Curves.easeInOutQuad;

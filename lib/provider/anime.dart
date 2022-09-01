@@ -2,7 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nekodroid/provider/api.dart';
-import 'package:nekosama_hive/nekosama_hive.dart';
+import 'package:nekosama/nekosama.dart';
 
 
 final animeProvider = FutureProvider.autoDispose.family<NSAnime, Uri>(

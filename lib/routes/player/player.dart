@@ -12,7 +12,7 @@ import 'package:nekodroid/routes/player/players/native/native.dart';
 import 'package:nekodroid/routes/player/players/webview.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
-import 'package:nekosama_hive/nekosama_hive.dart';
+import 'package:nekosama/nekosama.dart';
 
 
 /* CONSTANTS */
