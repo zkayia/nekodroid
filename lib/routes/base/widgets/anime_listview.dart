@@ -24,17 +24,17 @@ class AnimeListview extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listview = itemCount == 0
-      ? SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: kDefaultScrollPhysics,
-        ),
-        child: Center(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: placeholder ?? const LargeIcon(Boxicons.bx_question_mark),
+      ? LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: kDefaultScrollPhysics,
+            ),
+            child: SizedBox.fromSize(
+              size: constraints.biggest,
+              child: placeholder ?? const LargeIcon(Boxicons.bx_question_mark),
+            ),
           ),
-        ),
-      )
+        )
       : ListView.separated(
         physics: const AlwaysScrollableScrollPhysics(
           parent: kDefaultScrollPhysics,
