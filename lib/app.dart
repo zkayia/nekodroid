@@ -8,6 +8,7 @@ import 'package:nekodroid/extensions/app_localizations.dart';
 import 'package:nekodroid/extensions/locale.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
+import 'package:nekodroid/routes/base.search/search.dart';
 import 'package:nekodroid/routes/base/base.dart';
 import 'package:nekodroid/routes/base.carousel_more/carousel_more.dart';
 import 'package:nekodroid/routes/fullscreen_viewer/fullscreen_viewer.dart';
@@ -45,15 +46,13 @@ class App extends ConsumerWidget {
     ),
     initialRoute: "/base",
     routes: {
+      "/anime": (context) => const AnimeRoute(),
       "/base": (context) => const BaseRoute(),
       "/base/carousel_more": (context) => const CarouselMoreRoute(),
-      "/anime": (context) => const AnimeRoute(),
-      // "/backup_restore": (context) => const BackupRoute(),
-      // "/detailled_history": (context) => const DetailledHistoryRoute(),
+      "/base/search": (context) => const SearchRoute(),
       "/fullscreen_viewer": (context) => const FullscreenViewerRoute(),
       "/player": (context) => const PlayerRoute(),
       "/settings": (context) => const SettingsRoute(),
-      // "/stats": (context) => const StatsRoute(),
     },
   );
 }

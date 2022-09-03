@@ -5,8 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:isar/isar.dart';
 import 'package:nekodroid/app.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/schemas/isar_search_anime.dart';
+import 'package:path_provider/path_provider.dart';
 
 // import 'dart:io';
 // import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -27,6 +30,14 @@ void main() async {
 
   await Hive.initFlutter();
 
+  await Isar.open(
+    [
+      IsarSearchAnimeSchema,
+    ],
+    directory: (await getApplicationSupportDirectory()).path,
+    inspector: false,
+  );
+
   // // Webview debug mode
   // if (Platform.isAndroid) {
   //   await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
@@ -38,6 +49,7 @@ void main() async {
   // await Hive.openBox<String>("recent-history");
   // await Hive.openBox<String>("anime-cache");
   // await Hive.openBox("settings");
+  // await Hive.openBox("misc-data");
   // await Hive.deleteFromDisk();
 
   await Hive.openBox<int>("favorites");
@@ -45,6 +57,7 @@ void main() async {
   await Hive.openBox<String>("recent-history");
   await Hive.openBox<String>("anime-cache");
   await Hive.openBox("settings");
+  await Hive.openBox("misc-data");
 
   runApp(
     // // Layout testing tool
