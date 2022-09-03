@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekosama/nekosama.dart';
 
 

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/routes/player/players/native/providers/hls.dart';
 import 'package:nekodroid/routes/player/players/native/providers/player_controls.dart';

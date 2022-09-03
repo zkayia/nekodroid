@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/api.dart';
 import 'package:nekodroid/provider/history.dart';
 import 'package:nekodroid/routes/player/players/native/native.dart';

@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/constants/nav_labels_mode.dart';
-import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/settings/widgets/settings_sliver_title_route.dart';
 

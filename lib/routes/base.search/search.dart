@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
 import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:nekodroid/widgets/anime_card.dart';

@@ -3,7 +3,7 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants/nav_labels_mode.dart';
-import 'package:nekodroid/extensions/app_localizations.dart';
+import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base/models/nav_bar_item.dart';
 import 'package:nekodroid/routes/base/pages/home.dart';
