@@ -12,12 +12,14 @@ class AnimeListview extends ConsumerWidget {
   final Widget Function(BuildContext context, int index) itemBuilder;
   final Future<void> Function()? onRefresh;
   final Widget? placeholder;
+  final double bottomElementPadding;
 
   const AnimeListview({
     required this.itemCount,
     required this.itemBuilder,
     this.onRefresh,
     this.placeholder,
+    this.bottomElementPadding=kBottomBarHeight,
     super.key,
   });
 
@@ -39,11 +41,13 @@ class AnimeListview extends ConsumerWidget {
         physics: const AlwaysScrollableScrollPhysics(
           parent: kDefaultScrollPhysics,
         ),
-        padding: const EdgeInsets.only(
+        padding: EdgeInsets.only(
           top: kPaddingSecond * 2 + kTopBarHeight,
           left: kPaddingMain,
           right: kPaddingMain,
-          bottom: kPaddingSecond * 2 + kBottomBarHeight,
+          bottom: kPaddingSecond
+            + (bottomElementPadding == 0 ? kPaddingSecond : 0)
+            + bottomElementPadding,
         ),
         itemCount: itemCount,
         separatorBuilder: (context, index) => const SizedBox(height: kPaddingSecond),
