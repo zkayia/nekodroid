@@ -35,7 +35,6 @@ void main() async {
       IsarSearchAnimeSchema,
     ],
     directory: (await getApplicationSupportDirectory()).path,
-    inspector: false,
   );
 
   // // Webview debug mode

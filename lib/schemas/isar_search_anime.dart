@@ -11,7 +11,7 @@ part 'isar_search_anime.g.dart';
 @collection
 class IsarSearchAnime {
   
-  Id id;
+  Id? id;
   String url;
   String thumbnail;
   String title;
@@ -26,6 +26,7 @@ class IsarSearchAnime {
   double score;
   int year;
   int episodeCount;
+  int? lastSearchTimestamp;
 
   IsarSearchAnime({
     required this.id,
@@ -40,6 +41,7 @@ class IsarSearchAnime {
     required this.score,
     required this.year,
     required this.episodeCount,
+    required this.lastSearchTimestamp,
   });
 
   @ignore
@@ -49,7 +51,7 @@ class IsarSearchAnime {
   Uri get thumbnailUri => Uri.parse(thumbnail);
 
   factory IsarSearchAnime.fromRawSearchDb(Map map) => IsarSearchAnime(
-    id: map["id"] ?? 0,
+    id: Isar.autoIncrement,
     url: "https://neko-sama.fr${map["url"] ?? ""}",
     thumbnail: map["url_image"] ?? "",
     title: map["title"] ?? "",
@@ -72,6 +74,7 @@ class IsarSearchAnime {
     score: double.tryParse(map["score"] ?? "0.0") ?? 0.0,
     year: int.tryParse(map["start_date_year"] ?? "0") ?? 0,
     episodeCount: _extractEpisodeInt(map["nb_eps"] ?? "0"),
+    lastSearchTimestamp: null,
   );
 
   String dataText(BuildContext context) => "${

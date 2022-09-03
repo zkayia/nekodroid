@@ -32,6 +32,10 @@
   
   "search": "Recherche",
   "searchNoResults": "Aucun résultat",
+  "searchRecents": "Recherché récemment",
+  "searchNoRecent": "Aucune recherche récente",
+  "searchdbFetching": "Récupération des données de recherche",
+  "searchdbUnavailable": "Recherche indisponible - Appuyez pour essayer",
   
   
   "more": "Plus",

@@ -21,6 +21,10 @@
   
   "search": "Search",
   "searchNoResults": "No results",
+  "searchRecents": "Searched recently",
+  "searchNoRecent": "No recent searches",
+  "searchdbFetching": "Fetching search data",
+  "searchdbUnavailable": "Search unavailable - Tap to try",
   
   
   "more": "More",

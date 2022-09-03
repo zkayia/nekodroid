@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/locale.dart';
+import 'package:nekodroid/extensions/neko_sama.dart';
+import 'package:nekodroid/provider/api.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
 import 'package:nekodroid/routes/base.search/search.dart';
@@ -18,12 +20,24 @@ import 'package:nekodroid/routes/settings/settings.dart';
 // import 'package:device_preview/device_preview.dart';
 
 
-class App extends ConsumerWidget {
+class App extends ConsumerStatefulWidget {
 
   const App({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
+  AppState createState() => AppState();
+}
+
+class AppState extends ConsumerState<App> {
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(apiProvider).checkSearchdb(ref);
+  }
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
     // // next 2 lines are related to the layout testing tool
     // useInheritedMediaQuery: true,
     // builder: DevicePreview.appBuilder,

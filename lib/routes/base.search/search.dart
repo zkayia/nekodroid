@@ -2,6 +2,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:isar/isar.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
@@ -97,10 +98,20 @@ class SearchRoute extends ConsumerWidget {
                   leading: AnimeCard(
                     image: GenericImage(anime.thumbnailUri),
                   ),
-                  onTap: () => Navigator.of(context).pushNamed(
-                    "/anime",
-                    arguments: anime.urlUri,
-                  ),
+                  onTap: () {
+                    final miscBox = Hive.box("misc-data");
+                    miscBox.put(
+                      "recent-searches",
+                      [
+                        anime.id,
+                        ...?miscBox.get("recent-searches"),
+                      ],
+                    );
+                    Navigator.of(context).pushNamed(
+                      "/anime",
+                      arguments: anime.urlUri,
+                    );
+                  },
                 );
               },
             ),
