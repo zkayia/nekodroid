@@ -35,7 +35,8 @@
   "searchRecents": "Recherché récemment",
   "searchNoRecent": "Aucune recherche récente",
   "searchdbFetching": "Récupération des données de recherche",
-  "searchdbUnavailable": "Recherche indisponible - Appuyez pour essayer",
+  "searchdbProcessing": "Traitement des données de recherche",
+  "searchdbUnavailable": "Recherche indisponible - Appuyez pour réessayer",
   
   
   "more": "Plus",

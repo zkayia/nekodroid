@@ -34,7 +34,7 @@ extension NekoSamaX on NekoSama {
         miscBox.put("searchdb-etag", etag);
         return populateSearchdb(ref);
       }
-      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetched);
+      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.ready);
     } on Exception catch (err) {
       ref.read(searchdbStatusProv.notifier).update(
         (_) => (err is NekoSamaException ? err.exception : err) is SocketException
@@ -47,11 +47,13 @@ extension NekoSamaX on NekoSama {
   Future<void> populateSearchdb(WidgetRef ref) async {
     ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetching);
     try {
+      final data = await getRawSearchDb();
+      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.processing);
       await compute(
         _populateSearchdbProcess,
-        await getRawSearchDb(),
+        data,
       );
-      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetched);
+      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.ready);
     } on Exception catch (err) {
       ref.read(searchdbStatusProv.notifier).update(
         (_) => (err is NekoSamaException ? err.exception : err) is SocketException

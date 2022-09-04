@@ -127,13 +127,13 @@ class SearchPage extends ConsumerWidget {
           ),
         ),
       ),
-      if (ref.watch(searchdbStatusProv) == SearchdbStatus.fetching)
+      if (ref.watch(searchdbStatusProv).inProcess)
         const LinearProgressIndicator(),
       Card(
         margin: const EdgeInsets.all(kPaddingSecond),
         child: InkWell(
           borderRadius: BorderRadius.circular(kBorderRadMain),
-          onTap: ref.watch(searchdbStatusProv) == SearchdbStatus.fetched
+          onTap: ref.watch(searchdbStatusProv) == SearchdbStatus.ready
             ? () => Navigator.of(context).pushNamed("/base/search")
             : () => ref.read(apiProvider).populateSearchdb(ref),
           child: ConstrainedBox(

@@ -24,7 +24,8 @@
   "searchRecents": "Searched recently",
   "searchNoRecent": "No recent searches",
   "searchdbFetching": "Fetching search data",
-  "searchdbUnavailable": "Search unavailable - Tap to try",
+  "searchdbProcessing": "Processing search data",
+  "searchdbUnavailable": "Search unavailable - Tap to retry",
   
   
   "more": "More",
