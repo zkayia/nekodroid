@@ -6,7 +6,7 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 
 /* CONSTANTS */
 
-enum _GenreChipType {click, select}
+enum _GenericChipType {click, select}
 
 
 /* MODELS */
@@ -26,33 +26,33 @@ enum _GenreChipType {click, select}
 
 /* WIDGETS */
 
-class GenreChip extends StatelessWidget {
+class GenericChip extends StatelessWidget {
 
-  final _GenreChipType _type;
+  final _GenericChipType _type;
   final String label;
   final void Function() onTap;
   final bool selected;
 
-  const GenreChip.click({
+  const GenericChip.click({
     required this.label,
     required this.onTap,
     super.key,
   }) :
-    _type = _GenreChipType.click,
+    _type = _GenericChipType.click,
     selected = false;
 
-  const GenreChip.select({
+  const GenericChip.select({
     required this.label,
     required this.selected,
     required this.onTap,
     super.key,
   }) :
-    _type = _GenreChipType.select;
+    _type = _GenericChipType.select;
 
   @override
   Widget build(BuildContext context) {
     switch (_type) {
-      case _GenreChipType.click:
+      case _GenericChipType.click:
         return TextButton(
           clipBehavior: Clip.hardEdge,
           onPressed: onTap,
@@ -64,7 +64,7 @@ class GenreChip extends StatelessWidget {
           ),
           child: SingleLineText.secondary(label),
         );
-      case _GenreChipType.select:
+      case _GenericChipType.select:
         final theme = Theme.of(context);
         return TextButton(
           clipBehavior: Clip.hardEdge,

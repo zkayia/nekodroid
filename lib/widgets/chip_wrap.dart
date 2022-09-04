@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
 
 
-class GenreGrid extends StatelessWidget {
+class ChipWrap extends StatelessWidget {
 
   final List<Widget> genres;
 
-  const GenreGrid({
+  const ChipWrap({
     required this.genres,
     super.key,
   });

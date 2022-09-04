@@ -19,8 +19,8 @@ import 'package:nekodroid/routes/anime/widgets/episode_thumbnail.dart';
 import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
-import 'package:nekodroid/widgets/genre_chip.dart';
-import 'package:nekodroid/widgets/genre_grid.dart';
+import 'package:nekodroid/widgets/generic_chip.dart';
+import 'package:nekodroid/widgets/chip_wrap.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
@@ -101,10 +101,10 @@ class AnimeRoute extends ConsumerWidget {
                   children: [
                     AnimePageHeader(anime),
                     const SizedBox(height: kPaddingMain),
-                    GenreGrid(
+                    ChipWrap(
                       genres: [
                         for (final genre in anime.genres)
-                          GenreChip.click(
+                          GenericChip.click(
                             label: context.tr.genres(genre.name),
                             onTap: () {}, //TODO: open all anime with this genre
                           ),
