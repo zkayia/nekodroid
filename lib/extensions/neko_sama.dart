@@ -42,14 +42,18 @@ extension NekoSamaX on NekoSama {
 
   Future<void> populateSearchdb(WidgetRef ref) async {
     ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetching);
-    await compute(
-      _populateSearchdbProcess,
-      await getRawSearchDb(),
-    ).then(
-      (_) => ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetched),
-      onError: (_) =>
-        ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.errored),
-    );
+    try {
+      await compute(
+        _populateSearchdbProcess,
+        await getRawSearchDb(),
+      ).then(
+        (_) => ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetched),
+        onError: (_) =>
+          ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.errored),
+      );
+    } on Exception {
+      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.errored);
+    }
   }
 }
 
