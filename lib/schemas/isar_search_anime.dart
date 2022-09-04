@@ -26,7 +26,6 @@ class IsarSearchAnime {
   double score;
   int year;
   int episodeCount;
-  int? lastSearchTimestamp;
 
   IsarSearchAnime({
     required this.id,
@@ -41,7 +40,6 @@ class IsarSearchAnime {
     required this.score,
     required this.year,
     required this.episodeCount,
-    required this.lastSearchTimestamp,
   });
 
   @ignore
@@ -74,7 +72,6 @@ class IsarSearchAnime {
     score: double.tryParse(map["score"] ?? "0.0") ?? 0.0,
     year: int.tryParse(map["start_date_year"] ?? "0") ?? 0,
     episodeCount: _extractEpisodeInt(map["nb_eps"] ?? "0"),
-    lastSearchTimestamp: null,
   );
 
   String dataText(BuildContext context) => "${
