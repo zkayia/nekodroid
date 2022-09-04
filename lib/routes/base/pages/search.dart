@@ -135,7 +135,9 @@ class SearchPage extends ConsumerWidget {
           borderRadius: BorderRadius.circular(kBorderRadMain),
           onTap: ref.watch(searchdbStatusProv) == SearchdbStatus.ready
             ? () => Navigator.of(context).pushNamed("/base/search")
-            : () => ref.read(apiProvider).populateSearchdb(ref),
+            : ref.watch(searchdbStatusProv).inProcess
+              ? null
+              : () => ref.read(apiProvider).populateSearchdb(ref),
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: kTopBarHeight),
             child: LabelledIcon.horizontal(
