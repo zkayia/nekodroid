@@ -6,6 +6,7 @@ import 'package:nekodroid/extensions/build_context.dart';
 
 enum SearchdbStatus {
   errored,
+  erroredNoInternet,
   fetched,
   fetching,
   unknown;
@@ -16,6 +17,8 @@ enum SearchdbStatus {
         return Boxicons.bx_search;
       case SearchdbStatus.fetching:
         return Boxicons.bx_cloud_download;
+      case SearchdbStatus.erroredNoInternet:
+        return Boxicons.bx_wifi_off;
       case SearchdbStatus.errored:
       case SearchdbStatus.unknown:
       default:
@@ -30,6 +33,7 @@ enum SearchdbStatus {
       case SearchdbStatus.fetching:
         return context.tr.searchdbFetching;
       case SearchdbStatus.errored:
+      case SearchdbStatus.erroredNoInternet:
       case SearchdbStatus.unknown:
       default:
         return context.tr.searchdbUnavailable;

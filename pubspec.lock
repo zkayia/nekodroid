@@ -560,10 +560,10 @@ packages:
     description:
       path: "packages/nekosama"
       ref: HEAD
-      resolved-ref: "23bfbe34dc4ee56843d039790096d0555cdf1505"
+      resolved-ref: "7f50315a2b942491329a2517a834874f9aff8c5d"
       url: "https://github.com/zkayia/nekosama_dart"
     source: git
-    version: "2.2.1"
+    version: "2.3.1"
   nested:
     dependency: transitive
     description:
@@ -696,7 +696,7 @@ packages:
       name: path_provider_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.3"
   pedantic:
     dependency: transitive
     description:
@@ -960,7 +960,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0+2"
+    version: "3.0.0+3"
   term_glyph:
     dependency: transitive
     description:

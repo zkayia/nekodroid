@@ -35,8 +35,12 @@ extension NekoSamaX on NekoSama {
         return populateSearchdb(ref);
       }
       ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetched);
-    } on Exception {
-      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.errored);
+    } on Exception catch (err) {
+      ref.read(searchdbStatusProv.notifier).update(
+        (_) => (err is NekoSamaException ? err.exception : err) is SocketException
+          ? SearchdbStatus.erroredNoInternet
+          : SearchdbStatus.errored,
+      );
     }
   }
 
@@ -46,13 +50,14 @@ extension NekoSamaX on NekoSama {
       await compute(
         _populateSearchdbProcess,
         await getRawSearchDb(),
-      ).then(
-        (_) => ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetched),
-        onError: (_) =>
-          ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.errored),
       );
-    } on Exception {
-      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.errored);
+      ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetched);
+    } on Exception catch (err) {
+      ref.read(searchdbStatusProv.notifier).update(
+        (_) => (err is NekoSamaException ? err.exception : err) is SocketException
+          ? SearchdbStatus.erroredNoInternet
+          : SearchdbStatus.errored,
+      );
     }
   }
 }
