@@ -11,7 +11,7 @@ extension NSAnimeExtendedBaseX on NSAnimeExtendedBase {
         ? ""
         : "${context.tr.episodeCountShort(episodeCount)} \u2022 " 
     }${
-      context.tr.formats(type.name)
+      context.tr.types(type.name)
     } \u2022 ${
       context.tr.statuses(status.name)
     } \u2022 ${

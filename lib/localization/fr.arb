@@ -110,11 +110,11 @@
     }
   },
   
-  "format": "Format",
-  "formats": "{format, select, movie{Film} ova{OVA} special{Spécial} tv{TV}}",
-  "@formats": {
+  "type": "Format",
+  "types": "{type, select, movie{Film} ova{OVA} special{Spécial} tv{TV}}",
+  "@types": {
     "placeholders": {
-      "format": {
+      "type": {
         "type": "String"
       }
     }
