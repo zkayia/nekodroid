@@ -10,7 +10,7 @@ import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
 import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
-import 'package:nekodroid/widgets/generic_image.dart';
+import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
@@ -96,7 +96,7 @@ class SearchRoute extends ConsumerWidget {
                   title: anime.title,
                   subtitle: anime.dataText(context),
                   leading: AnimeCard(
-                    image: GenericImage(anime.thumbnailUri),
+                    image: GenericCachedImage(anime.thumbnailUri),
                   ),
                   onTap: () {
                     final miscBox = Hive.box("misc-data");

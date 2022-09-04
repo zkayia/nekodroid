@@ -14,7 +14,7 @@ import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
 import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
-import 'package:nekodroid/widgets/generic_image.dart';
+import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
@@ -74,57 +74,56 @@ class SearchPage extends ConsumerWidget {
           ).when(
             loading: () => const CircularProgressIndicator(),
             error: (_, __) => const Icon(Boxicons.bx_error_circle),
-            data: (searches) => searches.isEmpty
-              ? LabelledIcon.vertical(
+            data: (searches) => AnimeListview(
+              itemCount: searches.isEmpty ? 0 : searches.length + 1,
+              placeholder: LabelledIcon.vertical(
                 icon: const LargeIcon(Boxicons.bx_question_mark),
                 label: context.tr.searchNoRecent,
-              )
-              : AnimeListview(
-                itemCount: searches.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    final titleLarge = Theme.of(context).textTheme.titleLarge;
-                    return ConstrainedBox(
-                      constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: SingleLineText(
-                              context.tr.searchRecents,
-                              style: titleLarge,
-                            ),
+              ),
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  final titleLarge = Theme.of(context).textTheme.titleLarge;
+                  return ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: SingleLineText(
+                            context.tr.searchRecents,
+                            style: titleLarge,
                           ),
-                          const SizedBox(width: kPaddingSecond),
-                          IconButton(
-                            onPressed: () => miscBox.clear(),
-                            icon: Icon(
-                              Boxicons.bx_trash,
-                              color: titleLarge?.color,
-                            ),
+                        ),
+                        const SizedBox(width: kPaddingSecond),
+                        IconButton(
+                          onPressed: () => miscBox.clear(),
+                          icon: Icon(
+                            Boxicons.bx_trash,
+                            color: titleLarge?.color,
                           ),
-                        ],
-                      ),
-                    );
-                  }
-                  final element = searches.elementAt(index - 1);
-                  return AnimeListTile(
-                    title: element.title,
-                    leading: AnimeCard(
-                      image: GenericImage(element.thumbnailUri),
-                    ),
-                    trailing: IconButton(
-                      onPressed: () => miscBox.put(
-                        "recent-searches",
-                        (miscBox.get("recent-searches") as List?)?.cast<int>().where(
-                          (e) => e != element.id,
-                        ).toList(),
-                      ),
-                      icon: const Icon(Boxicons.bx_trash_alt),
+                        ),
+                      ],
                     ),
                   );
-                },
-              ),
+                }
+                final element = searches.elementAt(index - 1);
+                return AnimeListTile(
+                  title: element.title,
+                  leading: AnimeCard(
+                    image: GenericCachedImage(element.thumbnailUri),
+                  ),
+                  trailing: IconButton(
+                    onPressed: () => miscBox.put(
+                      "recent-searches",
+                      (miscBox.get("recent-searches") as List?)?.cast<int>().where(
+                        (e) => e != element.id,
+                      ).toList(),
+                    ),
+                    icon: const Icon(Boxicons.bx_trash_alt),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
