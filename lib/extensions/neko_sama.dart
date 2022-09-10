@@ -49,9 +49,11 @@ extension NekoSamaX on NekoSama {
     try {
       final data = await getRawSearchDb();
       ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.processing);
-      await compute(
-        _populateSearchdbProcess,
-        data,
+      Hive.box("misc-data").putAll(
+        await compute(
+          _populateSearchdbProcess,
+          data,
+        ),
       );
       ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.ready);
     } on Exception catch (err) {
@@ -64,16 +66,30 @@ extension NekoSamaX on NekoSama {
   }
 }
 
-Future<void> _populateSearchdbProcess(List<Map<String, dynamic>> rawDb) async {
+Future<Map> _populateSearchdbProcess(List<Map<String, dynamic>> rawDb) async {
   final isar = await Isar.open([
     IsarSearchAnimeSchema,
   ]);
+  final stats = {
+    "searchdb-lowest-popularity": 0.0,
+    "searchdb-highest-popularity": 0.0,
+  };
   final animes = [
-    ...rawDb.map(IsarSearchAnime.fromRawSearchDb)
+    ...rawDb.map((e) {
+      final anime = IsarSearchAnime.fromRawSearchDb(e);
+      if (anime.popularity < stats["searchdb-lowest-popularity"]!) {
+        stats["searchdb-lowest-popularity"] = anime.popularity;
+      }
+      if (anime.popularity > stats["searchdb-highest-popularity"]!) {
+        stats["searchdb-highest-popularity"] = anime.popularity;
+      }
+      return anime;
+    })
   ];
   isar.writeTxnSync(() {
     isar.isarSearchAnimes
       ..clearSync()
       ..putAllSync(animes);
   });
+  return stats;
 }

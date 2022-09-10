@@ -220,6 +220,18 @@ ThemeData _buildTheme({
       selectedItemColor: accent,
       unselectedItemColor: polarAlt,
     ),
+    bottomSheetTheme: const BottomSheetThemeData().copyWith(
+      elevation: kDefaultElevation,
+      modalElevation: kDefaultElevation,
+      backgroundColor: primAlt,
+      modalBackgroundColor: primAlt,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(kBorderRadMain),
+          topRight: Radius.circular(kBorderRadMain),
+        ),
+      ),
+    ),
     buttonTheme: const ButtonThemeData().copyWith(
       alignedDropdown: true,
     ),

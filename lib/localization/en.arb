@@ -26,6 +26,8 @@
   "searchdbFetching": "Fetching search data",
   "searchdbProcessing": "Processing search data",
   "searchdbUnavailable": "Search unavailable - Tap to retry",
+  "searchFiltersResetConfirm": "Are you sure ?",
+  "searchFiltersResetConfirmDesc": "All current selected filters will be unselected.",
   
   
   "more": "More",
@@ -99,6 +101,9 @@
     }
   },
   
+  
+  "score": "Score",
+  "popularity": "Popularity",
   
   "genre": "Genre",
   "genres": "{genre, select, action{action} adventure{adventure} battleRoyale{battle royale} comedy{comedy} cyberpunk{cyberpunk} drama{drama} ecchi{ecchi} fantasy{fantasy} hentai{hentai} horror{horror} isekai{isekai} mafia{mafia} magic{magic} magicalGirl{magical girl} mecha{mecha} military{military} music{music} mystery{mystery} psychological{psychological} romance{romance} sciFi{sci-fi} sliceOfLife{slice of life} sports{sports} supernatural{supernatural} thriller{thriller}}",
