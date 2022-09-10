@@ -8,7 +8,7 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/routes/player/players/native/providers/player_controls.dart';
 import 'package:nekodroid/routes/player/players/native/widgets/progress_bar.dart';
-import 'package:nekodroid/widgets/generic_dialog.dart';
+import 'package:nekodroid/widgets/generic_form_dialog.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 import 'package:video_player/video_player.dart';
 
@@ -217,11 +217,11 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                   ref.read(playerControlsProvider.notifier).inAction = true;
                   final newSpeed = await showDialog<double>(
                     context: context,
-                    builder: (context) => GenericDialog.radio(
+                    builder: (context) => GenericFormDialog.radio(
                       title: context.tr.playerPlaybackSpeed,
                       elements: [
                         for (final speed in [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0])
-                          GenericDialogElement(
+                          GenericFormDialogElement(
                             label: speed.toString(),
                             value: speed,
                             selected: speed == ref.read(playerValProvider).playbackSpeed,
@@ -245,11 +245,11 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                     ref.read(playerControlsProvider.notifier).inAction = true;
                     final newQuality = await showDialog<File>(
                       context: context,
-                      builder: (context) => GenericDialog.radio(
+                      builder: (context) => GenericFormDialog.radio(
                         title: context.tr.playerQuality,
                         elements: [
                           for (final quality in qualities.entries)
-                            GenericDialogElement(
+                            GenericFormDialogElement(
                               label: quality.key,
                               value: quality.value,
                               selected: "file://${quality.value.path}" == controller.dataSource,
