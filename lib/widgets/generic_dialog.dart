@@ -30,7 +30,7 @@ class GenericDialog<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: SingleLineText(title),
+    title: Text(title),
     titlePadding: const EdgeInsets.only(
       top: kPaddingMain,
       left: kPaddingMain,
