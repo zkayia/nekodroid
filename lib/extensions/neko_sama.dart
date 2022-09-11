@@ -14,7 +14,7 @@ import 'package:nekosama/nekosama.dart';
 extension NekoSamaX on NekoSama {
 
   Future<void> checkSearchdb(WidgetRef ref) async {
-    ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.fetching);
+    ref.read(searchdbStatusProv.notifier).update((_) => SearchdbStatus.verifying);
     try {
       final client = HttpClient();
       final request = await client.headUrl(

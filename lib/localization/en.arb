@@ -25,6 +25,7 @@
   "searchNoRecent": "No recent searches",
   "searchRecentsClearConfirm": "Clear recent searches ?",
   "searchRecentsClearConfirmDesc": "All recent searches will be deleted.",
+  "searchdbVerifying": "Verifying search data",
   "searchdbFetching": "Fetching search data",
   "searchdbProcessing": "Processing search data",
   "searchdbUnavailable": "Search unavailable - Tap to retry",

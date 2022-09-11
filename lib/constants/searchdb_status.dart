@@ -8,12 +8,16 @@ enum SearchdbStatus {
   ready,
   processing,
   fetching,
+  verifying,
   erroredNoInternet,
   errored,
   unknown;
 
-  bool get inProcess =>
-    this == SearchdbStatus.fetching || this == SearchdbStatus.processing;
+  bool get inProcess => const {
+    SearchdbStatus.verifying,
+    SearchdbStatus.fetching,
+    SearchdbStatus.processing,
+  }.contains(this);
 
   IconData get icon {
     switch (this) {
@@ -23,6 +27,8 @@ enum SearchdbStatus {
         return Boxicons.bx_chip;
       case SearchdbStatus.fetching:
         return Boxicons.bx_cloud_download;
+      case SearchdbStatus.verifying:
+        return Boxicons.bx_check_shield;
       case SearchdbStatus.erroredNoInternet:
         return Boxicons.bx_wifi_off;
       default:
@@ -38,6 +44,8 @@ enum SearchdbStatus {
         return context.tr.searchdbProcessing;
       case SearchdbStatus.fetching:
         return context.tr.searchdbFetching;
+      case SearchdbStatus.verifying:
+        return context.tr.searchdbVerifying;
       default:
         return context.tr.searchdbUnavailable;
     }
