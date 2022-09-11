@@ -34,10 +34,12 @@
   "searchNoResults": "Aucun résultat",
   "searchRecents": "Recherché récemment",
   "searchNoRecent": "Aucune recherche récente",
+  "searchRecentsClearConfirm": "Vider les recherches récentes ?",
+  "searchRecentsClearConfirmDesc": "Toutes les recherches récentes seront supprimées.",
   "searchdbFetching": "Récupération des données de recherche",
   "searchdbProcessing": "Traitement des données de recherche",
   "searchdbUnavailable": "Recherche indisponible - Appuyez pour réessayer",
-  "searchFiltersResetConfirm": "Êtes-vous sûr ?",
+  "searchFiltersResetConfirm": "Réinitialiser les filtres ?",
   "searchFiltersResetConfirmDesc": "Tous les filtres actuellement sélectionnés seront désélectionnés.",
   
   

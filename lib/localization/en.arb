@@ -23,10 +23,12 @@
   "searchNoResults": "No results",
   "searchRecents": "Searched recently",
   "searchNoRecent": "No recent searches",
+  "searchRecentsClearConfirm": "Clear recent searches ?",
+  "searchRecentsClearConfirmDesc": "All recent searches will be deleted.",
   "searchdbFetching": "Fetching search data",
   "searchdbProcessing": "Processing search data",
   "searchdbUnavailable": "Search unavailable - Tap to retry",
-  "searchFiltersResetConfirm": "Are you sure ?",
+  "searchFiltersResetConfirm": "Reset filters ?",
   "searchFiltersResetConfirmDesc": "All current selected filters will be unselected.",
   
   

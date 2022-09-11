@@ -15,6 +15,7 @@ import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
+import 'package:nekodroid/widgets/generic_dialog.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
@@ -96,7 +97,17 @@ class SearchPage extends ConsumerWidget {
                         ),
                         const SizedBox(width: kPaddingSecond),
                         IconButton(
-                          onPressed: () => miscBox.clear(),
+                          onPressed: () => showDialog<bool>(
+                            context: context,
+                            builder: (context) => GenericDialog.confirm(
+                              title: context.tr.searchRecentsClearConfirm,
+                              child: Text(context.tr.searchRecentsClearConfirmDesc),
+                            ),
+                          ).then((value) {
+                            if (value ?? false) {
+                              miscBox.clear();
+                            }
+                          }),
                           icon: Icon(
                             Boxicons.bx_trash,
                             color: titleLarge?.color,
@@ -112,6 +123,10 @@ class SearchPage extends ConsumerWidget {
                   leading: AnimeCard(
                     image: GenericCachedImage(element.thumbnailUri),
                   ),
+                  onTap: () => Navigator.of(context).pushNamed(
+                    "/anime",
+                    arguments: element.urlUri,
+                  ),
                   trailing: IconButton(
                     onPressed: () => miscBox.put(
                       "recent-searches",
@@ -119,7 +134,7 @@ class SearchPage extends ConsumerWidget {
                         (e) => e != element.id,
                       ).toList(),
                     ),
-                    icon: const Icon(Boxicons.bx_trash_alt),
+                    icon: const Icon(Boxicons.bx_x),
                   ),
                 );
               },
