@@ -33,49 +33,55 @@ class AnimeCard extends StatelessWidget {
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(kBorderRadMain),
-            child: InkWell(
-              onTap: onTap,
-              onLongPress: onLongPress,
-              child: Stack(
-                fit: StackFit.expand,
-                alignment: Alignment.center,
-                children: [
-                  image,
-                  if (isEpisode)
-                    const ColoredBox(
-                      color: kShadowThumbWithIcon,
-                      child: Center(
-                        child: Icon(
-                          Boxicons.bx_play,
-                          color: kOnImageColor,
-                        ),
+            child: Stack(
+              fit: StackFit.expand,
+              alignment: Alignment.center,
+              children: [
+                image,
+                if (isEpisode)
+                  const ColoredBox(
+                    color: kShadowThumbWithIcon,
+                    child: Center(
+                      child: Icon(
+                        Boxicons.bx_play,
+                        color: kOnImageColor,
                       ),
                     ),
-                  if (badge != null)
-                    Align(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(kBorderRadMain),
-                        ),
-                        child: Material(
-                          color: kAnimeCardBadgeShadow,
-                          child: Padding(
-                            padding: kAnimeCardBadgeTextPadding,
-                            child: FittedBox(
-                              child: SingleLineText(
-                                badge ?? "",
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: kAnimeCardBadgeColor,
-                                ),
+                  ),
+                if (badge != null)
+                  Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(kBorderRadMain),
+                      ),
+                      child: Material(
+                        color: kAnimeCardBadgeShadow,
+                        child: Padding(
+                          padding: kAnimeCardBadgeTextPadding,
+                          child: FittedBox(
+                            child: SingleLineText(
+                              badge ?? "",
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: kAnimeCardBadgeColor,
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                ],
-              ),
+                  ),
+                Positioned.fill(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(kBorderRadMain),
+                      onTap: onTap,
+                      onLongPress: onLongPress,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
