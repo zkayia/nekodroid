@@ -153,6 +153,7 @@ class SearchPage extends ConsumerWidget {
             : ref.watch(searchdbStatusProv).inProcess
               ? null
               : () => ref.read(apiProvider).populateSearchdb(ref),
+          onLongPress: () => ref.read(apiProvider).populateSearchdb(ref),
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: kTopBarHeight),
             child: LabelledIcon.horizontal(
