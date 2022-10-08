@@ -10,4 +10,6 @@ extension IterableX<E> on Iterable<E> {
     }
     return orElse?.call();
   }
+
+  E? elementAtOrNull(int index) => length > index ? elementAt(index) : null;
 }

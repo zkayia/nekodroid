@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:nekodroid/extensions/iterable.dart';
 
 
 extension LocaleX on Locale {
@@ -9,11 +10,13 @@ extension LocaleX on Locale {
     : fromString(localeString);
   
   static Locale fromString(String localeString) {
-    if (localeString.contains("_")) {
-      final parts = localeString.split("_");
+    final strReg = RegExp("_|-");
+    if (localeString.contains(strReg)) {
+      final parts = localeString.split(strReg);
       return Locale.fromSubtags(
         languageCode: parts.first,
-        countryCode: parts.last,
+        scriptCode: parts.length == 3 ? parts.elementAtOrNull(1) : null,
+        countryCode: parts.elementAtOrNull(parts.length == 3 ? 2 : 1),
       );
     }
     return Locale(localeString);
