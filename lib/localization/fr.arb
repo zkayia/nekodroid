@@ -36,10 +36,14 @@
   "searchNoRecent": "Aucune recherche récente",
   "searchRecentsClearConfirm": "Vider les recherches récentes ?",
   "searchRecentsClearConfirmDesc": "Toutes les recherches récentes seront supprimées.",
-  "searchdbVerifying": "Vérification des données de recherche",
-  "searchdbFetching": "Récupération des données de recherche",
-  "searchdbProcessing": "Traitement des données de recherche",
-  "searchdbUnavailable": "Recherche indisponible - Appuyez pour réessayer",
+  "searchdbStatus": "{status, select, ready{Recherche} processing{Traitement des données de recherche} fetching{Récupération des données de recherche} verifying{Vérification des données de recherche} other{Recherche indisponible - Appuyez pour réessayer}}",
+  "@searchdbStatus": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
   "searchFiltersResetConfirm": "Réinitialiser les filtres ?",
   "searchFiltersResetConfirmDesc": "Tous les filtres actuellement sélectionnés seront désélectionnés.",
   

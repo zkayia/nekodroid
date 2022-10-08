@@ -158,7 +158,7 @@ class SearchPage extends ConsumerWidget {
             constraints: const BoxConstraints(minHeight: kTopBarHeight),
             child: LabelledIcon.horizontal(
               icon: Icon(ref.watch(searchdbStatusProv).icon),
-              label: ref.watch(searchdbStatusProv).getMessage(context),
+              label: context.tr.searchdbStatus(ref.watch(searchdbStatusProv).name),
             ),
           ),
         ),
