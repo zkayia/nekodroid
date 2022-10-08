@@ -122,10 +122,10 @@ class _GenericFormDialogState<T> extends State<GenericFormDialog> {
             switch (widget._type) {
               case _FormDialogType.checkbox:
                 return CheckboxListTile(
-                  title: SingleLineText(element.label),
+                  title: Text(element.label),
                   subtitle: element.details == null 
                     ? null
-                    : OverflowText(element.details!),
+                    : Text(element.details!),
                   value: _value?.contains(element.value),
                   onChanged: (value) {
                     if (value != _value?.contains(element.value)) {
@@ -139,10 +139,10 @@ class _GenericFormDialogState<T> extends State<GenericFormDialog> {
                 );
               case _FormDialogType.radio:
                 return RadioListTile<T>(
-                  title: SingleLineText(element.label),
+                  title: Text(element.label),
                   subtitle: element.details == null 
                     ? null
-                    : OverflowText(element.details!),
+                    : Text(element.details!),
                   value: element.value,
                   groupValue: _value?.first,
                   onChanged: (T? value) {
