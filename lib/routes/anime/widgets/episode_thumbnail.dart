@@ -28,8 +28,8 @@ class EpisodeThumbnail extends ConsumerWidget {
           imageUrl,
           childBuilder: (context, child) {
             final blurThumbsSigma = ref.watch(
-              settingsProvider.select((value) => value.blurThumbsSigma),
-            );
+              settingsProvider.select((value) => value.anime.blurThumbsSigma),
+            ).toDouble();
             return ref.read(blurThumbsProvider)
               ? ImageFiltered(
                 imageFilter: ImageFilter.blur(

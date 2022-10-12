@@ -44,14 +44,14 @@ class AppState extends ConsumerState<App> {
     onGenerateTitle: (context) => context.tr.appTitle,
     debugShowCheckedModeBanner: false,
     theme: lightTheme,
-    darkTheme: ref.watch(settingsProvider.select((value) => value.useAmoled))
+    darkTheme: ref.watch(settingsProvider.select((v) => v.general.useAmoled))
       ? amoledTheme
       : darkTheme,
-    themeMode: ref.watch(settingsProvider.select((value) => value.themeMode)),
+    themeMode: ref.watch(settingsProvider.select((v) => v.general.themeMode)),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: LocaleX.fromSettingString(
-      ref.watch(settingsProvider.select((value) => value.locale)),
+      ref.watch(settingsProvider.select((v) => v.general.locale)),
     )
       ?? LocaleX.fromString(Intl.systemLocale),
     builder: (context, child) => ScrollConfiguration(

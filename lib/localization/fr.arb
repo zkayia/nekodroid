@@ -46,6 +46,14 @@
   },
   "searchFiltersResetConfirm": "Réinitialiser les filtres ?",
   "searchFiltersResetConfirmDesc": "Tous les filtres actuellement sélectionnés seront désélectionnés.",
+  "searchFiltersPersistModes": "{mode, select, device{Tout le temps} session{Jusqu'au redémarrage de l'application} route{Tant que la page de recherche est ouverte}}",
+  "@searchFiltersPersistModes": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
   
   
   "more": "Plus",
@@ -72,6 +80,7 @@
     }
   },
   "settingsUseAmoled": "Utiliser l'AMOLED",
+  "settingsUseAmoledDesc": "Utiliser un fond noir profond pour le thème sombre",
   "settingsLocale": "Langage",
   "settingsDeviceLocale": "Language de l'appareil",
   "settingsNavLabel": "Etiquettes de navigation",
@@ -85,15 +94,71 @@
   },
   "settingsDefaultPage": "Page par défaut",
   
-  "carouselItemCount": "Nombre d'élement du carousel",
+  "carouselColumnCount": "Nombre de colones du carousel",
+  "episodeCardPressAction": "Action d'appui sur un épisode",
+  "episodeCardLongPressAction": "Action d'appui long sur un épisode",
+  "episodeCardActions": "{action, select, playEpisodeNative{Jouer (natif)} playEpisodeWebview{Jouer (webview)} openAnime{Ouvrir l'anime} copyAnimeTitle{Copier le title de l'anime} copyAnimeTitleWithEp{Copier le title de l'anime avec le numéro d'épisode} copyEpisodeLink{Copier le lien de l'épisode} copyVideoLink{Copier le lien de la vidéo} copyAnimeLink{Copier le lien de l'anime} nothing{Ne rien faire}}",
+  "@episodeCardActions": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "animeCardPressAction": "Action d'appui sur un anime",
+  "animeCardLongPressAction": "Action d'appui long sur un anime",
+  "animeCardActions": "{action, select, openAnime{Ouvrir l'anime} playFirstEpNative{Jouer le premier épisode (natif)} playFirstEpWebview{Jouer le premier épisode (webview)} copyTitle{Copier le titre} copyLink{Copier le lien} nothing{Ne rien faire}}",
+  "@animeCardActions": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  
+  "defaultTab": "Onglet par défaut",
+  "enableTabbarScrolling": "Défilement de la barre des onglets",
+  
+  "autoOpenSearchBar": "Ouvrir automatiquement la barre de recherche",
+  "autoOpenSearchBarDesc": "Ouvre automatiquement la barre de recherche dans l'onglet recherche",
+  "showAllWhenNoQuery": "Afficher tout",
+  "showAllWhenNoQueryDesc": "Afficher tout les animes lorsque la barre de recherche est vide",
+  "exitOnClear": "Sortir quand vide",
+  "exitOnClearDesc": "Quitter quand le bouton efface est utilisé et que la barre de recherche est vide",
+  "bottomExitButton": "Bouton de sortie",
+  "bottomExitButtonDesc": "Activer le bouton de sortie en bas de l'écran",
+  "bottomExitButtonFloat": "Faire flotter le bouton de sortie",
+  "bottomExitButtonFloatDesc": "Déplacer dynamiquement le bouton de sortie au dessus du clavier",
+  "rememberSearchFilter": "Se rappeler des filtres",
   
   "blurThumbs": "Flouter les miniatures",
   "blurThumbsSigma": "Force du flou",
   "blurThumbsShowSwitch": "Afficher le switch de flou",
   
-  "settingsAdvanced": "Avancé",
-  
-  "settingsUpdate": "Mise à jour",
+  "confirmExit": "Confirmer avant de sortir",
+  "confirmExitDesc": "Demander une confirmation avant de sortir avec le bouton retour",
+  "confirmExitDuration": "Temps de confirmation",
+  "confirmExitDurationDesc": "(secondes) La confirmation disparaitra après",
+  "rememberLastLocation": "Se rappeler de la dernière position",
+  "rememberLastLocationDesc": "Recommencer les episodes à la dernière position",
+  "autoMarkCompleted": "Marquer comme finis automatiquement",
+  "autoMarkCompletedDesc": "Automatiquement marquer les episodes comme finis lorsqu'un seuil est franchi",
+  "autoMarkCompletedThreshold": "Seuil de marquage automatique",
+  "autoMarkCompletedThresholdDesc": "(pourcent %) Marquer un episode comme finis après",
+  "controlsDisplayDuration": "Temps d'affichage des controles",
+  "controlsDisplayDurationDesc": "(secondes) Les controles du joueur natif disparaitrons après",
+  "controlsBackgroundTransparency": "Transparence du fond des controles",
+  "controlsBackgroundTransparencyDesc": "(pourcent %) Transparence de l'ombre derrière les controles",
+  "pauseOnControlsDisplay": "Pause quand les controles s'affichent",
+  "pauseOnControlsDisplayDesc": "Mettre la video en pause lorsque les controles s'affiche",
+  "introSkipTime": "Temps des introduction",
+  "introSkipTimeDesc": "(secondes) Quand le bouton pour passer les intros est utilisé, avancer de",
+  "forwardQuickSkipTime": "Temps d'avance rapide",
+  "forwardQuickSkipTimeDesc": "(secondes) Quand le bouton d'avance rapide est utilisé, avancer de",
+  "backwardQuickSkipTime": "Temps de retour rapide",
+  "backwardQuickSkipTimeDesc": "(secondes) Quand le bouton de retour rapide est utilisé, revenir de",
+  "quickSkipDisplayDuration": "Temps d'affichage du déplacement rapide",
+  "quickSkipDisplayDurationDesc": "(millisecondes) Cacher le déplacement rapide après",
   
   "settingsAbout": "A propos",
   

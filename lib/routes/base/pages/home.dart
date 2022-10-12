@@ -52,7 +52,7 @@ class HomePage extends ConsumerWidget {
                 title: carousel.key,
                 items: [
                   ...carousel.value.take(
-                    ref.read(settingsProvider).carouselItemCount
+                    ref.read(settingsProvider).home.carouselColumnCount
                       * (index == 0 ? 2 : 1),
                   ),
                 ],

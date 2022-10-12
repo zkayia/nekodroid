@@ -1,25 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nekodroid/constants/nav_labels_mode.dart';
 import 'package:nekodroid/extensions/iterable.dart';
 import 'package:nekodroid/models/app_settings.dart';
 
 
 const kFallbackLocale = Locale("en");
 
-const kDefaultSettings = AppSettings(
-  locale: "system",
-  themeMode: ThemeMode.system,
-  useAmoled: false,
-  defaultPage: 0,
-  carouselItemCount: 5,
-  secrecyEnabled: false,
-  blurThumbs: true,
-  blurThumbsSigma: 12,
-  navLabelsMode: NavLabelsMode.all,
-  lazyLoadItemCount: 5,
-);
+const kDefaultSettings = AppSettings();
 
 // all of the below are in ms
 const int kPlayerPopDelay = 3 * 1000;

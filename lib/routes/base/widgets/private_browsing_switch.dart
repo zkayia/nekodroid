@@ -14,15 +14,15 @@ class PrivateBrowsingSwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => ListTile(
     // TODO: implement private browsing
-    enabled: false,
+    enabled: ref.watch(settingsProvider.select((v) => v.library.enableHistory)),
     leading: const ListTileIcon(Boxicons.bxs_mask),
     title: Text(context.tr.morePrivateBrowsing),
     subtitle: Text(context.tr.morePrivateBrowsingDescription),
-    // trailing: Switch(
-    //   value: ref.watch(settingsProvider.select((value) => value.secrecyEnabled)),
-    //   onChanged: (bool value) =>
-    //     ref.read(settingsProvider.notifier).secrecyEnabled = value,
-    // ),
-    onTap: () => ref.read(settingsProvider.notifier).switchSecrecyEnabled(),
+    trailing: Switch(
+      value: ref.watch(settingsProvider.select((v) => v.session.privateBrowsingEnabled)),
+      onChanged: (bool value) =>
+        ref.read(settingsProvider.notifier).privateBrowsingEnabled = value,
+    ),
+    onTap: () => ref.read(settingsProvider.notifier).togglePrivateBrowsingEnabled(),
   );
 }

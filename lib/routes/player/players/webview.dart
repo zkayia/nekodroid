@@ -81,7 +81,7 @@ class WebviewPlayerState extends ConsumerState<WebviewPlayer> {
             useWideViewPort: false,
             useShouldInterceptRequest: true,
             forceDark: _resolveForceDark(
-              ref.watch(settingsProvider.select((value) => value.themeMode)),
+              ref.watch(settingsProvider.select((v) => v.general.themeMode)),
             ),
           ),
         ),

@@ -35,6 +35,14 @@
   },
   "searchFiltersResetConfirm": "Reset filters ?",
   "searchFiltersResetConfirmDesc": "All current selected filters will be unselected.",
+  "searchFiltersPersistModes": "{mode, select, device{Always} session{Until app restart} route{While search is open}}",
+  "@searchFiltersPersistModes": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
   
   
   "more": "More",
@@ -61,6 +69,7 @@
     }
   },
   "settingsUseAmoled": "Use AMOLED",
+  "settingsUseAmoledDesc": "Use a pure black background for the dark theme",
   "settingsLocale": "Language",
   "settingsDeviceLocale": "Device language",
   "settingsNavLabel": "Navigation labels",
@@ -74,15 +83,71 @@
   },
   "settingsDefaultPage": "Default page",
   
-  "carouselItemCount": "Carousel item count",
+  "carouselColumnCount": "Carousel column count",
+  "episodeCardPressAction": "Episode card tap action",
+  "episodeCardLongPressAction": "Episode card hold action",
+  "episodeCardActions": "{action, select, playEpisodeNative{Play (native)} playEpisodeWebview{Play (webview)} openAnime{Open anime} copyAnimeTitle{Copy anime title} copyAnimeTitleWithEp{Copy anime title with episode number} copyEpisodeLink{Copy episode link} copyVideoLink{Copy video link} copyAnimeLink{Copy anime link} nothing{Do nothing}}",
+  "@episodeCardActions": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "animeCardPressAction": "Anime card tap action",
+  "animeCardLongPressAction": "Anime card hold action",
+  "animeCardActions": "{action, select, openAnime{Open anime} playFirstEpNative{Play first episode (native)} playFirstEpWebview{Play first episode (webview)} copyTitle{Copy title} copyLink{Copy link} nothing{Do nothing}}",
+  "@animeCardActions": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  
+  "defaultTab": "Default tab",
+  "enableTabbarScrolling": "Enable tabs bar scrolling",
+  
+  "autoOpenSearchBar": "Auto open search bar",
+  "autoOpenSearchBarDesc": "Automatically open the search bar when navigating to the search tab",
+  "showAllWhenNoQuery": "Show all when empty",
+  "showAllWhenNoQueryDesc": "Show all animes when the search bar is empty",
+  "exitOnClear": "Exit on clear",
+  "exitOnClearDesc": "Exit when the clear button is used on an empty search bar",
+  "bottomExitButton": "Exit button",
+  "bottomExitButtonDesc": "Enables the bottom exit button",
+  "bottomExitButtonFloat": "Exit button float",
+  "bottomExitButtonFloatDesc": "Dynamically move the exit button above the keyboard",
+  "rememberSearchFilter": "Remember search filters",
   
   "blurThumbs": "Blur thumbnails",
   "blurThumbsSigma": "Blur intensity",
   "blurThumbsShowSwitch": "Show blur thumbnails switch",
   
-  "settingsAdvanced": "Advanced",
-  
-  "settingsUpdate": "Update",
+  "confirmExit": "Confirm before exiting",
+  "confirmExitDesc": "Require two taps to exit using the back button",
+  "confirmExitDuration": "Confirm duration",
+  "confirmExitDurationDesc": "(seconds) The confirmation will disappear after",
+  "rememberLastLocation": "Remember last location",
+  "rememberLastLocationDesc": "Restart episodes at the last location",
+  "autoMarkCompleted": "Auto mark completed",
+  "autoMarkCompletedDesc": "Mark episodes as completed when a threshold is reached",
+  "autoMarkCompletedThreshold": "Auto mark completed threshold",
+  "autoMarkCompletedThresholdDesc": "(percentage %) Mark an episode as completed after",
+  "controlsDisplayDuration": "Controls display duration",
+  "controlsDisplayDurationDesc": "(seconds) The native player controls will be hidden after",
+  "controlsBackgroundTransparency": "Controls background transparency",
+  "controlsBackgroundTransparencyDesc": "(percentage %) Transparency of the shadow behind the controls",
+  "pauseOnControlsDisplay": "Pause on controls display",
+  "pauseOnControlsDisplayDesc": "Pause the video when the controls appear on screen",
+  "introSkipTime": "Intro skip time",
+  "introSkipTimeDesc": "(seconds) When the intro skip button is used, skip by",
+  "forwardQuickSkipTime": "Forward quick skip time",
+  "forwardQuickSkipTimeDesc": "(seconds) When the forward quick skip button is used, skip by",
+  "backwardQuickSkipTime": "Backward quick skip time",
+  "backwardQuickSkipTimeDesc": "(seconds) When the backward quick skip button is used, go back by",
+  "quickSkipDisplayDuration": "Quick skip display duration",
+  "quickSkipDisplayDurationDesc": "(milliseconds) Hide the quick skip overlay after",
   
   "settingsAbout": "About",
   

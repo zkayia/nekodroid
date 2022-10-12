@@ -55,11 +55,14 @@ class BaseRoute extends ConsumerWidget {
         currentIndex: ref.watch(navIndexProvider),
         onTap: (index) =>
           ref.read(navIndexProvider.notifier).update((state) => index),
-        showSelectedLabels:
-          ref.watch(settingsProvider).navLabelsMode != NavLabelsMode.disabled,
+        showSelectedLabels: ref.watch(
+          settingsProvider.select((v) => v.general.navLabelsMode),
+        ) != NavLabelsMode.disabled,
         showUnselectedLabels:
-          ref.watch(settingsProvider).navLabelsMode != NavLabelsMode.disabled
-          && ref.watch(settingsProvider).navLabelsMode == NavLabelsMode.all,
+          ref.watch(settingsProvider.select((v) => v.general.navLabelsMode))
+            != NavLabelsMode.disabled
+          && ref.watch(settingsProvider.select((v) => v.general.navLabelsMode))
+            == NavLabelsMode.all,
       ),
     ),
   );
