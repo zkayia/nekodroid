@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
+import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/player/players/native/providers/player_controls.dart';
 import 'package:nekodroid/routes/player/players/native/widgets/progress_bar.dart';
 import 'package:nekodroid/widgets/generic_form_dialog.dart';
@@ -67,8 +68,9 @@ class PlayerControls extends ConsumerWidget {
         if (action != null) {
           controller.seekTo(
             ref.read(playerValProvider).position + Duration(
-              // TODO: quick skip duration setting
-              seconds: action == DoubleTapAction.rewind ? -3 : 3,
+              seconds: action == DoubleTapAction.rewind
+                ? -ref.read(settingsProvider).player.quickSkipBackwardTime
+                : ref.read(settingsProvider).player.quickSkipForwardTime,
             ),
           );
           ref.read(playerControlsProvider.notifier)
@@ -97,8 +99,7 @@ class PlayerControls extends ConsumerWidget {
         if (
           ref.read(playerValProvider).isPlaying
           && !ref.read(playerControlsProvider).controlsDisplay
-          // TODO: playerPauseOnShowControls setting
-          // && ref.read(settingsProvider).playerPauseOnShowControls
+          && ref.read(settingsProvider).player.controlsPauseOnDisplay
         ) {
           controller.pause();
         }
@@ -185,8 +186,9 @@ class _PlayerControlsMainUi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth10 = MediaQuery.of(context).size.width * 0.1;
     return Material(
-      // TODO: playerControlsShadowAlpha setting
-      color: Colors.black.withAlpha(255 * 50 ~/ 100),
+      color: Colors.black.withAlpha(
+        255 * ref.read(settingsProvider).player.controlsBackgroundTransparency ~/ 100,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -280,8 +282,9 @@ class _PlayerControlsMainUi extends ConsumerWidget {
               IconButton(
                 onPressed: () {
                   controller.seekTo(
-                    // TODO: intro skip length setting
-                    controller.value.position + const Duration(minutes: 1, seconds: 28),
+                    controller.value.position + Duration(
+                      seconds: ref.read(settingsProvider).player.introSkipTime,
+                    ),
                   );
                   ref.watch(playerControlsProvider.notifier).didAction();
                 },
@@ -309,9 +312,6 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                   : IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      // if (!ref.read(playerControlsProvider).showControls) {
-                      //   ref.read(playerControlsProvider.notifier).toggleControls(true);
-                      // }
                       if (ref.read(playerValProvider).isPlaying) {
                         controller.pause();
                       } else {

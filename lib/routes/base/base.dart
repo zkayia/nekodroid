@@ -3,7 +3,9 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants/nav_labels_mode.dart';
+import 'package:nekodroid/constants/searchdb_status.dart';
 import 'package:nekodroid/extensions/build_context.dart';
+import 'package:nekodroid/provider/searchdb_status.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base/models/nav_bar_item.dart';
 import 'package:nekodroid/routes/base/pages/home.dart';
@@ -53,8 +55,16 @@ class BaseRoute extends ConsumerWidget {
           ),
         ],
         currentIndex: ref.watch(navIndexProvider),
-        onTap: (index) =>
-          ref.read(navIndexProvider.notifier).update((state) => index),
+        onTap: (index) {
+          ref.read(navIndexProvider.notifier).update((state) => index);
+          if (
+            index == 2
+            && ref.read(settingsProvider).search.autoOpenBar
+            && ref.read(searchdbStatusProv) == SearchdbStatus.ready
+          ) {
+            Navigator.of(context).pushNamed("/base/search");
+          }
+        },
         showSelectedLabels: ref.watch(
           settingsProvider.select((v) => v.general.navLabelsMode),
         ) != NavLabelsMode.disabled,

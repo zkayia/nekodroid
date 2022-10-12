@@ -8,7 +8,6 @@ import 'package:nekodroid/models/carousel_more_parameters.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base/providers/home.dart';
 import 'package:nekodroid/routes/base/widgets/anime_carousel.dart';
-import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
@@ -26,10 +25,10 @@ class HomePage extends ConsumerWidget {
         error: (error, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
         loading: () => const CircularProgressIndicator(),
         data: (data) {
-          final carousels = {
-            context.tr.homeLatestEps: _buildAnimeCards(context, data.newEpisodes, true),
-            context.tr.homeSeasonalAnimes: _buildAnimeCards(context, data.seasonalAnimes),
-            context.tr.homePopularAnimes: _buildAnimeCards(context, data.mostPopularAnimes),
+          final carousels = <String, List>{
+            context.tr.homeLatestEps: data.newEpisodes,
+            context.tr.homeSeasonalAnimes: data.seasonalAnimes,
+            context.tr.homePopularAnimes: data.mostPopularAnimes,
           };
           return ListView.separated(
             physics: kDefaultScrollPhysics,
@@ -41,22 +40,43 @@ class HomePage extends ConsumerWidget {
             separatorBuilder: (context, index) => const SizedBox(height: kPaddingCarousels),
             itemBuilder: (context, index) {
               final carousel = carousels.entries.elementAt(index);
+              final isEpisode = index == 0;
+              AnimeCard cardBuilder(BuildContext context, element) => AnimeCard(
+                image: GenericCachedImage(element.thumbnail),
+                isEpisode: isEpisode,
+                badge: isEpisode ?
+                  context.tr.episodeShort(element.episodeNumber)
+                  : null,
+                label: isEpisode ? element.episodeTitle : element.title,
+                onTap: () => isEpisode
+                  ? ref.read(settingsProvider).home.episodeCardPressAction
+                    .doAction(Navigator.of(context), ref, element)
+                  : ref.read(settingsProvider).home.animeCardPressAction
+                    .doAction(Navigator.of(context), ref, element),
+                onLongPress: () => isEpisode
+                  ? ref.read(settingsProvider).home.episodeCardLongPressAction
+                    .doAction(Navigator.of(context), ref, element)
+                  : ref.read(settingsProvider).home.animeCardLongPressAction
+                    .doAction(Navigator.of(context), ref, element),
+              );
               return AnimeCarousel(
                 onMoreTapped: () => Navigator.of(context).pushNamed(
                   "/base/carousel_more",
                   arguments: CarouselMoreParameters(
                     title: carousel.key,
-                    cards: carousel.value,
+                    cards: [
+                      ...carousel.value.map((e) => cardBuilder(context, e)),
+                    ],
                   ),
                 ),
                 title: carousel.key,
-                items: [
-                  ...carousel.value.take(
-                    ref.read(settingsProvider).home.carouselColumnCount
-                      * (index == 0 ? 2 : 1),
-                  ),
-                ],
-                isEpisode: index == 0,
+                itemCount: ref.read(settingsProvider).home.carouselColumnCount
+                  * (index == 0 ? 2 : 1),
+                itemBuilder: (context, index) {
+                  final element = carousel.value.elementAt(index);
+                  return cardBuilder(context, element);
+                },
+                isEpisode: isEpisode,
               );
             },
           );
@@ -64,38 +84,4 @@ class HomePage extends ConsumerWidget {
       ),
     ),
   );
-
-  List<AnimeCard> _buildAnimeCards(
-    BuildContext context,
-    List elements,
-    [
-      bool isEpisode=false,
-    ]
-  ) => [
-    ...elements.map(
-      (e) => AnimeCard(
-        image: GenericCachedImage(e.thumbnail),
-        isEpisode: isEpisode,
-        badge: isEpisode ?
-          context.tr.episodeShort(e.episodeNumber)
-          : null,
-        label: isEpisode ? e.episodeTitle : e.title,
-        onTap: isEpisode
-          ? () => Navigator.of(context).pushNamed(
-            "/player",
-            arguments: PlayerRouteParameters(
-              episode: e,
-              playerType: PlayerType.native,
-            ),
-          )
-          : () => Navigator.of(context).pushNamed("/anime", arguments: e.url),
-        onLongPress: isEpisode
-          ? () => Navigator.of(context).pushNamed(
-            "/anime",
-            arguments: isEpisode ? e.animeUrl : e.url,
-          )
-          : null,
-      ),
-    ),
-  ];
 }

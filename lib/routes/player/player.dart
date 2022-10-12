@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/api.dart';
 import 'package:nekodroid/provider/history.dart';
+import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/player/players/native/native.dart';
 import 'package:nekodroid/routes/player/players/webview.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
+import 'package:nekodroid/widgets/generic_toast_text.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekosama/nekosama.dart';
 
@@ -112,6 +113,8 @@ class PlayerRoute extends ConsumerStatefulWidget {
 
 class PlayerRouteState extends ConsumerState<PlayerRoute> {
 
+  FToast fToast = FToast();
+
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
@@ -119,11 +122,15 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    fToast.init(context);
     super.initState();
   }
 
   @override
   void dispose() {
+    fToast
+      ..removeQueuedCustomToasts()
+      ..removeCustomToast();
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
@@ -146,22 +153,26 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
   @override
   Widget build(BuildContext context) {
     final parameters = ModalRoute.of(context)!.settings.arguments as PlayerRouteParameters;
-    final theme = Theme.of(context);
     ref.watch(_playerPopTimeProvider);
     return GenericRoute(
       hideExitFab: true,
       // useSafeArea: parameters.playerType != PlayerType.native,
       onExitTap: (context) async {
+        if (!ref.read(settingsProvider).player.confirmOnBackExit) {
+          return true;
+        }
         final current = DateTime.now().millisecondsSinceEpoch;
-        // TODO: playerPopDelay setting
-        if (current - ref.read(_playerPopTimeProvider) > kPlayerPopDelay) {
+        if (
+          current - ref.read(_playerPopTimeProvider)
+            > ref.read(settingsProvider).player.backExitDuration * 1000
+        ) {
           ref.read(_playerPopTimeProvider.notifier).update((state) => current);
-          Fluttertoast.showToast(
-            msg: context.tr.playerConfirmExit,
-            toastLength: Toast.LENGTH_SHORT,
+          fToast.showToast(
+            child: GenericToastText(context.tr.playerConfirmExit),
+            toastDuration: Duration(
+              seconds: ref.read(settingsProvider).player.backExitDuration,
+            ),
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: theme.colorScheme.background,
-            textColor: theme.textTheme.bodyMedium?.color,
           );
           return false;
         }
@@ -201,22 +212,23 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
                       ? () {
                         final currentEp = ref.read(_playerParamsProvider(parameters)).episode;
                         _offsetCurrentEpBy(1, parameters);
-                        ref.read(historyProvider.notifier).addEntry(
-                          parameters.anime!.toJson(),
-                          currentEp,
-                          DateTime.now().millisecondsSinceEpoch,
-                        ).then(
-                          (success) => Fluttertoast.showToast(
-                            msg: context.tr.playerEpStatus(
-                              success,
-                              currentEp.episodeNumber,
+                        if (ref.read(settingsProvider).player.epAutoMarkCompleted) {
+                          ref.read(historyProvider.notifier).addEntry(
+                            parameters.anime!.toJson(),
+                            currentEp,
+                            DateTime.now().millisecondsSinceEpoch,
+                          ).then(
+                            (success) => fToast.showToast(
+                              child: GenericToastText(
+                                context.tr.playerEpStatus(
+                                  success,
+                                  currentEp.episodeNumber,
+                                ),
+                              ),
+                              gravity: ToastGravity.BOTTOM,
                             ),
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: theme.colorScheme.background,
-                            textColor: theme.textTheme.bodyMedium?.color,
-                          ),
-                        );
+                          );
+                        }
                       }
                       : null,
                 );

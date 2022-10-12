@@ -20,6 +20,7 @@ class LibraryPage extends ConsumerWidget {
           + (v.library.lists?.length ?? 0),
       ),
     ),
+    initialIndex: ref.watch(settingsProvider.select((v) => v.library.defaultTab)),
     child: Stack(
       children: const [
         LibraryTabview(),

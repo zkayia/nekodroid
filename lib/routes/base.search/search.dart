@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:isar/isar.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
+import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/base.search/providers/range_values.dart';
 import 'package:nekodroid/routes/base.search/providers/selectable_filters.dart';
 import 'package:nekodroid/routes/base.search/widgets/filters_dialog.dart';
@@ -43,10 +44,22 @@ final _lastTextQueryProv = StateProvider.autoDispose<String?>(
 final _searchResultsProv = FutureProvider.autoDispose<List<IsarSearchAnime>>(
   (ref) {
     final query = ref.watch(_queryProv);
+    final isar = Isar.getInstance()!;
     if (query == null) {
+      if (ref.watch(settingsProvider.select((v) => v.search.showAllWhenNoQuery))) {
+        return isar.txn(
+          isar.isarSearchAnimes.buildQuery<IsarSearchAnime>(
+            sortBy: [
+              const SortProperty(
+                property: "popularity",
+                sort: Sort.desc,
+              ),
+            ],
+          ).findAll,
+        );
+      }
       return [];
     }
-    final isar = Isar.getInstance()!;
     return isar.txn(query.findAll);
   },
 );
@@ -117,6 +130,9 @@ class SearchRoute extends ConsumerWidget {
       ..watch(scoreFilterProv)
       ..watch(popularityFilterProv);
     return GenericRoute(
+      hideExitFab: ref.watch(settingsProvider.select((v) => !v.search.fabEnabled)),
+      resizeToAvoidBottomInset:
+        ref.watch(settingsProvider.select((v) => v.search.fabMoveWithKeyboard)),
       body: Stack(
         children: [
           ref.watch(_searchResultsProv).when(
@@ -170,9 +186,14 @@ class SearchRoute extends ConsumerWidget {
                     icon: const Icon(Boxicons.bx_x),
                     splashRadius: kTopBarHeight / 2,
                     color: bodyLarge?.color,
-                    onPressed: () => ref.read(_textControllerProv).text.isNotEmpty
-                      ? ref.read(_textControllerProv).clear()
-                      : Navigator.of(context).pop(),
+                    onPressed: () {
+                      if (ref.read(_textControllerProv).text.isNotEmpty) {
+                        return ref.read(_textControllerProv).clear();
+                      }
+                      if (ref.read(settingsProvider).search.clearButtonExitWhenNoQuery) {
+                        Navigator.of(context).pop();
+                      }
+                    },
                   ),
                   suffixIcon: IconButton(
                     icon: const Icon(Boxicons.bx_filter_alt),

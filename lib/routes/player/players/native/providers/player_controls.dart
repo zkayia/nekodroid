@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/extensions/datetime.dart';
+import 'package:nekodroid/provider/settings.dart';
 
 
 /* CONSTANTS */
@@ -60,12 +61,12 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
   DateTime? _dtLastTime;
 
   _PlayerControlsProviderNotifier(Ref ref) :
-    // TODO: player controls display time
-    _playerControlsDisplayDuration = const Duration(seconds: 3),
-      // ref.watch(settingsProvider.select((value) => value.playerControlsDisplayDuration)),
-    // TODO: quick skip button display time
-    _playerQuickSkipDisplayDuration = const Duration(milliseconds: 200),
-      // ref.watch(settingsProvider.select((value) => value.playerQuickSkipDisplayDuration)),
+    _playerControlsDisplayDuration = Duration(
+      seconds: ref.read(settingsProvider).player.controlsDisplayDuration,
+    ),
+    _playerQuickSkipDisplayDuration = Duration(
+      milliseconds: ref.read(settingsProvider).player.quickSkipDisplayDuration,
+    ),
     super(const PlayerControlsData());
 
   set dtCurrent(DoubleTapAction? value) => state = PlayerControlsData(
@@ -106,7 +107,6 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
   ).then((_) => _check());
 
   void _check() {
-    // TODO: player controls display time
     if (
       state.controlsDisplay
       && isPlaying && !isDone && !isSeeking && !inAction
@@ -114,7 +114,6 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
     ) {
       toggleControls(force: false);
     }
-    // TODO: quick skip button display time
     if (
       state.dtDisplay != null
       && (_dtLastTime?.diffToNow() ?? Duration.zero) >= _playerQuickSkipDisplayDuration

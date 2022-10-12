@@ -10,14 +10,16 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 class AnimeCarousel extends StatelessWidget {
 
   final String title;
-  final List<Widget> items;
+  final int itemCount;
+  final Widget Function(BuildContext context, int index) itemBuilder;
   final Object? titleHeroTag;
   final bool isEpisode;
   final void Function()? onMoreTapped;
 
   const AnimeCarousel({
     required this.title,
-    required this.items,
+    required this.itemCount,
+    required this.itemBuilder,
     this.titleHeroTag,
     this.onMoreTapped,
     this.isEpisode=false,
@@ -100,16 +102,19 @@ class AnimeCarousel extends StatelessWidget {
                 stops: kShadowStops,
               ).createShader(rect),
               blendMode: BlendMode.dstOut,
-              child: GridView.count(
-                crossAxisCount: isEpisode ? 2 : 1,
-                childAspectRatio: isEpisode ? 10 / 16 : 7 / 5,
-                mainAxisSpacing: kPaddingSecond,
-                crossAxisSpacing: kPaddingSecond,
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: isEpisode ? 2 : 1,
+                  childAspectRatio: isEpisode ? 10 / 16 : 7 / 5,
+                  mainAxisSpacing: kPaddingSecond,
+                  crossAxisSpacing: kPaddingSecond,
+                ),
                 padding: const EdgeInsets.symmetric(horizontal: kPaddingMain),
                 shrinkWrap: true,
                 physics: kDefaultScrollPhysics,
                 scrollDirection: Axis.horizontal,
-                children: items,
+                itemCount: itemCount,
+                itemBuilder: itemBuilder,
               ),
             ),
           ),
