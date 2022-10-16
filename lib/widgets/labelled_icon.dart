@@ -10,17 +10,21 @@ class LabelledIcon extends StatelessWidget {
   final Widget icon;
   final String? label;
   final Widget? labelWidget;
+  final bool minMainAxis;
 
   const LabelledIcon.horizontal({
     required this.icon,
     this.label,
     this.labelWidget,
+    this.minMainAxis=false,
     super.key,
   }) : _axis = Axis.horizontal;
+
   const LabelledIcon.vertical({
     required this.icon,
     this.label,
     this.labelWidget,
+    this.minMainAxis=false,
     super.key,
   }) : _axis = Axis.vertical;
 
@@ -28,7 +32,7 @@ class LabelledIcon extends StatelessWidget {
   Widget build(BuildContext context) => Flex(
     direction: _axis,
     mainAxisAlignment: MainAxisAlignment.center,
-    mainAxisSize: MainAxisSize.min,
+    mainAxisSize: minMainAxis ? MainAxisSize.min : MainAxisSize.max,
     children: [
       icon,
       if (label != null || labelWidget != null)
