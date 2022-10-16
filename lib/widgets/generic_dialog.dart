@@ -7,26 +7,34 @@ import 'package:nekodroid/widgets/single_line_text.dart';
 
 class GenericDialog<T> extends StatelessWidget {
 
+  final bool isConfirm;
   final String title;
   final Widget? child;
-  final T cancelValue;
-  final T okValue;
+  final T? Function(BuildContext context)? onConfirm;
+  final T? Function(BuildContext context)? onCancel;
+  final bool canAbortConfirm;
+  final dynamic confirmAbortValue;
   
   const GenericDialog({
     required this.title,
     required this.child,
-    required this.cancelValue,
-    required this.okValue,
+    required this.onConfirm,
+    this.onCancel,
+    this.canAbortConfirm=true,
+    this.confirmAbortValue,
     super.key,
-  });
+  }) : isConfirm = false;
 
   const GenericDialog.confirm({
     required this.title,
     required this.child,
     super.key,
   }) :
-    cancelValue = false as T,
-    okValue = true as T;
+    isConfirm = true,
+    onCancel = null,
+    onConfirm = null,
+    canAbortConfirm = false,
+    confirmAbortValue = null;
 
   @override
   Widget build(BuildContext context) => AlertDialog(
@@ -42,14 +50,26 @@ class GenericDialog<T> extends StatelessWidget {
         children: [
           Expanded(
             child: GenericButton.text(
-              onPressed: () => Navigator.of(context).pop(cancelValue),
+              onPressed: () => Navigator.of(context).pop(
+                isConfirm ? false : onCancel?.call(context),
+              ),
               child: const SingleLineText("Cancel"),
             ),
           ),
           const SizedBox(width: kPaddingMain),
           Expanded(
             child: GenericButton.text(
-              onPressed: () => Navigator.of(context).pop(okValue),
+              onPressed: () {
+                final onConfirmCall = onConfirm?.call(context);
+                if (
+                  onConfirm != null
+                  && canAbortConfirm
+                  && onConfirmCall == confirmAbortValue
+                ) {
+                  return;
+                }
+                Navigator.of(context).pop(isConfirm ? true : onConfirmCall);
+              },
               primary: true,
               child: const SingleLineText("Ok"),
             ),

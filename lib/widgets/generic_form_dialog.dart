@@ -99,10 +99,10 @@ class _GenericFormDialogState<T> extends State<GenericFormDialog> {
   @override
   Widget build(BuildContext context) => GenericDialog(
     title: widget.title,
-    cancelValue: null,
-    okValue: widget._type == _FormDialogType.radio
+    onConfirm: (_) => widget._type == _FormDialogType.radio
       ? _value?.first
       : _value,
+    canAbortConfirm: false,
     child: widget.elements.isEmpty
       ? Center(
         child: LabelledIcon.vertical(
