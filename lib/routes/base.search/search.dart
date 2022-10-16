@@ -49,8 +49,8 @@ final _searchResultsProv = FutureProvider.autoDispose<List<IsarSearchAnime>>(
       if (ref.watch(settingsProvider.select((v) => v.search.showAllWhenNoQuery))) {
         return isar.txn(
           isar.isarSearchAnimes.buildQuery<IsarSearchAnime>(
-            sortBy: [
-              const SortProperty(
+            sortBy: const [
+              SortProperty(
                 property: "popularity",
                 sort: Sort.desc,
               ),
