@@ -30,8 +30,8 @@ dependencies:
   fluttertoast: ^8.0.9
   hive_flutter: ^1.1.0
   intl: ^0.17.0
-  isar: ^3.0.0-dev.13
-  isar_flutter_libs: ^3.0.0-dev.13
+  isar: ^3.0.2
+  isar_flutter_libs: ^3.0.2
   lazy_load_scrollview: ^1.3.0
   nekosama:
     git:
