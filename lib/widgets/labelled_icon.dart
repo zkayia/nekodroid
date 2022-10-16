@@ -28,6 +28,7 @@ class LabelledIcon extends StatelessWidget {
   Widget build(BuildContext context) => Flex(
     direction: _axis,
     mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisSize: MainAxisSize.min,
     children: [
       icon,
       if (label != null || labelWidget != null)
