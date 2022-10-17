@@ -39,7 +39,7 @@ class LibrarySettings {
     "enableFavorites": enableFavorites,
   };
 
-  factory LibrarySettings.fromMap(Map<String, dynamic> map) => LibrarySettings(
+  factory LibrarySettings.fromMap(Map map) => LibrarySettings(
     enableTabbarScrolling: map["enableTabbarScrolling"]
       ?? kDefaultSettings.library.enableTabbarScrolling,
     defaultTab: map["defaultTab"] ?? kDefaultSettings.library.defaultTab,

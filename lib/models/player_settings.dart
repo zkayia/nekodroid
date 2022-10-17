@@ -87,7 +87,7 @@ class PlayerSettings {
     "quickSkipDisplayDuration": quickSkipDisplayDuration,
   };
 
-  factory PlayerSettings.fromMap(Map<String, dynamic> map) => PlayerSettings(
+  factory PlayerSettings.fromMap(Map map) => PlayerSettings(
     confirmOnBackExit: map["confirmOnBackExit"]
       ?? kDefaultSettings.player.confirmOnBackExit,
     backExitDuration: map["backExitDelay"]

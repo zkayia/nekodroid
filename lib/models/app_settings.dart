@@ -62,7 +62,7 @@ class AppSettings {
     "player": player.toMap(),
   };
 
-  factory AppSettings.fromMap(Map<String, dynamic> map) => AppSettings(
+  factory AppSettings.fromMap(Map map) => AppSettings(
     general: map["general"] == null
       ? kDefaultSettings.general
       : GeneralSettings.fromMap(map["general"]),

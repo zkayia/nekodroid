@@ -46,7 +46,7 @@ class HomeSettings {
     "animeCardLongPressAction": animeCardLongPressAction.index,
   };
 
-  factory HomeSettings.fromMap(Map<String, dynamic> map) => HomeSettings(
+  factory HomeSettings.fromMap(Map map) => HomeSettings(
     carouselColumnCount: map["carouselColumnCount"]
       ?? kDefaultSettings.home.carouselColumnCount,
     episodeCardPressAction: HomeEpisodeCardAction.values.elementAt(

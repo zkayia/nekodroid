@@ -44,7 +44,7 @@ class SearchSettings {
     "fabMoveWithKeyboard": fabMoveWithKeyboard,
   };
 
-  factory SearchSettings.fromMap(Map<String, dynamic> map) => SearchSettings(
+  factory SearchSettings.fromMap(Map map) => SearchSettings(
     autoOpenBar: map["autoOpenBar"] ?? kDefaultSettings.search.autoOpenBar,
     showAllWhenNoQuery: map["showAllWhenNoQuery"]
       ?? kDefaultSettings.search.showAllWhenNoQuery,

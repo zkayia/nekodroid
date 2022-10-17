@@ -39,7 +39,7 @@ class AnimeSettings {
     "autoAddToWatching": autoAddToWatching,
   };
 
-  factory AnimeSettings.fromMap(Map<String, dynamic> map) => AnimeSettings(
+  factory AnimeSettings.fromMap(Map map) => AnimeSettings(
     blurThumbs: map["blurThumbs"] ?? kDefaultSettings.anime.blurThumbs,
     blurThumbsSigma: map["blurThumbsSigma"] ?? kDefaultSettings.anime.blurThumbsSigma,
     lazyLoadItemCount: map["lazyLoadItemCount"] ?? kDefaultSettings.anime.lazyLoadItemCount,

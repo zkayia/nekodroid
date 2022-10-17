@@ -56,7 +56,7 @@ class GeneralSettings {
     "reverseNavbarSwipe": reverseNavbarSwipe,
   };
 
-  factory GeneralSettings.fromMap(Map<String, dynamic> map) => GeneralSettings(
+  factory GeneralSettings.fromMap(Map map) => GeneralSettings(
     themeMode: ThemeMode.values.elementAt(
       map["themeMode"] ?? kDefaultSettings.general.themeMode.index,
     ),
