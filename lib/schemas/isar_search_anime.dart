@@ -11,7 +11,7 @@ part 'isar_search_anime.g.dart';
 @collection
 class IsarSearchAnime {
   
-  Id? id;
+  Id id = Isar.autoIncrement;
   String url;
   String thumbnail;
   String title;
@@ -28,7 +28,6 @@ class IsarSearchAnime {
   int episodeCount;
 
   IsarSearchAnime({
-    required this.id,
     required this.url,
     required this.thumbnail,
     required this.title,
@@ -49,7 +48,6 @@ class IsarSearchAnime {
   Uri get thumbnailUri => Uri.parse(thumbnail);
 
   factory IsarSearchAnime.fromRawSearchDb(Map map) => IsarSearchAnime(
-    id: Isar.autoIncrement,
     url: "https://neko-sama.fr${map["url"] ?? ""}",
     thumbnail: map["url_image"] ?? "",
     title: map["title"] ?? "",
