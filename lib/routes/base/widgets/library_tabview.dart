@@ -2,109 +2,174 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/datetime.dart';
-import 'package:nekodroid/extensions/ns_anime_extended_base.dart';
-import 'package:nekodroid/provider/favorites.dart';
-import 'package:nekodroid/provider/anime.dart';
 import 'package:nekodroid/provider/settings.dart';
+import 'package:nekodroid/provider/lists.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
+import 'package:nekodroid/schemas/isar_anime_list_item.dart';
+import 'package:nekodroid/schemas/isar_episode_status.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
-import 'package:nekosama/nekosama.dart';
 
+
+final _recentHistoryProv = StreamProvider.autoDispose<List<IsarEpisodeStatus>>(
+  (ref) => Isar.getInstance()!.isarEpisodeStatus.filter()
+    .lastWatchedTimestampIsNotNull()
+    .sortByLastWatchedTimestampDesc()
+    .watch(fireImmediately: true),
+);
+
+final _favoritesProv = StreamProvider.autoDispose<List<IsarAnimeListItem>>(
+  (ref) => Isar.getInstance()!.isarAnimeListItems.filter()
+    .favoritedTimestampIsNotNull()
+    .sortByFavoritedTimestampDesc()
+    .watch(fireImmediately: true),
+);
 
 class LibraryTabview extends ConsumerWidget {
 
   const LibraryTabview({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final favorites = [...ref.watch(favoritesProvider).entries]
-      ..sort((a, b) => b.value.compareTo(a.value));
-    return TabBarView(
-      physics: kDefaultScrollPhysics,
-      children: [
-        if (ref.watch(settingsProvider.select((v) => v.library.enableHistory)))
-          ValueListenableBuilder(
-            valueListenable: Hive.box<String>("recent-history").listenable(),
-            builder: (context, Box<String> box, child) => AnimeListview(
-              itemCount: box.length,
-              itemBuilder: (context, index) {
-                final reverseIndex = box.length - 1 - index;
-                final episode = NSEpisode.fromJson(box.getAt(reverseIndex)!);
-                return ref.watch(animeProvider(episode.animeUrl)).when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
-                  data: (data) => AnimeListTile(
-                    title: data.title,
-                    subtitle: DateTime.fromMillisecondsSinceEpoch(
-                      // will break on: `2106-02-07 07:28:15.000`
-                      box.keyAt(reverseIndex) * 1000,
-                    ).formatHistory(context),
-                    leading: AnimeCard(
-                      image: GenericCachedImage(data.thumbnail),
-                      badge: context.tr.episodeShort(episode.episodeNumber),
-                      onTap: () =>
-                        Navigator.of(context).pushNamed("/anime", arguments: data.url),
-                    ),
-                    onTap: () {}, //TODO: open detailled history page
-                  ),
-                );
-              },
-              placeholder: LabelledIcon.vertical(
-                icon: const LargeIcon(Boxicons.bx_history),
-                label: context.tr.libraryEmptyHistory,
-              ),
+  Widget build(BuildContext context, WidgetRef ref) => TabBarView(
+    physics: kDefaultScrollPhysics,
+    children: [
+      if (ref.watch(settingsProvider.select((v) => v.library.enableHistory)))
+        ref.watch(_recentHistoryProv).when(
+          loading: () => const CircularProgressIndicator(),
+          error: (_, __) => const LargeIcon(Boxicons.bxs_error_circle),
+          data: (data) => AnimeListview(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final episode = data.elementAt(index);
+              return FutureBuilder(
+                future: episode.anime.load(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Icon(Boxicons.bxs_error_circle);
+                  }
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return AnimeListTile(
+                      title: episode.anime.value!.title,
+                      subtitle: DateTime.fromMillisecondsSinceEpoch(
+                        episode.lastWatchedTimestamp!,
+                      ).formatHistory(context),
+                      leading: AnimeCard(
+                        image: GenericCachedImage(episode.thumbnailUri),
+                        badge: context.tr.episodeShort(episode.episodeNumber),
+                        onTap: () => Navigator.of(context).pushNamed(
+                          "/anime",
+                          arguments: episode.anime.value!.urlUri,
+                        ),
+                      ),
+                      onTap: () {}, //TODO: open detailled history page
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                },
+              );
+            },
+            placeholder: LabelledIcon.vertical(
+              icon: const LargeIcon(Boxicons.bx_history),
+              label: context.tr.libraryEmptyHistory,
             ),
           ),
-        if (ref.watch(settingsProvider.select((v) => v.library.enableFavorites)))
-          AnimeListview(
-            itemCount: favorites.length,
-            itemBuilder: (context, index) => ref.watch(
-              animeProvider(favorites.elementAt(index).key),
-            ).when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
-              data: (anime) => AnimeListTile(
+        ),
+      if (ref.watch(settingsProvider.select((v) => v.library.enableFavorites)))
+        ref.watch(_favoritesProv).when(
+          loading: () => const CircularProgressIndicator(),
+          error: (_, __) => const LargeIcon(Boxicons.bxs_error_circle),
+          data: (data) => AnimeListview(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final anime = data.elementAt(index);
+              return AnimeListTile(
                 title: anime.title,
                 subtitle: anime.dataText(context),
-                leading: AnimeCard(image: GenericCachedImage(anime.thumbnail)),
-                trailing: GenericButton.elevated(
-                  onPressed: () => ref.read(favoritesProvider.notifier).toggleFavBoxOnly(
-                    anime.url,
-                    DateTime.now(),
-                    anime,
-                  ),
-                  child: ref.watch(favoritesProvider.notifier).isFavoritedBox(anime.url)
-                    ? const Icon(
-                      Boxicons.bxs_heart,
-                      color: Colors.red,
-                    )
-                    : const Icon(Boxicons.bx_heart),
+                leading: AnimeCard(image: GenericCachedImage(anime.thumbnailUri)),
+                onTap: () => Navigator.of(context).pushNamed(
+                  "/anime",
+                  arguments: anime.urlUri,
                 ),
-                onTap: () =>
-                  Navigator.of(context).pushNamed("/anime", arguments: anime.url),
-              ),
-            ),
-            onRefresh: () async => ref.refresh(favoritesProvider),
+              );
+            },
             placeholder: LabelledIcon.vertical(
               icon: const LargeIcon(Boxicons.bx_heart),
               label: context.tr.libraryEmptyFavorites,
             ),
           ),
-        ...?ref.watch(settingsProvider.select((v) => v.library.lists))?.map(
-          (e) => Center(
-            child: Text(e.label),
+        ),
+      ...ref.watch(listsProvider).when(
+        error: (_, __) => const [
+          LabelledIcon.vertical(
+            icon: LargeIcon(Boxicons.bx_error_circle),
+            label: "Error loading lists", //TODO: tr
           ),
-        )
-      ],
-    );
-  }
+        ],
+        loading: () => const [
+          LabelledIcon.vertical(
+            icon: CircularProgressIndicator(),
+            label: "Loading lists", //TODO: tr
+          ),
+        ],
+        data: (data) => data.isEmpty
+          ? [
+            Center(
+              child: GenericButton.elevated(
+                onPressed: () {}, //TODO: go to list settings 
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kPaddingMain,
+                    vertical: kPaddingSecond,
+                  ),
+                  child: LabelledIcon.vertical(
+                    icon: Icon(Boxicons.bx_cog),
+                    label: "Create a list", //TODO: tr
+                    minMainAxis: true,
+                  ),
+                ),
+              ),
+            ),
+          ]
+          : data.map(
+            (e) => FutureBuilder(
+              future: e.animes.load(),
+              builder: (context, snap) {
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snap.hasError) {
+                  return const Icon(Boxicons.bx_error_circle);
+                }
+                return AnimeListview(
+                  itemCount: e.animes.length,
+                  itemBuilder: (context, index) {
+                    final anime = e.animes.elementAt(index);
+                    return AnimeListTile(
+                      title: anime.title,
+                      subtitle: anime.dataText(context),
+                      leading: AnimeCard(image: GenericCachedImage(anime.thumbnailUri)),
+                      onTap: () => Navigator.of(context).pushNamed(
+                        "/anime",
+                        arguments: anime.urlUri,
+                      ),
+                    );
+                  },
+                  placeholder: const LabelledIcon.vertical(
+                    icon: Icon(Boxicons.bx_question_mark),
+                    label: "List is empty", //TODO: tr
+                  ),
+                );
+              },
+            ),
+          ),
+      ),
+    ],
+  );
 }

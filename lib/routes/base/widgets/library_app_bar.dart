@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/provider/settings.dart';
+import 'package:nekodroid/provider/lists.dart';
 
 
 class LibraryAppBar extends ConsumerWidget {
@@ -33,13 +34,38 @@ class LibraryAppBar extends ConsumerWidget {
               height: kTopBarHeight - kTabbarIndicatorSize,
               icon: Icon(Boxicons.bxs_heart),
             ),
-          ...?ref.watch(settingsProvider.select((v) => v.library.lists))?.map(
-            (e) => Tab(
-              height: kTopBarHeight - kTabbarIndicatorSize,
-              text: e.label,
-              icon: e.icon == null ? null : Icon(e.icon),
-            ),
-          )
+          ...ref.watch(listsProvider).when(
+            error: (error, _) => const [
+              Tab(
+                height: kTopBarHeight - kTabbarIndicatorSize,
+                icon: Icon(Boxicons.bx_error_circle),
+              ),
+            ],
+            loading: () => [
+              Tab(
+                height: kTopBarHeight - kTabbarIndicatorSize,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints.tight(
+                    Size.square(Theme.of(context).iconTheme.size ?? 24),
+                  ),
+                  child: const CircularProgressIndicator(),
+                ),
+              ),
+            ],
+            data: (data) => data.isEmpty
+              ? const [
+                Tab(
+                  height: kTopBarHeight - kTabbarIndicatorSize,
+                  icon: Icon(Boxicons.bx_plus),
+                )
+              ]
+              : data.map(
+                (e) => Tab(
+                  height: kTopBarHeight - kTabbarIndicatorSize,
+                  text: e.name,
+                ),
+              ),
+          ),
         ],
       ),
     ),

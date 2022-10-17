@@ -2,10 +2,9 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/ns_anime_extended_base.dart';
-import 'package:nekodroid/provider/favorites.dart';
+import 'package:nekodroid/routes/anime/widgets/add_to_list_button.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_title.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
@@ -101,7 +100,7 @@ class AnimePageHeader extends StatelessWidget {
                         ),
                         child: const Icon(Boxicons.bx_share_alt),
                       ),
-                      _FavoriteButton(anime),
+                      AddToListButton(anime),
                     ],
                   ),
                 ),
@@ -112,26 +111,4 @@ class AnimePageHeader extends StatelessWidget {
       ),
     );
   }
-}
-
-class _FavoriteButton extends ConsumerWidget {
-
-  final NSAnime anime;
-
-  const _FavoriteButton(this.anime);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) => GenericButton.elevated(
-    onPressed: () => ref.read(favoritesProvider.notifier).toggleFav(
-      anime.url,
-      DateTime.now(),
-      anime,
-    ),
-    child: ref.watch(favoritesProvider).containsKey(anime.url)
-      ? const Icon(
-        Boxicons.bxs_heart,
-        color: Colors.red,
-      )
-      : const Icon(Boxicons.bx_heart),
-  );
 }

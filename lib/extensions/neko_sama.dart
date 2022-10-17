@@ -7,6 +7,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:isar/isar.dart';
 import 'package:nekodroid/constants/searchdb_status.dart';
 import 'package:nekodroid/provider/searchdb_status.dart';
+import 'package:nekodroid/schemas/isar_anime_list.dart';
+import 'package:nekodroid/schemas/isar_anime_list_item.dart';
+import 'package:nekodroid/schemas/isar_episode_status.dart';
 import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:nekosama/nekosama.dart';
 
@@ -67,9 +70,15 @@ extension NekoSamaX on NekoSama {
 }
 
 Future<Map> _populateSearchdbProcess(List<Map<String, dynamic>> rawDb) async {
-  final isar = await Isar.open([
-    IsarSearchAnimeSchema,
-  ]);
+  final isar = await Isar.open(
+    [
+      IsarSearchAnimeSchema,
+      IsarAnimeListItemSchema,
+      IsarAnimeListSchema,
+      IsarEpisodeStatusSchema,
+    ],
+    inspector: false,
+  );
   final stats = {
     "searchdb-lowest-popularity": 0.0,
     "searchdb-highest-popularity": 0.0,

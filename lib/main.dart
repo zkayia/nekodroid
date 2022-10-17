@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,9 @@ import 'package:intl/intl_standalone.dart';
 import 'package:isar/isar.dart';
 import 'package:nekodroid/app.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/schemas/isar_anime_list.dart';
+import 'package:nekodroid/schemas/isar_anime_list_item.dart';
+import 'package:nekodroid/schemas/isar_episode_status.dart';
 import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -30,12 +35,23 @@ void main() async {
 
   await Hive.initFlutter();
 
+  final isarDir = Directory("${(await getApplicationSupportDirectory()).path}/isar");
+  // if (isarDir.existsSync()) {
+  //   await isarDir.delete(recursive: true);
+  // }
+  if (!isarDir.existsSync()) {
+    await isarDir.create(recursive: true);
+  }
   await Isar.open(
     [
       IsarSearchAnimeSchema,
+      IsarAnimeListItemSchema,
+      IsarAnimeListSchema,
+      IsarEpisodeStatusSchema,
     ],
-    directory: (await getApplicationSupportDirectory()).path,
+    directory: isarDir.path,
   );
+  // Isar.getInstance()!.writeTxnSync(Isar.getInstance()!.clearSync);
 
   // // Webview debug mode
   // if (Platform.isAndroid) {

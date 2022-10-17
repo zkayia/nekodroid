@@ -9,7 +9,6 @@ import 'package:nekodroid/constants/home_episode_card_action.dart';
 import 'package:nekodroid/constants/nav_labels_mode.dart';
 import 'package:nekodroid/constants/search_filters_persist_mode.dart';
 import 'package:nekodroid/models/app_settings.dart';
-import 'package:nekodroid/models/library_list.dart';
 
 
 final settingsProvider = StateNotifierProvider<_SettingsProviderNotifier, AppSettings>(
@@ -225,15 +224,6 @@ class _SettingsProviderNotifier extends StateNotifier<AppSettings> {
   void resetEnableFavorites() => state = state.copyWith(
     library: state.library.copyWith(
       enableFavorites: kDefaultSettings.library.enableFavorites,
-    ),
-  );
-
-  set lists(List<LibraryList>? value) => state = state.copyWith(
-    library: state.library.copyWith(lists: value),
-  );
-  void resetLists() => state = state.copyWith(
-    library: state.library.copyWith(
-      lists: kDefaultSettings.library.lists,
     ),
   );
 
