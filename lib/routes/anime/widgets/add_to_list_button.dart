@@ -55,10 +55,10 @@ class AddToListButton extends ConsumerWidget {
             ],
           ),
         );
-        if (result?.isEmpty ?? true) {
+        if (result == null) {
           return;
         }
-        if (result!.contains(-1)) {
+        if (result.contains(-1)) {
           isarAnime.favoritedTimestamp ??= DateTime.now().millisecondsSinceEpoch;
         } else {
           isarAnime.favoritedTimestamp = null;
