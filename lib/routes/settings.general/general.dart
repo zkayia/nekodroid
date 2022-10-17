@@ -3,26 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants/nav_labels_mode.dart';
-import 'package:nekodroid/constants/widget_title_mixin.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/settings/widgets/radio_setting.dart';
-import 'package:nekodroid/routes/settings/widgets/settings_sliver_title_route.dart';
-import 'package:nekodroid/routes/settings/widgets/switch_setting.dart';
+import 'package:nekodroid/widgets/radio_setting.dart';
+import 'package:nekodroid/widgets/settings_sliver_title_route.dart';
+import 'package:nekodroid/widgets/switch_setting.dart';
 
 
-class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
+class SettingsGeneralRoute extends ConsumerWidget {
 
-  @override
-  final String title;
-
-  const SettingsGeneralPage(
-    this.title,
-    {
-      super.key,
-    }
-  );
+  const SettingsGeneralRoute({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +24,7 @@ class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
       context.tr.more,
     ];
     return SettingsSliverTitleRoute(
-      title: title,
+      title: context.tr.settingsGeneral,
       children: [
         RadioSetting<ThemeMode>(
           title: context.tr.settingsTheme,

@@ -3,30 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants/home_anime_card_action.dart';
 import 'package:nekodroid/constants/home_episode_card_action.dart';
-import 'package:nekodroid/constants/widget_title_mixin.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/settings/widgets/radio_setting.dart';
-import 'package:nekodroid/routes/settings/widgets/settings_sliver_title_route.dart';
-import 'package:nekodroid/routes/settings/widgets/slider_setting.dart';
+import 'package:nekodroid/widgets/radio_setting.dart';
+import 'package:nekodroid/widgets/settings_sliver_title_route.dart';
+import 'package:nekodroid/widgets/slider_setting.dart';
 
 
-class SettingsHomePage extends ConsumerWidget implements WidgetTitleMixin {
+class SettingsHomeRoute extends ConsumerWidget {
 
-  @override
-  final String title;
-
-  const SettingsHomePage(
-    this.title,
-    {
-      super.key,
-    }
-  );
+  const SettingsHomeRoute({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
-    title: title,
+    title: context.tr.home,
     children: [
       SliderSetting(
         title: context.tr.carouselColumnCount,

@@ -2,29 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/constants/widget_title_mixin.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/lists.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/settings/pages/library.lists.dart';
-import 'package:nekodroid/routes/settings/widgets/radio_setting.dart';
-import 'package:nekodroid/routes/settings/widgets/settings_sliver_title_route.dart';
-import 'package:nekodroid/routes/settings/widgets/switch_setting.dart';
+import 'package:nekodroid/widgets/radio_setting.dart';
+import 'package:nekodroid/widgets/settings_sliver_title_route.dart';
+import 'package:nekodroid/widgets/switch_setting.dart';
 import 'package:nekodroid/schemas/isar_anime_list.dart';
 
 
-class SettingsLibraryPage extends ConsumerWidget implements WidgetTitleMixin {
+class SettingsLibraryRoute extends ConsumerWidget {
 
-  @override
-  final String title;
-
-  const SettingsLibraryPage(
-    this.title,
-    {
-      super.key,
-    }
-  );
+  const SettingsLibraryRoute({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,7 +39,7 @@ class SettingsLibraryPage extends ConsumerWidget implements WidgetTitleMixin {
       (e) => e.position == ref.watch(settingsProv.select((v) => v.library.defaultTab)),
     );
     return SettingsSliverTitleRoute(
-      title: title,
+      title: context.tr.library,
       children: [
         SwitchSetting(
           title: context.tr.enableTabbarScrolling,
@@ -79,9 +69,7 @@ class SettingsLibraryPage extends ConsumerWidget implements WidgetTitleMixin {
           ),
           title: const Text("Lists config"), //TODO: tr
           subtitle: const Text("Add/delete/edit lists in the library"), //TODO: tr
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const SettingsLibraryListsPage()),
-          ),
+          onTap: () => Navigator.of(context).pushNamed("/settings/library/lists"),
         ),
       ],
     );

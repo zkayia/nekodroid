@@ -15,6 +15,14 @@ import 'package:nekodroid/routes/base/base.dart';
 import 'package:nekodroid/routes/base.carousel_more/carousel_more.dart';
 import 'package:nekodroid/routes/fullscreen_viewer/fullscreen_viewer.dart';
 import 'package:nekodroid/routes/player/player.dart';
+import 'package:nekodroid/routes/settings.about/about.dart';
+import 'package:nekodroid/routes/settings.anime/anime.dart';
+import 'package:nekodroid/routes/settings.general/general.dart';
+import 'package:nekodroid/routes/settings.home/home.dart';
+import 'package:nekodroid/routes/settings.library.lists/lists.dart';
+import 'package:nekodroid/routes/settings.library/library.dart';
+import 'package:nekodroid/routes/settings.player/player.dart';
+import 'package:nekodroid/routes/settings.search/search.dart';
 import 'package:nekodroid/routes/settings/settings.dart';
 
 // import 'package:device_preview/device_preview.dart';
@@ -67,6 +75,14 @@ class AppState extends ConsumerState<App> {
       "/fullscreen_viewer": (context) => const FullscreenViewerRoute(),
       "/player": (context) => const PlayerRoute(),
       "/settings": (context) => const SettingsRoute(),
+      "/settings/about": (context) => const SettingsAboutRoute(),
+      "/settings/anime": (context) => const SettingsAnimeRoute(),
+      "/settings/general": (context) => const SettingsGeneralRoute(),
+      "/settings/home": (context) => const SettingsHomeRoute(),
+      "/settings/library": (context) => const SettingsLibraryRoute(),
+      "/settings/library/lists": (context) => const SettingsLibraryListsRoute(),
+      "/settings/player": (context) => const SettingsPlayerRoute(),
+      "/settings/search": (context) => const SettingsSearchRoute(),
     },
   );
 }

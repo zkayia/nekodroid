@@ -1,28 +1,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nekodroid/constants/widget_title_mixin.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/settings/widgets/settings_sliver_title_route.dart';
-import 'package:nekodroid/routes/settings/widgets/switch_setting.dart';
+import 'package:nekodroid/widgets/settings_sliver_title_route.dart';
+import 'package:nekodroid/widgets/switch_setting.dart';
 
 
-class SettingsSearchPage extends ConsumerWidget implements WidgetTitleMixin {
+class SettingsSearchRoute extends ConsumerWidget {
 
-  @override
-  final String title;
-
-  const SettingsSearchPage(
-    this.title,
-    {
-      super.key,
-    }
-  );
+  const SettingsSearchRoute({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => SettingsSliverTitleRoute(
-    title: title,
+    title: context.tr.search,
     children: [
       SwitchSetting(
         title: context.tr.autoOpenSearchBar,

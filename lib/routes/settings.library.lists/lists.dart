@@ -9,7 +9,7 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/lists.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/settings/widgets/switch_setting.dart';
+import 'package:nekodroid/widgets/switch_setting.dart';
 import 'package:nekodroid/schemas/isar_anime_list.dart';
 import 'package:nekodroid/widgets/generic_dialog.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
@@ -18,9 +18,9 @@ import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 
 
-class SettingsLibraryListsPage extends ConsumerWidget {
+class SettingsLibraryListsRoute extends ConsumerWidget {
 
-  const SettingsLibraryListsPage({super.key});
+  const SettingsLibraryListsRoute({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
