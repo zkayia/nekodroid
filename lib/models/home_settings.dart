@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/constants/home_anime_card_action.dart';
 import 'package:nekodroid/constants/home_episode_card_action.dart';
+
 
 @immutable
 class HomeSettings {
@@ -24,29 +24,29 @@ class HomeSettings {
     this.animeCardLongPressAction=HomeAnimeCardAction.copyLink,
   });
 
-	HomeSettings copyWith({
-		int? carouselColumnCount,
-		HomeEpisodeCardAction? episodeCardPressAction,
-		HomeEpisodeCardAction? episodeCardLongPressAction,
-		HomeAnimeCardAction? animeCardPressAction,
-		HomeAnimeCardAction? animeCardLongPressAction,
-	}) => HomeSettings(
-		carouselColumnCount: carouselColumnCount ?? this.carouselColumnCount,
-		episodeCardPressAction: episodeCardPressAction ?? this.episodeCardPressAction,
-		episodeCardLongPressAction: episodeCardLongPressAction ?? this.episodeCardLongPressAction,
-		animeCardPressAction: animeCardPressAction ?? this.animeCardPressAction,
-		animeCardLongPressAction: animeCardLongPressAction ?? this.animeCardLongPressAction,
-	);
+  HomeSettings copyWith({
+    int? carouselColumnCount,
+    HomeEpisodeCardAction? episodeCardPressAction,
+    HomeEpisodeCardAction? episodeCardLongPressAction,
+    HomeAnimeCardAction? animeCardPressAction,
+    HomeAnimeCardAction? animeCardLongPressAction,
+  }) => HomeSettings(
+    carouselColumnCount: carouselColumnCount ?? this.carouselColumnCount,
+    episodeCardPressAction: episodeCardPressAction ?? this.episodeCardPressAction,
+    episodeCardLongPressAction: episodeCardLongPressAction ?? this.episodeCardLongPressAction,
+    animeCardPressAction: animeCardPressAction ?? this.animeCardPressAction,
+    animeCardLongPressAction: animeCardLongPressAction ?? this.animeCardLongPressAction,
+  );
 
-	Map<String, dynamic> toMap() => {
-		"carouselColumnCount": carouselColumnCount,
-		"episodeCardPressAction": episodeCardPressAction.index,
-		"episodeCardLongPressAction": episodeCardLongPressAction.index,
-		"animeCardPressAction": animeCardPressAction.index,
-		"animeCardLongPressAction": animeCardLongPressAction.index,
-	};
+  Map<String, dynamic> toMap() => {
+    "carouselColumnCount": carouselColumnCount,
+    "episodeCardPressAction": episodeCardPressAction.index,
+    "episodeCardLongPressAction": episodeCardLongPressAction.index,
+    "animeCardPressAction": animeCardPressAction.index,
+    "animeCardLongPressAction": animeCardLongPressAction.index,
+  };
 
-	factory HomeSettings.fromMap(Map<String, dynamic> map) => HomeSettings(
+  factory HomeSettings.fromMap(Map<String, dynamic> map) => HomeSettings(
     carouselColumnCount: map["carouselColumnCount"]
       ?? kDefaultSettings.home.carouselColumnCount,
     episodeCardPressAction: HomeEpisodeCardAction.values.elementAt(
@@ -63,33 +63,33 @@ class HomeSettings {
       map["animeCardLongPressAction"]
         ?? kDefaultSettings.home.animeCardLongPressAction.index,
     ),
-	);
+  );
 
-	String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-	factory HomeSettings.fromJson(String source) => HomeSettings.fromMap(json.decode(source));
+  factory HomeSettings.fromJson(String source) => HomeSettings.fromMap(json.decode(source));
 
-	@override
-	String toString() =>
-		"HomeSettings(carouselColumnCount: $carouselColumnCount, episodeCardPressAction: $episodeCardPressAction, episodeCardLongPressAction: $episodeCardLongPressAction, animeCardPressAction: $animeCardPressAction, animeCardLongPressAction: $animeCardLongPressAction)";
+  @override
+  String toString() =>
+    "HomeSettings(carouselColumnCount: $carouselColumnCount, episodeCardPressAction: $episodeCardPressAction, episodeCardLongPressAction: $episodeCardLongPressAction, animeCardPressAction: $animeCardPressAction, animeCardLongPressAction: $animeCardLongPressAction)";
 
-	@override
-	bool operator ==(Object other) {
-		if (identical(this, other)) {
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
       return true;
     }
-		return other is HomeSettings
-			&& other.carouselColumnCount == carouselColumnCount
-			&& other.episodeCardPressAction == episodeCardPressAction
-			&& other.episodeCardLongPressAction == episodeCardLongPressAction
-			&& other.animeCardPressAction == animeCardPressAction
-			&& other.animeCardLongPressAction == animeCardLongPressAction;
-	}
+    return other is HomeSettings
+      && other.carouselColumnCount == carouselColumnCount
+      && other.episodeCardPressAction == episodeCardPressAction
+      && other.episodeCardLongPressAction == episodeCardLongPressAction
+      && other.animeCardPressAction == animeCardPressAction
+      && other.animeCardLongPressAction == animeCardLongPressAction;
+  }
 
-	@override
-	int get hashCode => carouselColumnCount.hashCode
-		^ episodeCardPressAction.hashCode
-		^ episodeCardLongPressAction.hashCode
-		^ animeCardPressAction.hashCode
-		^ animeCardLongPressAction.hashCode;
+  @override
+  int get hashCode => carouselColumnCount.hashCode
+    ^ episodeCardPressAction.hashCode
+    ^ episodeCardLongPressAction.hashCode
+    ^ animeCardPressAction.hashCode
+    ^ animeCardLongPressAction.hashCode;
 }

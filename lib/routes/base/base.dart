@@ -7,7 +7,7 @@ import 'package:nekodroid/constants/searchdb_status.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/searchdb_status.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/base/models/nav_bar_item.dart';
+import 'package:nekodroid/models/nav_bar_item.dart';
 import 'package:nekodroid/routes/base/pages/home.dart';
 import 'package:nekodroid/routes/base/pages/library.dart';
 import 'package:nekodroid/routes/base/pages/more.dart';
@@ -25,7 +25,7 @@ class BaseRoute extends ConsumerWidget {
     child: Scaffold(
       resizeToAvoidBottomInset: false,
       body: IndexedStack(
-        index: ref.watch(navIndexProvider),
+        index: ref.watch(navIndexProv),
         sizing: StackFit.expand,
         children: const [
           HomePage(),
@@ -54,24 +54,24 @@ class BaseRoute extends ConsumerWidget {
             label: context.tr.more,
           ),
         ],
-        currentIndex: ref.watch(navIndexProvider),
+        currentIndex: ref.watch(navIndexProv),
         onTap: (index) {
-          ref.read(navIndexProvider.notifier).update((state) => index);
+          ref.read(navIndexProv.notifier).update((state) => index);
           if (
             index == 2
-            && ref.read(settingsProvider).search.autoOpenBar
+            && ref.read(settingsProv).search.autoOpenBar
             && ref.read(searchdbStatusProv) == SearchdbStatus.ready
           ) {
             Navigator.of(context).pushNamed("/base/search");
           }
         },
         showSelectedLabels: ref.watch(
-          settingsProvider.select((v) => v.general.navLabelsMode),
+          settingsProv.select((v) => v.general.navLabelsMode),
         ) != NavLabelsMode.disabled,
         showUnselectedLabels:
-          ref.watch(settingsProvider.select((v) => v.general.navLabelsMode))
+          ref.watch(settingsProv.select((v) => v.general.navLabelsMode))
             != NavLabelsMode.disabled
-          && ref.watch(settingsProvider.select((v) => v.general.navLabelsMode))
+          && ref.watch(settingsProv.select((v) => v.general.navLabelsMode))
             == NavLabelsMode.all,
       ),
     ),

@@ -4,7 +4,7 @@ import 'package:isar/isar.dart';
 import 'package:nekodroid/schemas/isar_anime_list.dart';
 
 
-final listsProvider = StreamProvider<List<IsarAnimeList>>(
+final listsProv = StreamProvider<List<IsarAnimeList>>(
   (ref) {
     final isar = Isar.getInstance()!;
     return isar.isarAnimeLists.buildQuery<IsarAnimeList>(

@@ -1,32 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:nekodroid/constants/generic_button_type.dart';
 
-
-/* CONSTANTS */
-
-enum _GenericButtonType {icon, elevated, outlined, text}
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
 
 class GenericButton extends StatelessWidget {
 
-  final _GenericButtonType _type;
+  final GenericButtonType type;
   final Widget child;
   final void Function()? onPressed;
   final void Function()? onLongPress;
@@ -40,7 +19,7 @@ class GenericButton extends StatelessWidget {
     this.primary=false,
     this.primaryOnForeground=false,
     super.key,
-  }) : _type = _GenericButtonType.elevated;
+  }) : type = GenericButtonType.elevated;
   
   const GenericButton.outlined({
     required this.onPressed,
@@ -49,7 +28,7 @@ class GenericButton extends StatelessWidget {
     this.primary=false,
     this.primaryOnForeground=false,
     super.key,
-  }) : _type = _GenericButtonType.outlined;
+  }) : type = GenericButtonType.outlined;
 
   const GenericButton.text({
     required this.onPressed,
@@ -58,7 +37,7 @@ class GenericButton extends StatelessWidget {
     this.primary=false,
     this.primaryOnForeground=false,
     super.key,
-  }) : _type = _GenericButtonType.text;
+  }) : type = GenericButtonType.text;
 
   @override
   Widget build(BuildContext context) {
@@ -79,21 +58,21 @@ class GenericButton extends StatelessWidget {
             : colorScheme.onPrimary,
       ),
     );
-    switch (_type) {
-      case _GenericButtonType.icon:
-      case _GenericButtonType.elevated:
+    switch (type) {
+      case GenericButtonType.icon:
+      case GenericButtonType.elevated:
         return ElevatedButton(
           onPressed: onPressed,
           style: buttonStyle,
           child: child,
         );
-      case _GenericButtonType.outlined:
+      case GenericButtonType.outlined:
         return OutlinedButton(
           onPressed: onPressed,
           style: buttonStyle,
           child: child,
         );
-      case _GenericButtonType.text:
+      case GenericButtonType.text:
         return TextButton(
           onPressed: onPressed,
           style: buttonStyle,

@@ -3,35 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/provider/settings.dart';
+import 'package:nekodroid/routes/player/webview/providers/webview_controller.dart';
+import 'package:nekodroid/routes/player/webview/providers/webview_is_loading.dart';
 
-
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-final _webviewIsLoadingProvider = StateProvider.autoDispose<bool>(
-  (ref) => true,
-);
-
-final _webviewControllerProvider = StateProvider.autoDispose<InAppWebViewController?>(
-  (ref) => null,
-);
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
 
 class WebviewPlayer extends ConsumerStatefulWidget {
 
@@ -50,7 +24,7 @@ class WebviewPlayerState extends ConsumerState<WebviewPlayer> {
 
   @override
   void dispose() {
-    ref.read(_webviewControllerProvider)?.evaluateJavascript(
+    ref.read(webviewControllerProv)?.evaluateJavascript(
       source: "document.exitFullscreen();",
     );
     super.dispose();
@@ -81,12 +55,12 @@ class WebviewPlayerState extends ConsumerState<WebviewPlayer> {
             useWideViewPort: false,
             useShouldInterceptRequest: true,
             forceDark: _resolveForceDark(
-              ref.watch(settingsProvider.select((v) => v.general.themeMode)),
+              ref.watch(settingsProv.select((v) => v.general.themeMode)),
             ),
           ),
         ),
         onWebViewCreated: (controller) async {
-          ref.read(_webviewControllerProvider.notifier).update((state) => controller);
+          ref.read(webviewControllerProv.notifier).update((state) => controller);
           controller
             ..addUserScript(
               userScript: UserScript(
@@ -106,7 +80,7 @@ class WebviewPlayerState extends ConsumerState<WebviewPlayer> {
             );
         },
         onLoadStop: (controller, url) =>
-          ref.read(_webviewIsLoadingProvider.notifier).update((state) => false),
+          ref.read(webviewIsLoadingProv.notifier).update((state) => false),
         androidShouldInterceptRequest: (controller, request) async =>
           _keepRequest(request) ? null : WebResourceResponse(),
         shouldOverrideUrlLoading: (controller, action) async =>
@@ -114,7 +88,7 @@ class WebviewPlayerState extends ConsumerState<WebviewPlayer> {
             ? NavigationActionPolicy.ALLOW
             : NavigationActionPolicy.CANCEL,
       ),
-      if (ref.watch(_webviewIsLoadingProvider))
+      if (ref.watch(webviewIsLoadingProv))
         const CircularProgressIndicator(),
     ],
   );

@@ -3,15 +3,14 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:isar/isar.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/constants/searchdb_status.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/neko_sama.dart';
 import 'package:nekodroid/provider/api.dart';
 import 'package:nekodroid/provider/searchdb_status.dart';
+import 'package:nekodroid/routes/base/providers/recent_searches.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
-import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
@@ -20,43 +19,6 @@ import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
-
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-final _recentSearchesProv = FutureProvider.autoDispose.family<
-  List<IsarSearchAnime>,
-  List?
->(
-  (ref, ids) async {
-    if (ids?.isEmpty ?? true) {
-      return const [];
-    }
-    final isar = Isar.getInstance()!;
-    return [
-      ...(
-        await isar.txn(() => isar.isarSearchAnimes.getAll(ids!.cast<int>()))
-      ).whereType<IsarSearchAnime>(),
-    ];
-  }
-);
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
 
 class SearchPage extends ConsumerWidget {
 
@@ -71,7 +33,7 @@ class SearchPage extends ConsumerWidget {
             keys: const ["recent-searches"],
           ),
           builder: (context, miscBox, _) => ref.watch(
-            _recentSearchesProv(miscBox.get("recent-searches") as List?),
+            recentSearchesProv(miscBox.get("recent-searches") as List?),
           ).when(
             loading: () => const CircularProgressIndicator(),
             error: (_, __) => const Icon(Boxicons.bx_error_circle),
@@ -152,8 +114,8 @@ class SearchPage extends ConsumerWidget {
             ? () => Navigator.of(context).pushNamed("/base/search")
             : ref.watch(searchdbStatusProv).inProcess
               ? null
-              : () => ref.read(apiProvider).populateSearchdb(ref),
-          onLongPress: () => ref.read(apiProvider).populateSearchdb(ref),
+              : () => ref.read(apiProv).populateSearchdb(ref),
+          onLongPress: () => ref.read(apiProv).populateSearchdb(ref),
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: kTopBarHeight),
             child: LabelledIcon.horizontal(

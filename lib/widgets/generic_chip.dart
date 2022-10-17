@@ -1,34 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/constants/generic_chip_type.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
 
-/* CONSTANTS */
-
-enum _GenericChipType {click, select}
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
-
 class GenericChip extends StatelessWidget {
 
-  final _GenericChipType _type;
+  final GenericChipType type;
   final String label;
   final void Function() onTap;
   final bool selected;
@@ -38,7 +17,7 @@ class GenericChip extends StatelessWidget {
     required this.onTap,
     super.key,
   }) :
-    _type = _GenericChipType.click,
+    type = GenericChipType.click,
     selected = false;
 
   const GenericChip.select({
@@ -47,12 +26,12 @@ class GenericChip extends StatelessWidget {
     required this.onTap,
     super.key,
   }) :
-    _type = _GenericChipType.select;
+    type = GenericChipType.select;
 
   @override
   Widget build(BuildContext context) {
-    switch (_type) {
-      case _GenericChipType.click:
+    switch (type) {
+      case GenericChipType.click:
         return TextButton(
           clipBehavior: Clip.hardEdge,
           onPressed: onTap,
@@ -64,7 +43,7 @@ class GenericChip extends StatelessWidget {
           ),
           child: SingleLineText.secondary(label),
         );
-      case _GenericChipType.select:
+      case GenericChipType.select:
         final theme = Theme.of(context);
         return TextButton(
           clipBehavior: Clip.hardEdge,

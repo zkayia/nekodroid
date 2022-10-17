@@ -20,21 +20,21 @@ class LibraryAppBar extends ConsumerWidget {
       ),
       child: TabBar(
         isScrollable:
-          ref.watch(settingsProvider.select((v) => v.library.enableTabbarScrolling)),
+          ref.watch(settingsProv.select((v) => v.library.enableTabbarScrolling)),
         physics: kDefaultScrollPhysics,
         splashBorderRadius: BorderRadius.circular(kBorderRadMain),
         tabs: [
-          if (ref.watch(settingsProvider.select((v) => v.library.enableHistory)))
+          if (ref.watch(settingsProv.select((v) => v.library.enableHistory)))
             const Tab(
               height: kTopBarHeight - kTabbarIndicatorSize,
               icon: Icon(Boxicons.bx_history),
             ),
-          if (ref.watch(settingsProvider.select((v) => v.library.enableFavorites)))
+          if (ref.watch(settingsProv.select((v) => v.library.enableFavorites)))
             const Tab(
               height: kTopBarHeight - kTabbarIndicatorSize,
               icon: Icon(Boxicons.bxs_heart),
             ),
-          ...ref.watch(listsProvider).when(
+          ...ref.watch(listsProv).when(
             error: (error, _) => const [
               Tab(
                 height: kTopBarHeight - kTabbarIndicatorSize,

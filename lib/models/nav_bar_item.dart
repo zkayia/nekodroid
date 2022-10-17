@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 
 
+@immutable
 class NavBarItem {
 
   final IconData? icon;
   final IconData? selectedIcon;
   final String? label;
 
-  NavBarItem({
+  const NavBarItem({
     this.icon,
     this.selectedIcon,
     this.label,

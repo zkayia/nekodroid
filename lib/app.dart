@@ -33,7 +33,7 @@ class AppState extends ConsumerState<App> {
   @override
   void initState() {
     super.initState();
-    ref.read(apiProvider).checkSearchdb(ref);
+    ref.read(apiProv).checkSearchdb(ref);
   }
 
   @override
@@ -44,14 +44,14 @@ class AppState extends ConsumerState<App> {
     onGenerateTitle: (context) => context.tr.appTitle,
     debugShowCheckedModeBanner: false,
     theme: lightTheme,
-    darkTheme: ref.watch(settingsProvider.select((v) => v.general.useAmoled))
+    darkTheme: ref.watch(settingsProv.select((v) => v.general.useAmoled))
       ? amoledTheme
       : darkTheme,
-    themeMode: ref.watch(settingsProvider.select((v) => v.general.themeMode)),
+    themeMode: ref.watch(settingsProv.select((v) => v.general.themeMode)),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: LocaleX.fromSettingString(
-      ref.watch(settingsProvider.select((v) => v.general.locale)),
+      ref.watch(settingsProv.select((v) => v.general.locale)),
     )
       ?? LocaleX.fromString(Intl.systemLocale),
     builder: (context, child) => ScrollConfiguration(

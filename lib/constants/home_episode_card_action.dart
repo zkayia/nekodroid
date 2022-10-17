@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nekodroid/constants/player_type.dart';
+import 'package:nekodroid/models/player_route_params.dart';
 import 'package:nekodroid/provider/api.dart';
-import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekosama/nekosama.dart';
 
 
@@ -24,7 +25,7 @@ enum HomeEpisodeCardAction {
       case playEpisodeWebview:
         navigator.pushNamed(
           "/player",
-          arguments: PlayerRouteParameters(
+          arguments: PlayerRouteParams(
             episode: episode,
             playerType: this == playEpisodeNative
               ? PlayerType.native
@@ -63,7 +64,7 @@ enum HomeEpisodeCardAction {
         Clipboard.setData(
           ClipboardData(
             text: (
-              await ref.read(apiProvider).getVideoUrl(episode)
+              await ref.read(apiProv).getVideoUrl(episode)
             ).toString(),
           ),
         );

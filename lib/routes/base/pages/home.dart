@@ -19,9 +19,9 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => RefreshIndicator(
-    onRefresh: () async => ref.refresh(homeProvider),
+    onRefresh: () async => ref.refresh(homeProv),
     child: Center(
-      child: ref.watch(homeProvider).when(
+      child: ref.watch(homeProv).when(
         error: (error, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
         loading: () => const CircularProgressIndicator(),
         data: (data) {
@@ -49,14 +49,14 @@ class HomePage extends ConsumerWidget {
                   : null,
                 label: isEpisode ? element.episodeTitle : element.title,
                 onTap: () => isEpisode
-                  ? ref.read(settingsProvider).home.episodeCardPressAction
+                  ? ref.read(settingsProv).home.episodeCardPressAction
                     .doAction(Navigator.of(context), ref, element)
-                  : ref.read(settingsProvider).home.animeCardPressAction
+                  : ref.read(settingsProv).home.animeCardPressAction
                     .doAction(Navigator.of(context), ref, element),
                 onLongPress: () => isEpisode
-                  ? ref.read(settingsProvider).home.episodeCardLongPressAction
+                  ? ref.read(settingsProv).home.episodeCardLongPressAction
                     .doAction(Navigator.of(context), ref, element)
-                  : ref.read(settingsProvider).home.animeCardLongPressAction
+                  : ref.read(settingsProv).home.animeCardLongPressAction
                     .doAction(Navigator.of(context), ref, element),
               );
               return AnimeCarousel(
@@ -70,7 +70,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
                 title: carousel.key,
-                itemCount: ref.read(settingsProvider).home.carouselColumnCount
+                itemCount: ref.read(settingsProv).home.carouselColumnCount
                   * (index == 0 ? 2 : 1),
                 itemBuilder: (context, index) {
                   final element = carousel.value.elementAt(index);

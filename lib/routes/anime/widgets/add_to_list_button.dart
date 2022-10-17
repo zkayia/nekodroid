@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:nekodroid/extensions/build_context.dart';
+import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/lists.dart';
 import 'package:nekodroid/schemas/isar_anime_list_item.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
@@ -18,7 +19,7 @@ class AddToListButton extends ConsumerWidget {
   const AddToListButton(this.anime, {super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => ref.watch(listsProvider).when(
+  Widget build(BuildContext context, WidgetRef ref) => ref.watch(listsProv).when(
     error: (_, __) => const Icon(Boxicons.bx_error_circle),
     loading: () => const CircularProgressIndicator(),
     data: (lists) => GenericButton.elevated(

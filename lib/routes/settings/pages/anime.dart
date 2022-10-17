@@ -27,21 +27,18 @@ class SettingsAnimePage extends ConsumerWidget implements WidgetTitleMixin {
     children: [
       SwitchSetting(
         title: context.tr.blurThumbs,
-        value: ref.watch(settingsProvider.select((value) => value.anime.blurThumbs)),
-        onChanged: (bool value) =>
-          ref.read(settingsProvider.notifier).blurThumbs = value,
+        value: ref.watch(settingsProv.select((v) => v.anime.blurThumbs)),
+        onChanged: (v) => ref.read(settingsProv.notifier).blurThumbs = v,
       ),
       SliderSetting(
         title: context.tr.blurThumbsSigma,
-        label: ref.watch(
-          settingsProvider.select((value) => value.anime.blurThumbsSigma),
-        ).toString(),
-        enabled: ref.watch(settingsProvider.select((value) => value.anime.blurThumbs)),
-        value: ref.watch(settingsProvider.select((value) => value.anime.blurThumbsSigma)),
+        label: ref.watch(settingsProv.select((v) => v.anime.blurThumbsSigma)).toString(),
+        enabled: ref.watch(settingsProv.select((v) => v.anime.blurThumbs)),
+        value: ref.watch(settingsProv.select((v) => v.anime.blurThumbsSigma)),
         min: 1,
         max: 20,
         steps: 1,
-        onChanged: (v) => ref.read(settingsProvider.notifier).blurThumbsSigma = v.toInt(),
+        onChanged: (v) => ref.read(settingsProv.notifier).blurThumbsSigma = v.toInt(),
       ),
     ],
   );

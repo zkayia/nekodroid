@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nekodroid/constants/player_type.dart';
+import 'package:nekodroid/models/player_route_params.dart';
 import 'package:nekodroid/provider/api.dart';
-import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekosama/nekosama.dart';
 
 
@@ -14,7 +15,6 @@ enum HomeAnimeCardAction {
   copyTitle,
   copyLink,
   nothing;
-
   
   Future<void> doAction(NavigatorState navigator, WidgetRef ref, NSCarouselAnime anime) async {
     switch (this) {
@@ -23,13 +23,13 @@ enum HomeAnimeCardAction {
         return;
       case playFirstEpNative:
       case playFirstEpWebview:
-        final fullAnime = await ref.read(apiProvider).getAnime(anime.url);
+        final fullAnime = await ref.read(apiProv).getAnime(anime.url);
         if (fullAnime.episodes.isEmpty) {
           return;
         }
         navigator.pushNamed(
           "/player",
-          arguments: PlayerRouteParameters(
+          arguments: PlayerRouteParams(
             episode: fullAnime.episodes.first,
             playerType: this == playFirstEpNative
               ? PlayerType.native

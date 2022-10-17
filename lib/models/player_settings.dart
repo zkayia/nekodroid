@@ -44,115 +44,115 @@ class PlayerSettings {
     this.quickSkipDisplayDuration=200,
   });
 
-	PlayerSettings copyWith({
-		bool? confirmOnBackExit,
-		int? backExitDuration,
-		bool? epContinueAtLastLocation,
-		bool? epAutoMarkCompleted,
-		int? epAutoMarkCompletedThreshold,
-		int? controlsDisplayDuration,
-		int? controlsBackgroundTransparency,
-		bool? controlsPauseOnDisplay,
-		int? introSkipTime,
-		int? quickSkipForwardTime,
-		int? quickSkipBackwardTime,
-		int? quickSkipDisplayDuration,
-	}) => PlayerSettings(
-		confirmOnBackExit: confirmOnBackExit ?? this.confirmOnBackExit,
-		backExitDuration: backExitDuration ?? this.backExitDuration,
-		epContinueAtLastLocation: epContinueAtLastLocation ?? this.epContinueAtLastLocation,
-		epAutoMarkCompleted: epAutoMarkCompleted ?? this.epAutoMarkCompleted,
-		epAutoMarkCompletedThreshold: epAutoMarkCompletedThreshold ?? this.epAutoMarkCompletedThreshold,
-		controlsDisplayDuration: controlsDisplayDuration ?? this.controlsDisplayDuration,
-		controlsBackgroundTransparency: controlsBackgroundTransparency ?? this.controlsBackgroundTransparency,
-		controlsPauseOnDisplay: controlsPauseOnDisplay ?? this.controlsPauseOnDisplay,
-		introSkipTime: introSkipTime ?? this.introSkipTime,
-		quickSkipForwardTime: quickSkipForwardTime ?? this.quickSkipForwardTime,
-		quickSkipBackwardTime: quickSkipBackwardTime ?? this.quickSkipBackwardTime,
-		quickSkipDisplayDuration: quickSkipDisplayDuration ?? this.quickSkipDisplayDuration,
-	);
+  PlayerSettings copyWith({
+    bool? confirmOnBackExit,
+    int? backExitDuration,
+    bool? epContinueAtLastLocation,
+    bool? epAutoMarkCompleted,
+    int? epAutoMarkCompletedThreshold,
+    int? controlsDisplayDuration,
+    int? controlsBackgroundTransparency,
+    bool? controlsPauseOnDisplay,
+    int? introSkipTime,
+    int? quickSkipForwardTime,
+    int? quickSkipBackwardTime,
+    int? quickSkipDisplayDuration,
+  }) => PlayerSettings(
+    confirmOnBackExit: confirmOnBackExit ?? this.confirmOnBackExit,
+    backExitDuration: backExitDuration ?? this.backExitDuration,
+    epContinueAtLastLocation: epContinueAtLastLocation ?? this.epContinueAtLastLocation,
+    epAutoMarkCompleted: epAutoMarkCompleted ?? this.epAutoMarkCompleted,
+    epAutoMarkCompletedThreshold: epAutoMarkCompletedThreshold ?? this.epAutoMarkCompletedThreshold,
+    controlsDisplayDuration: controlsDisplayDuration ?? this.controlsDisplayDuration,
+    controlsBackgroundTransparency: controlsBackgroundTransparency ?? this.controlsBackgroundTransparency,
+    controlsPauseOnDisplay: controlsPauseOnDisplay ?? this.controlsPauseOnDisplay,
+    introSkipTime: introSkipTime ?? this.introSkipTime,
+    quickSkipForwardTime: quickSkipForwardTime ?? this.quickSkipForwardTime,
+    quickSkipBackwardTime: quickSkipBackwardTime ?? this.quickSkipBackwardTime,
+    quickSkipDisplayDuration: quickSkipDisplayDuration ?? this.quickSkipDisplayDuration,
+  );
 
-	Map<String, dynamic> toMap() => {
-		"confirmOnBackExit": confirmOnBackExit,
-		"backExitDelay": backExitDuration,
-		"epContinueAtLastLocation": epContinueAtLastLocation,
-		"epAutoMarkCompleted": epAutoMarkCompleted,
-		"epAutoMarkCompletedThreshold": epAutoMarkCompletedThreshold,
-		"controlsDisplayDuration": controlsDisplayDuration,
-		"controlsBackgroundTransparency": controlsBackgroundTransparency,
-		"controlsPauseOnDisplay": controlsPauseOnDisplay,
-		"introSkipTime": introSkipTime,
-		"quickSkipForwardTime": quickSkipForwardTime,
-		"quickSkipBackwardTime": quickSkipBackwardTime,
-		"quickSkipDisplayDuration": quickSkipDisplayDuration,
-	};
+  Map<String, dynamic> toMap() => {
+    "confirmOnBackExit": confirmOnBackExit,
+    "backExitDelay": backExitDuration,
+    "epContinueAtLastLocation": epContinueAtLastLocation,
+    "epAutoMarkCompleted": epAutoMarkCompleted,
+    "epAutoMarkCompletedThreshold": epAutoMarkCompletedThreshold,
+    "controlsDisplayDuration": controlsDisplayDuration,
+    "controlsBackgroundTransparency": controlsBackgroundTransparency,
+    "controlsPauseOnDisplay": controlsPauseOnDisplay,
+    "introSkipTime": introSkipTime,
+    "quickSkipForwardTime": quickSkipForwardTime,
+    "quickSkipBackwardTime": quickSkipBackwardTime,
+    "quickSkipDisplayDuration": quickSkipDisplayDuration,
+  };
 
-	factory PlayerSettings.fromMap(Map<String, dynamic> map) => PlayerSettings(
-		confirmOnBackExit: map["confirmOnBackExit"]
+  factory PlayerSettings.fromMap(Map<String, dynamic> map) => PlayerSettings(
+    confirmOnBackExit: map["confirmOnBackExit"]
       ?? kDefaultSettings.player.confirmOnBackExit,
-		backExitDuration: map["backExitDelay"]
+    backExitDuration: map["backExitDelay"]
       ?? kDefaultSettings.player.backExitDuration,
-		epContinueAtLastLocation: map["epContinueAtLastLocation"]
+    epContinueAtLastLocation: map["epContinueAtLastLocation"]
       ?? kDefaultSettings.player.epContinueAtLastLocation,
-		epAutoMarkCompleted: map["epAutoMarkCompleted"]
+    epAutoMarkCompleted: map["epAutoMarkCompleted"]
       ?? kDefaultSettings.player.epAutoMarkCompleted,
-		epAutoMarkCompletedThreshold: map["epAutoMarkCompletedThreshold"]
+    epAutoMarkCompletedThreshold: map["epAutoMarkCompletedThreshold"]
       ?? kDefaultSettings.player.epAutoMarkCompletedThreshold,
-		controlsDisplayDuration: map["controlsDisplayDuration"]
+    controlsDisplayDuration: map["controlsDisplayDuration"]
       ?? kDefaultSettings.player.controlsDisplayDuration,
-		controlsBackgroundTransparency: map["controlsBackgroundTransparency"]
+    controlsBackgroundTransparency: map["controlsBackgroundTransparency"]
       ?? kDefaultSettings.player.controlsBackgroundTransparency,
-		controlsPauseOnDisplay: map["controlsPauseOnDisplay"]
+    controlsPauseOnDisplay: map["controlsPauseOnDisplay"]
       ?? kDefaultSettings.player.controlsPauseOnDisplay,
-		introSkipTime: map["introSkipTime"]
+    introSkipTime: map["introSkipTime"]
       ?? kDefaultSettings.player.introSkipTime,
-		quickSkipForwardTime: map["quickSkipForwardTime"]
+    quickSkipForwardTime: map["quickSkipForwardTime"]
       ?? kDefaultSettings.player.quickSkipForwardTime,
-		quickSkipBackwardTime: map["quickSkipBackwardTime"]
+    quickSkipBackwardTime: map["quickSkipBackwardTime"]
       ?? kDefaultSettings.player.quickSkipBackwardTime,
-		quickSkipDisplayDuration: map["quickSkipDisplayDuration"]
+    quickSkipDisplayDuration: map["quickSkipDisplayDuration"]
       ?? kDefaultSettings.player.quickSkipDisplayDuration,
-	);
+  );
 
-	String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-	factory PlayerSettings.fromJson(String source) => PlayerSettings.fromMap(json.decode(source));
+  factory PlayerSettings.fromJson(String source) => PlayerSettings.fromMap(json.decode(source));
 
-	@override
-	String toString() =>
-		"PlayerSettings(confirmOnBackExit: $confirmOnBackExit, backExitDelay: $backExitDuration, epContinueAtLastLocation: $epContinueAtLastLocation, epAutoMarkCompleted: $epAutoMarkCompleted, epAutoMarkCompletedThreshold: $epAutoMarkCompletedThreshold, controlsDisplayDuration: $controlsDisplayDuration, controlsBackgroundTransparency: $controlsBackgroundTransparency, controlsPauseOnDisplay: $controlsPauseOnDisplay, introSkipTime: $introSkipTime, quickSkipForwardTime: $quickSkipForwardTime, quickSkipBackwardTime: $quickSkipBackwardTime, quickSkipDisplayDuration: $quickSkipDisplayDuration)";
+  @override
+  String toString() =>
+    "PlayerSettings(confirmOnBackExit: $confirmOnBackExit, backExitDelay: $backExitDuration, epContinueAtLastLocation: $epContinueAtLastLocation, epAutoMarkCompleted: $epAutoMarkCompleted, epAutoMarkCompletedThreshold: $epAutoMarkCompletedThreshold, controlsDisplayDuration: $controlsDisplayDuration, controlsBackgroundTransparency: $controlsBackgroundTransparency, controlsPauseOnDisplay: $controlsPauseOnDisplay, introSkipTime: $introSkipTime, quickSkipForwardTime: $quickSkipForwardTime, quickSkipBackwardTime: $quickSkipBackwardTime, quickSkipDisplayDuration: $quickSkipDisplayDuration)";
 
-	@override
-	bool operator ==(Object other) {
-		if (identical(this, other)) {
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
       return true;
     }
-		return other is PlayerSettings
-			&& other.confirmOnBackExit == confirmOnBackExit
-			&& other.backExitDuration == backExitDuration
-			&& other.epContinueAtLastLocation == epContinueAtLastLocation
-			&& other.epAutoMarkCompleted == epAutoMarkCompleted
-			&& other.epAutoMarkCompletedThreshold == epAutoMarkCompletedThreshold
-			&& other.controlsDisplayDuration == controlsDisplayDuration
-			&& other.controlsBackgroundTransparency == controlsBackgroundTransparency
-			&& other.controlsPauseOnDisplay == controlsPauseOnDisplay
-			&& other.introSkipTime == introSkipTime
-			&& other.quickSkipForwardTime == quickSkipForwardTime
-			&& other.quickSkipBackwardTime == quickSkipBackwardTime
-			&& other.quickSkipDisplayDuration == quickSkipDisplayDuration;
-	}
+    return other is PlayerSettings
+      && other.confirmOnBackExit == confirmOnBackExit
+      && other.backExitDuration == backExitDuration
+      && other.epContinueAtLastLocation == epContinueAtLastLocation
+      && other.epAutoMarkCompleted == epAutoMarkCompleted
+      && other.epAutoMarkCompletedThreshold == epAutoMarkCompletedThreshold
+      && other.controlsDisplayDuration == controlsDisplayDuration
+      && other.controlsBackgroundTransparency == controlsBackgroundTransparency
+      && other.controlsPauseOnDisplay == controlsPauseOnDisplay
+      && other.introSkipTime == introSkipTime
+      && other.quickSkipForwardTime == quickSkipForwardTime
+      && other.quickSkipBackwardTime == quickSkipBackwardTime
+      && other.quickSkipDisplayDuration == quickSkipDisplayDuration;
+  }
 
-	@override
-	int get hashCode => confirmOnBackExit.hashCode
-		^ backExitDuration.hashCode
-		^ epContinueAtLastLocation.hashCode
-		^ epAutoMarkCompleted.hashCode
-		^ epAutoMarkCompletedThreshold.hashCode
-		^ controlsDisplayDuration.hashCode
-		^ controlsBackgroundTransparency.hashCode
-		^ controlsPauseOnDisplay.hashCode
-		^ introSkipTime.hashCode
-		^ quickSkipForwardTime.hashCode
-		^ quickSkipBackwardTime.hashCode
-		^ quickSkipDisplayDuration.hashCode;
+  @override
+  int get hashCode => confirmOnBackExit.hashCode
+    ^ backExitDuration.hashCode
+    ^ epContinueAtLastLocation.hashCode
+    ^ epAutoMarkCompleted.hashCode
+    ^ epAutoMarkCompletedThreshold.hashCode
+    ^ controlsDisplayDuration.hashCode
+    ^ controlsBackgroundTransparency.hashCode
+    ^ controlsPauseOnDisplay.hashCode
+    ^ introSkipTime.hashCode
+    ^ quickSkipForwardTime.hashCode
+    ^ quickSkipBackwardTime.hashCode
+    ^ quickSkipDisplayDuration.hashCode;
 }

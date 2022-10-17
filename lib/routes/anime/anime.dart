@@ -4,19 +4,19 @@ import 'dart:math';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/constants/player_type.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/datetime.dart';
 import 'package:nekodroid/extensions/duration.dart';
-import 'package:nekodroid/provider/history.dart';
+import 'package:nekodroid/models/player_route_params.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/provider/anime.dart';
 import 'package:nekodroid/routes/anime/providers/blur_thumbs.dart';
+import 'package:nekodroid/routes/anime/providers/lazy_load.dart';
 import 'package:nekodroid/routes/anime/widgets/anime_page_header.dart';
 import 'package:nekodroid/routes/anime/widgets/episode_thumbnail.dart';
-import 'package:nekodroid/routes/player/player.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/generic_chip.dart';
@@ -25,32 +25,6 @@ import 'package:nekodroid/widgets/generic_route.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
-
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-final lazyLoadProvider = StateProvider.autoDispose.family<int, int>(
-  (ref, total) => ref.watch(
-    settingsProvider.select((v) => v.anime.lazyLoadItemCount),
-  ).clamp(0, total),
-);
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
 
 class AnimeRoute extends ConsumerWidget {
 
@@ -62,7 +36,7 @@ class AnimeRoute extends ConsumerWidget {
     final theme = Theme.of(context);
     return GenericRoute(
       body: Center(
-        child: ref.watch(animeProvider(animeUrl)).when(
+        child: ref.watch(animeProv(animeUrl)).when(
           loading: () => const CircularProgressIndicator(),
           error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
           data: (anime) {
@@ -74,22 +48,15 @@ class AnimeRoute extends ConsumerWidget {
                 style: theme.textTheme.bodyMedium,
               ),
             );
-            final history = ref.watch(historyProvider).get(anime.url.toString()) ?? {};
+            final history = {}; //TODO: load history for anime
             return LazyLoadScrollView(
-              onEndOfPage: () => ref.read(lazyLoadProvider(anime.episodes.length).notifier).update(
+              onEndOfPage: () => ref.read(lazyLoadProv(anime.episodes.length).notifier).update(
                 (state) => (
-                  state + ref.watch(settingsProvider).anime.lazyLoadItemCount
+                  state + ref.watch(settingsProv).anime.lazyLoadItemCount
                 ).clamp(0, anime.episodes.length),
               ),
               child: RefreshIndicator(
-                onRefresh: () async {
-                  final stringUrl = animeUrl.toString();
-                  final cacheBox = Hive.box<String>("anime-cache");
-                  await cacheBox.delete(stringUrl);
-                  ref.refresh(animeProvider(animeUrl)).whenData(
-                    (value) => cacheBox.put(stringUrl, value.toJson()),
-                  );
-                },
+                onRefresh: () async => ref.refresh(animeProv(animeUrl)),
                 child: ListView(
                   padding: const EdgeInsets.only(
                     top: kPaddingSecond,
@@ -132,14 +99,13 @@ class AnimeRoute extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GenericButton.elevated(
-                          onPressed: () =>
-                            ref.read(blurThumbsProvider.notifier).update((state) => !state),
-                          primary: ref.watch(blurThumbsProvider),
+                          onPressed: () => ref.read(blurThumbsProv.notifier).update((s) => !s),
+                          primary: ref.watch(blurThumbsProv),
                           primaryOnForeground: true,
                           child: const Icon(Boxicons.bxs_low_vision),
                         ),
                         SingleLineText(
-                          "Episodes",
+                          "Episodes", //TODO: tr
                           style: theme.textTheme.titleLarge,
                         ),
                         GenericButton.elevated(
@@ -149,7 +115,7 @@ class AnimeRoute extends ConsumerWidget {
                               : history.keys.cast<int>().reduce(max);
                             Navigator.of(context).pushNamed(
                               "/player",
-                              arguments: PlayerRouteParameters(
+                              arguments: PlayerRouteParams(
                                 playerType: PlayerType.native,
                                 episode: anime.episodes.elementAt(latest),
                                 anime: anime,
@@ -165,13 +131,13 @@ class AnimeRoute extends ConsumerWidget {
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: ref.watch(lazyLoadProvider(anime.episodes.length)),
+                      itemCount: ref.watch(lazyLoadProv(anime.episodes.length)),
                       separatorBuilder: (context, index) => const SizedBox(height: kPaddingSecond),
                       itemBuilder: (context, index) {
                         final episode = anime.episodes.elementAt(index);
                         void openPlayer(PlayerType playerType) => Navigator.of(context).pushNamed(
                           "/player",
-                          arguments: PlayerRouteParameters(
+                          arguments: PlayerRouteParams(
                             playerType: playerType,
                             episode: episode,
                             anime: anime,
@@ -183,13 +149,9 @@ class AnimeRoute extends ConsumerWidget {
                           leading: EpisodeThumbnail(episode.thumbnail),
                           trailing: Checkbox(
                             value: wasWatched,
-                            onChanged: (value) async => ref.read(historyProvider.notifier).toggleEntry(
-                              anime.toJson(),
-                              episode,
-                              DateTime.now().millisecondsSinceEpoch,
-                            ),
+                            onChanged: (value) async {}, //TODO: toggle ep history
                           ),
-                          title: "Episode ${episode.episodeNumber}",
+                          title: "Episode ${episode.episodeNumber}", //TODO: tr
                           titleWrap: false,
                           subtitle: "${
                             episode.duration?.toUnitsString(unitsTranslations: context.tr)

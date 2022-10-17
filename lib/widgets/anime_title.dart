@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AnimeTitle extends StatelessWidget {
 
-  final bool _isBold;
+  final bool isBold;
   final String title;
   final bool isExtended;
   final Locale? locale;
@@ -32,7 +32,7 @@ class AnimeTitle extends StatelessWidget {
       this.textScaleFactor,
       this.textWidthBasis,
     }
-  ) : _isBold = false;
+  ) : isBold = false;
 
   const AnimeTitle.bold(
     this.title,
@@ -49,7 +49,7 @@ class AnimeTitle extends StatelessWidget {
       this.textScaleFactor,
       this.textWidthBasis,
     }
-  ) : _isBold = true;
+  ) : isBold = true;
 
   @override
   Widget build(BuildContext context) => Text(
@@ -60,7 +60,7 @@ class AnimeTitle extends StatelessWidget {
     semanticsLabel: semanticsLabel,
     strutStyle: strutStyle,
     style: style ?? (
-      _isBold
+      isBold
         ? Theme.of(context).textTheme.titleMedium
         : Theme.of(context).textTheme.bodyMedium
     ),

@@ -6,38 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
+import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/player/players/native/providers/player_controls.dart';
-import 'package:nekodroid/routes/player/players/native/widgets/progress_bar.dart';
+import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
+import 'package:nekodroid/routes/player/native/widgets/progress_bar.dart';
 import 'package:nekodroid/widgets/generic_form_dialog.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 import 'package:video_player/video_player.dart';
 
 
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
-
-class PlayerControls extends ConsumerWidget {
-
+class PlayerControlsMainUi extends ConsumerWidget {
+  
   final VideoPlayerController controller;
   final ProviderBase<VideoPlayerValue> playerValProvider;
   final Map<String, File> qualities;
@@ -47,7 +26,7 @@ class PlayerControls extends ConsumerWidget {
   final void Function()? onPrevious;
   final void Function()? onNext;
 
-  const PlayerControls({
+  const PlayerControlsMainUi({
     required this.controller,
     required this.playerValProvider,
     required this.qualities,
@@ -60,134 +39,11 @@ class PlayerControls extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Positioned.fill(
-    child: GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onDoubleTap: () {
-        final action = ref.read(playerControlsProvider).dtCurrent;
-        if (action != null) {
-          controller.seekTo(
-            ref.read(playerValProvider).position + Duration(
-              seconds: action == DoubleTapAction.rewind
-                ? -ref.read(settingsProvider).player.quickSkipBackwardTime
-                : ref.read(settingsProvider).player.quickSkipForwardTime,
-            ),
-          );
-          ref.read(playerControlsProvider.notifier)
-            ..dtUpdate(action)
-            ..didAction();
-        }
-      },
-      onDoubleTapDown: (tapDetails) {
-        final screenSize = MediaQuery.of(context).size;
-        final tapPos = tapDetails.globalPosition;
-        if (
-          ref.read(playerControlsProvider).controlsDisplay
-          && (tapPos.dy < screenSize.height * 0.2 || screenSize.height * 0.8 < tapPos.dy)
-        ) {
-          ref.read(playerControlsProvider.notifier).dtCurrent = null;
-          return;
-        }
-        final zoneWidth = screenSize.width * 0.3;
-        ref.read(playerControlsProvider.notifier).dtCurrent = tapPos.dx < zoneWidth
-          ? DoubleTapAction.rewind
-          : screenSize.width - zoneWidth < tapPos.dx
-            ? DoubleTapAction.fastForward
-            : null;
-      },
-      onTap: () {
-        if (
-          ref.read(playerValProvider).isPlaying
-          && !ref.read(playerControlsProvider).controlsDisplay
-          && ref.read(settingsProvider).player.controlsPauseOnDisplay
-        ) {
-          controller.pause();
-        }
-        ref.watch(playerControlsProvider.notifier)
-          ..toggleControls()
-          ..didAction();
-      },
-      child: IgnorePointer(
-        ignoring: !ref.watch(playerControlsProvider).controlsDisplay,
-        child: AnimatedOpacity(
-          opacity: ref.watch(playerControlsProvider).controlsDisplay ? 1 : 0,
-          duration: kDefaultAnimDuration,
-          curve: kDefaultAnimCurve,
-          child: _PlayerControlsMainUi(
-            controller: controller,
-            playerValProvider: playerValProvider,
-            qualities: qualities,
-            title: title,
-            subtitle: subtitle,
-            changeVideo: changeVideo,
-            onPrevious: onPrevious,
-            onNext: onNext,
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-
-class PlayerControlsQuickSkipOverlay extends ConsumerWidget {
-  
-  const PlayerControlsQuickSkipOverlay({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final display = ref.watch(playerControlsProvider.select((value) => value.dtDisplay));
-    return display == null
-      ? const SizedBox.shrink()
-      : Align(
-        alignment: display == DoubleTapAction.rewind
-          ? Alignment.centerLeft
-          : Alignment.centerRight,
-        child: ConstrainedBox(
-          constraints: BoxConstraints.tight(
-            Size.fromWidth(MediaQuery.of(context).size.width * 0.3),
-          ),
-          child: Center(
-            child: Icon(
-              display == DoubleTapAction.rewind
-                ? Boxicons.bx_rewind
-                : Boxicons.bx_fast_forward,
-            ),
-          ),
-        ),
-      );
-  }
-}
-
-
-class _PlayerControlsMainUi extends ConsumerWidget {
-  
-  final VideoPlayerController controller;
-  final ProviderBase<VideoPlayerValue> playerValProvider;
-  final Map<String, File> qualities;
-  final String title;
-  final String subtitle;
-  final void Function(File newVid) changeVideo;
-  final void Function()? onPrevious;
-  final void Function()? onNext;
-
-  const _PlayerControlsMainUi({
-    required this.controller,
-    required this.playerValProvider,
-    required this.qualities,
-    required this.title,
-    required this.subtitle,
-    required this.changeVideo,
-    this.onPrevious,
-    this.onNext,
-  });
-
-  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth10 = MediaQuery.of(context).size.width * 0.1;
     return Material(
       color: Colors.black.withAlpha(
-        255 * ref.read(settingsProvider).player.controlsBackgroundTransparency ~/ 100,
+        255 * ref.read(settingsProv).player.controlsBackgroundTransparency ~/ 100,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,7 +72,7 @@ class _PlayerControlsMainUi extends ConsumerWidget {
               SizedBox(width: screenWidth10),
               IconButton(
                 onPressed: () async {
-                  ref.read(playerControlsProvider.notifier).inAction = true;
+                  ref.read(playerControlsProv.notifier).inAction = true;
                   final newSpeed = await showDialog<double>(
                     context: context,
                     builder: (context) => GenericFormDialog.radio(
@@ -234,7 +90,7 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                   if (newSpeed != null) {
                     controller.setPlaybackSpeed(newSpeed);
                   }
-                  ref.read(playerControlsProvider.notifier)
+                  ref.read(playerControlsProv.notifier)
                     ..didAction()
                     ..inAction = false;
                 },
@@ -244,7 +100,7 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                 onPressed: qualities.isEmpty
                   ? null
                   : () async {
-                    ref.read(playerControlsProvider.notifier).inAction = true;
+                    ref.read(playerControlsProv.notifier).inAction = true;
                     final newQuality = await showDialog<File>(
                       context: context,
                       builder: (context) => GenericFormDialog.radio(
@@ -262,7 +118,7 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                     if (newQuality != null) {
                       changeVideo(newQuality);
                     }
-                    ref.read(playerControlsProvider.notifier)
+                    ref.read(playerControlsProv.notifier)
                       ..didAction()
                       ..inAction = false;
                   },
@@ -271,10 +127,10 @@ class _PlayerControlsMainUi extends ConsumerWidget {
               IconButton(
                 onPressed: () {
                   controller.setVolume((ref.read(playerValProvider).volume + 1) % 2);
-                  ref.watch(playerControlsProvider.notifier).didAction();
+                  ref.watch(playerControlsProv.notifier).didAction();
                 },
                 icon: Icon(
-                  ref.watch(playerValProvider.select((value) => value.volume)) == 0
+                  ref.watch(playerValProvider.select((v) => v.volume)) == 0
                     ? Boxicons.bx_volume_mute
                     : Boxicons.bx_volume_full,
                 ),
@@ -283,10 +139,10 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                 onPressed: () {
                   controller.seekTo(
                     controller.value.position + Duration(
-                      seconds: ref.read(settingsProvider).player.introSkipTime,
+                      seconds: ref.read(settingsProv).player.introSkipTime,
                     ),
                   );
-                  ref.watch(playerControlsProvider.notifier).didAction();
+                  ref.watch(playerControlsProv.notifier).didAction();
                 },
                 icon: const Icon(Boxicons.bx_fast_forward),
               ),
@@ -298,7 +154,7 @@ class _PlayerControlsMainUi extends ConsumerWidget {
               IconButton(
                 onPressed: onPrevious != null
                   ? () {
-                    ref.watch(playerControlsProvider.notifier).didAction();
+                    ref.watch(playerControlsProv.notifier).didAction();
                     onPrevious!();
                   }
                   : null,
@@ -307,7 +163,7 @@ class _PlayerControlsMainUi extends ConsumerWidget {
               SizedBox(width: screenWidth10),
               ConstrainedBox(
                 constraints: BoxConstraints.tight(const Size.square(kLargeIconSize)),
-                child: ref.watch(playerValProvider.select((value) => value.isBuffering))
+                child: ref.watch(playerValProvider.select((v) => v.isBuffering))
                   ? const CircularProgressIndicator()
                   : IconButton(
                     padding: EdgeInsets.zero,
@@ -317,14 +173,14 @@ class _PlayerControlsMainUi extends ConsumerWidget {
                       } else {
                         controller.play();
                       }
-                      ref.watch(playerControlsProvider.notifier).didAction();
+                      ref.watch(playerControlsProv.notifier).didAction();
                     },
                     iconSize: kLargeIconSize,
-                    icon: ref.watch(playerValProvider.select((value) => value.isPlaying))
+                    icon: ref.watch(playerValProvider.select((v) => v.isPlaying))
                       ? const Icon(Boxicons.bx_pause)
                       : 
-                        ref.watch(playerValProvider.select((value) => value.position))
-                        >= ref.watch(playerValProvider.select((value) => value.duration))
+                        ref.watch(playerValProvider.select((v) => v.position))
+                        >= ref.watch(playerValProvider.select((v) => v.duration))
                           ? Transform.scale(
                             scaleX: -1,
                             child: const Icon(Boxicons.bx_revision),
@@ -336,7 +192,7 @@ class _PlayerControlsMainUi extends ConsumerWidget {
               IconButton(
                 onPressed: onNext != null
                   ? () {
-                      ref.watch(playerControlsProvider.notifier).didAction();
+                      ref.watch(playerControlsProv.notifier).didAction();
                       onNext!();
                     }
                   : null,
@@ -345,11 +201,11 @@ class _PlayerControlsMainUi extends ConsumerWidget {
             ],
           ),
           ProgressBar(
-            position: ref.watch(playerValProvider.select((value) => value.position)),
-            duration: ref.watch(playerValProvider.select((value) => value.duration)),
+            position: ref.watch(playerValProvider.select((v) => v.position)),
+            duration: ref.watch(playerValProvider.select((v) => v.duration)),
             onSeek: (newPos) {
               controller.seekTo(newPos);
-              ref.watch(playerControlsProvider.notifier).didAction();
+              ref.watch(playerControlsProv.notifier).didAction();
             },
           ),
         ],

@@ -35,7 +35,7 @@ class SettingsRoute extends ConsumerWidget {
       title: context.tr.settings,
       verticalPadding: kPaddingSecond,
       onExitTap: (_) async {
-        await ref.read(settingsProvider.notifier).saveToHive();
+        await ref.read(settingsProv.notifier).saveToHive();
         return true;
       },
       children: [

@@ -6,7 +6,6 @@ import 'package:nekodroid/widgets/chip_wrap.dart';
 import 'package:nekodroid/widgets/generic_chip.dart';
 
 
-
 class FiltersDialogSelectable extends ConsumerWidget {
 
   final List<Enum> values;

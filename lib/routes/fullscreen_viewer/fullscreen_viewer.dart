@@ -4,28 +4,6 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 
 
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
-
 class FullscreenViewerRoute extends StatelessWidget {
 
   const FullscreenViewerRoute({super.key});

@@ -2,15 +2,14 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/datetime.dart';
+import 'package:nekodroid/provider/favorites.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/provider/lists.dart';
+import 'package:nekodroid/routes/base/providers/recent_history.dart';
 import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
-import 'package:nekodroid/schemas/isar_anime_list_item.dart';
-import 'package:nekodroid/schemas/isar_episode_status.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
@@ -18,20 +17,6 @@ import 'package:nekodroid/widgets/generic_cached_image.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 
-
-final _recentHistoryProv = StreamProvider.autoDispose<List<IsarEpisodeStatus>>(
-  (ref) => Isar.getInstance()!.isarEpisodeStatus.filter()
-    .lastWatchedTimestampIsNotNull()
-    .sortByLastWatchedTimestampDesc()
-    .watch(fireImmediately: true),
-);
-
-final _favoritesProv = StreamProvider.autoDispose<List<IsarAnimeListItem>>(
-  (ref) => Isar.getInstance()!.isarAnimeListItems.filter()
-    .favoritedTimestampIsNotNull()
-    .sortByFavoritedTimestampDesc()
-    .watch(fireImmediately: true),
-);
 
 class LibraryTabview extends ConsumerWidget {
 
@@ -41,8 +26,8 @@ class LibraryTabview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => TabBarView(
     physics: kDefaultScrollPhysics,
     children: [
-      if (ref.watch(settingsProvider.select((v) => v.library.enableHistory)))
-        ref.watch(_recentHistoryProv).when(
+      if (ref.watch(settingsProv.select((v) => v.library.enableHistory)))
+        ref.watch(recentHistoryProv).when(
           loading: () => const CircularProgressIndicator(),
           error: (_, __) => const LargeIcon(Boxicons.bxs_error_circle),
           data: (data) => AnimeListview(
@@ -82,8 +67,8 @@ class LibraryTabview extends ConsumerWidget {
             ),
           ),
         ),
-      if (ref.watch(settingsProvider.select((v) => v.library.enableFavorites)))
-        ref.watch(_favoritesProv).when(
+      if (ref.watch(settingsProv.select((v) => v.library.enableFavorites)))
+        ref.watch(favoritesProv).when(
           loading: () => const CircularProgressIndicator(),
           error: (_, __) => const LargeIcon(Boxicons.bxs_error_circle),
           data: (data) => AnimeListview(
@@ -106,7 +91,7 @@ class LibraryTabview extends ConsumerWidget {
             ),
           ),
         ),
-      ...ref.watch(listsProvider).when(
+      ...ref.watch(listsProv).when(
         error: (_, __) => const [
           LabelledIcon.vertical(
             icon: LargeIcon(Boxicons.bx_error_circle),

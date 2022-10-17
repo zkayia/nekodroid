@@ -59,18 +59,10 @@ void main() async {
   // }
 
   // // Clears all Hive db storage at restart
-  // await Hive.openBox<int>("favorites");
-  // await Hive.openBox<Map>("history");
-  // await Hive.openBox<String>("recent-history");
-  // await Hive.openBox<String>("anime-cache");
   // await Hive.openBox("settings");
   // await Hive.openBox("misc-data");
   // await Hive.deleteFromDisk();
 
-  await Hive.openBox<int>("favorites");
-  await Hive.openBox<Map>("history");
-  await Hive.openBox<String>("recent-history");
-  await Hive.openBox<String>("anime-cache");
   await Hive.openBox("settings");
   await Hive.openBox("misc-data");
 

@@ -2,6 +2,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/widgets/generic_form_dialog.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 

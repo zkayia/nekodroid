@@ -3,50 +3,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/models/hls_prov_data.dart';
 import 'package:path_provider/path_provider.dart';
 
 
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-@immutable
-class HlsProviderData {
-
-  final Uri videoUrl;
-  final AssetBundle assetBundle;
-
-  const HlsProviderData({
-    required this.videoUrl,
-    required this.assetBundle,
-  });
-
-  @override
-  String toString() => "HlsProviderData(videoUrl: $videoUrl, assetBundle: $assetBundle)";
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    return other is HlsProviderData && other.videoUrl == videoUrl && other.assetBundle == assetBundle;
-  }
-
-  @override
-  int get hashCode => videoUrl.hashCode ^ assetBundle.hashCode;
-}
-
-
-/* PROVIDERS */
-
-final hlsProvider = FutureProvider.autoDispose.family<Map<String, File>, HlsProviderData>(
+final hlsProv = FutureProvider.autoDispose.family<Map<String, File>, HlsProvData>(
   (ref, data) {
     final bytesCompleter = Completer<Map<String, List<int>>>();
     final filesCompleter = Completer<Map<String, File>>();
@@ -89,12 +53,9 @@ final hlsProvider = FutureProvider.autoDispose.family<Map<String, File>, HlsProv
   },
 );
 
-
-/* MISC */
-
 HeadlessInAppWebView _buildWebview(
   Completer<Map<String, List<int>>> bytesCompleter,
-  HlsProviderData data,
+  HlsProvData data,
 ) {
   final qualitiesCount = Completer<int>();
   final Map<String, List<int>> qualities = {};
@@ -168,6 +129,3 @@ HeadlessInAppWebView _buildWebview(
     shouldOverrideUrlLoading: (controller, action) async => NavigationActionPolicy.CANCEL,
   );
 }
-
-
-/* WIDGETS */

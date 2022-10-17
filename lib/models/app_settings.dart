@@ -35,34 +35,34 @@ class AppSettings {
     this.player=const PlayerSettings(),
   });
 
-	AppSettings copyWith({
-		SessionSettings? session,
-		GeneralSettings? general,
-		HomeSettings? home,
-		LibrarySettings? library,
-		SearchSettings? search,
-		AnimeSettings? anime,
-		PlayerSettings? player,
-	}) => AppSettings(
-		session: session ?? this.session,
-		general: general ?? this.general,
-		home: home ?? this.home,
-		library: library ?? this.library,
-		search: search ?? this.search,
-		anime: anime ?? this.anime,
-		player: player ?? this.player,
-	);
+  AppSettings copyWith({
+    SessionSettings? session,
+    GeneralSettings? general,
+    HomeSettings? home,
+    LibrarySettings? library,
+    SearchSettings? search,
+    AnimeSettings? anime,
+    PlayerSettings? player,
+  }) => AppSettings(
+    session: session ?? this.session,
+    general: general ?? this.general,
+    home: home ?? this.home,
+    library: library ?? this.library,
+    search: search ?? this.search,
+    anime: anime ?? this.anime,
+    player: player ?? this.player,
+  );
 
-	Map<String, dynamic> toMap() => {
-		"general": general.toMap(),
-		"home": home.toMap(),
-		"library": library.toMap(),
-		"search": search.toMap(),
-		"anime": anime.toMap(),
-		"player": player.toMap(),
-	};
+  Map<String, dynamic> toMap() => {
+    "general": general.toMap(),
+    "home": home.toMap(),
+    "library": library.toMap(),
+    "search": search.toMap(),
+    "anime": anime.toMap(),
+    "player": player.toMap(),
+  };
 
-	factory AppSettings.fromMap(Map<String, dynamic> map) => AppSettings(
+  factory AppSettings.fromMap(Map<String, dynamic> map) => AppSettings(
     general: map["general"] == null
       ? kDefaultSettings.general
       : GeneralSettings.fromMap(map["general"]),
@@ -81,35 +81,35 @@ class AppSettings {
     player: map["player"] == null
       ? kDefaultSettings.player
       : PlayerSettings.fromMap(map["player"]),
-	);
+  );
 
-	String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-	factory AppSettings.fromJson(String source) => AppSettings.fromMap(json.decode(source));
+  factory AppSettings.fromJson(String source) => AppSettings.fromMap(json.decode(source));
 
-	@override
-	String toString() =>
-		"AppSettings(general: $general, home: $home, library: $library, search: $search, anime: $anime, player: $player)";
+  @override
+  String toString() =>
+    "AppSettings(general: $general, home: $home, library: $library, search: $search, anime: $anime, player: $player)";
 
-	@override
-	bool operator ==(Object other) {
-		if (identical(this, other)) {
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
       return true;
     }
-		return other is AppSettings
-			&& other.general == general
-			&& other.home == home
-			&& other.library == library
-			&& other.search == search
-			&& other.anime == anime
-			&& other.player == player;
-	}
+    return other is AppSettings
+      && other.general == general
+      && other.home == home
+      && other.library == library
+      && other.search == search
+      && other.anime == anime
+      && other.player == player;
+  }
 
-	@override
-	int get hashCode => general.hashCode
-		^ home.hashCode
-		^ library.hashCode
-		^ search.hashCode
-		^ anime.hashCode
-		^ player.hashCode;
+  @override
+  int get hashCode => general.hashCode
+    ^ home.hashCode
+    ^ library.hashCode
+    ^ search.hashCode
+    ^ anime.hashCode
+    ^ player.hashCode;
 }

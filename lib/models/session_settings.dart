@@ -1,5 +1,5 @@
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 
 @immutable
@@ -11,9 +11,9 @@ class SessionSettings {
     this.privateBrowsingEnabled=false,
   });
 
-	SessionSettings copyWith({
-		bool? privateBrowsingEnabled,
-	}) => SessionSettings(
-		privateBrowsingEnabled: privateBrowsingEnabled ?? this.privateBrowsingEnabled,
-	);
+  SessionSettings copyWith({
+    bool? privateBrowsingEnabled,
+  }) => SessionSettings(
+    privateBrowsingEnabled: privateBrowsingEnabled ?? this.privateBrowsingEnabled,
+  );
 }

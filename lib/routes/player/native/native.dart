@@ -5,46 +5,22 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/extensions/build_context.dart';
-import 'package:nekodroid/routes/player/player.dart';
-import 'package:nekodroid/routes/player/players/native/providers/hls.dart';
-import 'package:nekodroid/routes/player/players/native/providers/player_controls.dart';
-import 'package:nekodroid/routes/player/players/native/widgets/player_controls.dart';
+import 'package:nekodroid/models/hls_prov_data.dart';
+import 'package:nekodroid/models/player_route_params.dart';
+import 'package:nekodroid/routes/player/native/providers/hls.dart';
+import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
+import 'package:nekodroid/routes/player/native/providers/player_is_init.dart';
+import 'package:nekodroid/routes/player/native/providers/player_value.dart';
+import 'package:nekodroid/routes/player/native/widgets/player_controls.dart';
+import 'package:nekodroid/routes/player/native/widgets/player_controls_quick_skip_overlay.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 import 'package:video_player/video_player.dart';
 
 
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-final _playerIsInitProvider = StateProvider.autoDispose<bool>(
-  (ref) => false,
-);
-
-final _playerValProvider = StateProvider.autoDispose<VideoPlayerValue>(
-  (ref) => VideoPlayerValue(duration: Duration.zero),
-);
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
-
 class NativePlayer extends ConsumerWidget {
 
-  final PlayerRouteParameters playerRouteParameters;
+  final PlayerRouteParams playerRouteParameters;
   final Uri videoUrl;
   final void Function()? onPrevious;
   final void Function()? onNext;
@@ -59,7 +35,7 @@ class NativePlayer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => ref.watch(
-    hlsProvider(HlsProviderData(videoUrl: videoUrl, assetBundle: DefaultAssetBundle.of(context))),
+    hlsProv(HlsProvData(videoUrl: videoUrl, assetBundle: DefaultAssetBundle.of(context))),
   ).when(
     loading: () => const CircularProgressIndicator(),
     error: (err, stackTrace) => LabelledIcon.vertical(
@@ -78,7 +54,7 @@ class NativePlayer extends ConsumerWidget {
 
 class _VideoPlayer extends ConsumerStatefulWidget {
   
-  final PlayerRouteParameters playerRouteParameters;
+  final PlayerRouteParams playerRouteParameters;
   final Map<String, File> hlsStreams;
   final void Function()? onPrevious;
   final void Function()? onNext;
@@ -118,7 +94,7 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
     controller = VideoPlayerController.file(file)
       ..addListener(_controllerListener)
       ..initialize().then((_) {
-        ref.read(_playerIsInitProvider.notifier).update((_) => true);
+        ref.read(playerIsInitProv.notifier).update((_) => true);
         controller
           ..seekTo(startAt ?? Duration.zero)
           ..play();
@@ -132,10 +108,10 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
   }
 
   void _controllerListener() {
-    ref.read(_playerValProvider.notifier).update((_) => controller.value);
-    ref.read(playerControlsProvider.notifier).isPlaying = controller.value.isPlaying;
+    ref.read(playerValueProv.notifier).update((_) => controller.value);
+    ref.read(playerControlsProv.notifier).isPlaying = controller.value.isPlaying;
     if (controller.value.position >= controller.value.duration) {
-      ref.read(playerControlsProvider.notifier).videoDone();
+      ref.read(playerControlsProv.notifier).videoDone();
     }
   }
 
@@ -144,17 +120,17 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
     // To keep the state when disabling visibility
     // when riverpod ^2.0.0 comes
     // remove thoses and autoDispose then ref.invalidate it in dispose
-    ref.watch(_playerValProvider);
+    ref.watch(playerValueProv);
     return Stack(
       fit: StackFit.expand,
       alignment: Alignment.center,
       children: [
         VideoPlayer(controller),
-        if (ref.watch(_playerIsInitProvider))
+        if (ref.watch(playerIsInitProv))
           ...[
             PlayerControls(
               controller: controller,
-              playerValProvider: _playerValProvider,
+              playerValProvider: playerValueProv,
               qualities: widget.hlsStreams,
               title: widget.playerRouteParameters.anime?.title ?? "",
               subtitle: context.tr.episodeLong(widget.playerRouteParameters.episode.episodeNumber),

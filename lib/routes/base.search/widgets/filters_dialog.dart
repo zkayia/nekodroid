@@ -110,14 +110,14 @@ class FiltersDialog extends ConsumerWidget {
                           ..read(popularityFilterProv.notifier).reset();
                       }
                     }),
-                  child: const Text("Reset"),
+                  child: const Text("Reset"), //TODO: tr
                 ),
               ),
               const SizedBox(width: kPaddingMain),
               Expanded(
                 child: GenericButton.elevated(
                   onPressed: Navigator.of(context).pop,
-                  child: const Text("Close"),
+                  child: const Text("Close"), //TODO: tr
                 ),
               ),
             ],

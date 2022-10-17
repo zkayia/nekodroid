@@ -2,52 +2,16 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/constants/form_dialog_type.dart';
+import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/widgets/generic_dialog.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
-import 'package:nekodroid/widgets/overflow_text.dart';
-import 'package:nekodroid/widgets/single_line_text.dart';
 
-
-/* CONSTANTS */
-
-enum _FormDialogType {checkbox, radio}
-
-
-/* MODELS */
-
-@immutable
-class GenericFormDialogElement<T> {
-
-  final String label;
-  final T value;
-  final String? details;
-  final bool selected;
-
-  const GenericFormDialogElement({
-    required this.label,
-    required this.value,
-    this.details,
-    this.selected=false,
-  });
-}
-
-
-/* PROVIDERS */
-
-
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
 
 class GenericFormDialog<T> extends StatefulWidget {
 
-  final _FormDialogType _type;
+  final FormDialogType type;
   final String title;
   final List<GenericFormDialogElement<T>> elements;
   final String? placeholderLabel;
@@ -59,7 +23,7 @@ class GenericFormDialog<T> extends StatefulWidget {
     this.placeholderLabel,
     this.placeholderIcon=Boxicons.bx_error_circle,
     super.key,
-  }) : _type = _FormDialogType.checkbox;
+  }) : type = FormDialogType.checkbox;
   
   const GenericFormDialog.radio({
     required this.title,
@@ -67,7 +31,7 @@ class GenericFormDialog<T> extends StatefulWidget {
     this.placeholderLabel,
     this.placeholderIcon=Boxicons.bx_error_circle,
     super.key,
-  }) : _type = _FormDialogType.radio;
+  }) : type = FormDialogType.radio;
 
   @override
   State<GenericFormDialog> createState() => _GenericFormDialogState<T>();
@@ -79,13 +43,13 @@ class _GenericFormDialogState<T> extends State<GenericFormDialog> {
 
   @override
   void initState() {
-    switch (widget._type) {
-      case _FormDialogType.checkbox:
+    switch (widget.type) {
+      case FormDialogType.checkbox:
         _value = [
           ...widget.elements.where((e) => e.selected).map((e) => e.value)
         ];
         break;
-      case _FormDialogType.radio:
+      case FormDialogType.radio:
         _value = widget.elements.any((e) => e.selected)
           ? [widget.elements.firstWhere((e) => e.selected).value]
           : null;
@@ -99,7 +63,7 @@ class _GenericFormDialogState<T> extends State<GenericFormDialog> {
   @override
   Widget build(BuildContext context) => GenericDialog(
     title: widget.title,
-    onConfirm: (_) => widget._type == _FormDialogType.radio
+    onConfirm: (_) => widget.type == FormDialogType.radio
       ? _value?.first
       : _value,
     canAbortConfirm: false,
@@ -119,8 +83,8 @@ class _GenericFormDialogState<T> extends State<GenericFormDialog> {
           padding: const EdgeInsets.all(kPaddingSecond),
           itemBuilder: (context, index) {
             final element = widget.elements.elementAt(index);
-            switch (widget._type) {
-              case _FormDialogType.checkbox:
+            switch (widget.type) {
+              case FormDialogType.checkbox:
                 return CheckboxListTile(
                   title: Text(element.label),
                   subtitle: element.details == null 
@@ -137,7 +101,7 @@ class _GenericFormDialogState<T> extends State<GenericFormDialog> {
                     }
                   },
                 );
-              case _FormDialogType.radio:
+              case FormDialogType.radio:
                 return RadioListTile<T>(
                   title: Text(element.label),
                   subtitle: element.details == null 

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/routes/base/models/nav_bar_item.dart';
+import 'package:nekodroid/models/nav_bar_item.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
 

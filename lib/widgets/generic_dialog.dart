@@ -53,7 +53,7 @@ class GenericDialog<T> extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(
                 isConfirm ? false : onCancel?.call(context),
               ),
-              child: const SingleLineText("Cancel"),
+              child: const SingleLineText("Cancel"), //TODO: tr
             ),
           ),
           const SizedBox(width: kPaddingMain),
@@ -71,7 +71,7 @@ class GenericDialog<T> extends StatelessWidget {
                 Navigator.of(context).pop(isConfirm ? true : onConfirmCall);
               },
               primary: true,
-              child: const SingleLineText("Ok"),
+              child: const SingleLineText("Ok"), //TODO: tr
             ),
           ),
         ],

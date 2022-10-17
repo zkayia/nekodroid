@@ -1,16 +1,15 @@
 
-import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants/nav_labels_mode.dart';
 import 'package:nekodroid/constants/widget_title_mixin.dart';
 import 'package:nekodroid/extensions/build_context.dart';
+import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/settings/widgets/radio_setting.dart';
 import 'package:nekodroid/routes/settings/widgets/settings_sliver_title_route.dart';
 import 'package:nekodroid/routes/settings/widgets/switch_setting.dart';
-import 'package:nekodroid/widgets/generic_form_dialog.dart';
 
 
 class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
@@ -39,7 +38,7 @@ class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
         RadioSetting<ThemeMode>(
           title: context.tr.settingsTheme,
           subtitle: context.tr.settingsThemes(
-            ref.watch(settingsProvider.select((v) => v.general.themeMode)).name,
+            ref.watch(settingsProv.select((v) => v.general.themeMode)).name,
           ),
           elements: [
             ...ThemeMode.values.map(
@@ -47,22 +46,22 @@ class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
                 label: context.tr.settingsThemes(e.name),
                 value: e,
                 selected: e == ref.watch(
-                  settingsProvider.select((v) => v.general.themeMode),
+                  settingsProv.select((v) => v.general.themeMode),
                 ),
               ),
             ),
           ],
-          onChanged: (v) => ref.read(settingsProvider.notifier).themeMode = v,
+          onChanged: (v) => ref.read(settingsProv.notifier).themeMode = v,
         ),
         SwitchSetting(
           title: context.tr.settingsUseAmoled,
           subtitle: context.tr.settingsUseAmoledDesc,
-          value: ref.watch(settingsProvider.select((v) => v.general.useAmoled)),
-          onChanged: (v) => ref.read(settingsProvider.notifier).useAmoled = v,
+          value: ref.watch(settingsProv.select((v) => v.general.useAmoled)),
+          onChanged: (v) => ref.read(settingsProv.notifier).useAmoled = v,
         ),
         RadioSetting<String>(
           title: context.tr.settingsLocale,
-          subtitle: ref.watch(settingsProvider.select((v) => v.general.locale)) == "system"
+          subtitle: ref.watch(settingsProv.select((v) => v.general.locale)) == "system"
             ? context.tr.settingsDeviceLocale
             : context.tr.localeDisplayName,
           elements: [
@@ -70,7 +69,7 @@ class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
               label: context.tr.settingsDeviceLocale,
               value: "system",
               selected: "system" == ref.watch(
-                settingsProvider.select((v) => v.general.locale),
+                settingsProv.select((v) => v.general.locale),
               ),
             ),
             for (final locale in AppLocalizations.supportedLocales)
@@ -78,16 +77,16 @@ class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
                 label: lookupAppLocalizations(locale).localeDisplayName,
                 value: locale.toLanguageTag(),
                 selected: locale.toLanguageTag() == ref.watch(
-                  settingsProvider.select((v) => v.general.locale),
+                  settingsProv.select((v) => v.general.locale),
                 ),
               ),
           ],
-          onChanged: (v) => ref.read(settingsProvider.notifier).locale = v,
+          onChanged: (v) => ref.read(settingsProv.notifier).locale = v,
         ),
         RadioSetting<NavLabelsMode>(
           title: context.tr.settingsNavLabel,
           subtitle: context.tr.settingsNavLabels(
-            ref.watch(settingsProvider.select((v) => v.general.navLabelsMode)).name,
+            ref.watch(settingsProv.select((v) => v.general.navLabelsMode)).name,
           ),
           elements: [
             ...NavLabelsMode.values.map(
@@ -95,17 +94,17 @@ class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
                 label: context.tr.settingsNavLabels(e.name),
                 value: e,
                 selected: e == ref.watch(
-                  settingsProvider.select((v) => v.general.navLabelsMode),
+                  settingsProv.select((v) => v.general.navLabelsMode),
                 ),
               ),
             ),
           ],
-          onChanged: (v) => ref.read(settingsProvider.notifier).navLabelsMode = v,
+          onChanged: (v) => ref.read(settingsProv.notifier).navLabelsMode = v,
         ),
         RadioSetting<int>(
           title: context.tr.settingsDefaultPage,
           subtitle: pagesText.elementAt(
-            ref.watch(settingsProvider.select((v) => v.general.defaultPage)),
+            ref.watch(settingsProv.select((v) => v.general.defaultPage)),
           ),
           elements: [
             for (var i = 0; i < pagesText.length; i++)
@@ -113,11 +112,11 @@ class SettingsGeneralPage extends ConsumerWidget implements WidgetTitleMixin {
                 label: pagesText.elementAt(i),
                 value: i,
                 selected: i == ref.watch(
-                  settingsProvider.select((v) => v.general.defaultPage),
+                  settingsProv.select((v) => v.general.defaultPage),
                 ),
               ),
           ],
-          onChanged: (v) => ref.read(settingsProvider.notifier).defaultPage = v,
+          onChanged: (v) => ref.read(settingsProv.notifier).defaultPage = v,
         ),
       ],
     );

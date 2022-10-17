@@ -14,28 +14,6 @@ import 'package:nekosama/nekosama.dart';
 import 'package:share_plus/share_plus.dart';
 
 
-/* CONSTANTS */
-
-
-
-
-/* MODELS */
-
-
-
-
-/* PROVIDERS */
-
-
-
-
-/* MISC */
-
-
-
-
-/* WIDGETS */
-
 class AnimePageHeader extends StatelessWidget {
 
   final NSAnime anime; 

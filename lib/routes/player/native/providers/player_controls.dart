@@ -1,55 +1,19 @@
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nekodroid/constants/double_tap_action.dart';
 import 'package:nekodroid/extensions/datetime.dart';
+import 'package:nekodroid/models/player_controls_data.dart';
 import 'package:nekodroid/provider/settings.dart';
 
 
-/* CONSTANTS */
-
-enum DoubleTapAction {rewind, fastForward}
-
-
-/* MODELS */
-
-@immutable
-class PlayerControlsData {
-
-  final bool controlsDisplay;
-  final DoubleTapAction? dtCurrent;
-  final DoubleTapAction? dtDisplay;
-  
-  const PlayerControlsData({
-    this.controlsDisplay=false,
-    this.dtCurrent,
-    this.dtDisplay,
-  });
-
-  PlayerControlsData copyWith({
-    bool? controlsDisplay,
-    DoubleTapAction? dtCurrent,
-    DoubleTapAction? dtDisplay,
-  }) => PlayerControlsData(
-    controlsDisplay: controlsDisplay ?? this.controlsDisplay,
-    dtCurrent: dtCurrent ?? this.dtCurrent,
-    dtDisplay: dtDisplay ?? this.dtDisplay,
-  );
-}
-
-
-/* PROVIDERS */
-
-final playerControlsProvider = StateNotifierProvider.autoDispose<
-  _PlayerControlsProviderNotifier,
+final playerControlsProv = StateNotifierProvider.autoDispose<
+  _PlayerControlsProvNotif,
   PlayerControlsData
 >(
-  _PlayerControlsProviderNotifier.new,
+  _PlayerControlsProvNotif.new,
 );
 
-
-/* MISC */
-
-class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> {
+class _PlayerControlsProvNotif extends StateNotifier<PlayerControlsData> {
 
   final Duration _playerControlsDisplayDuration;
   final Duration _playerQuickSkipDisplayDuration;
@@ -60,12 +24,12 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
   DateTime? _lastActionTime;
   DateTime? _dtLastTime;
 
-  _PlayerControlsProviderNotifier(Ref ref) :
+  _PlayerControlsProvNotif(Ref ref) :
     _playerControlsDisplayDuration = Duration(
-      seconds: ref.read(settingsProvider).player.controlsDisplayDuration,
+      seconds: ref.read(settingsProv).player.controlsDisplayDuration,
     ),
     _playerQuickSkipDisplayDuration = Duration(
-      milliseconds: ref.read(settingsProvider).player.quickSkipDisplayDuration,
+      milliseconds: ref.read(settingsProv).player.quickSkipDisplayDuration,
     ),
     super(const PlayerControlsData());
 
@@ -122,6 +86,3 @@ class _PlayerControlsProviderNotifier extends StateNotifier<PlayerControlsData> 
     }
   }
 }
-
-
-/* WIDGETS */

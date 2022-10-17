@@ -15,10 +15,10 @@ class LibraryPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int tabsCount = ref.watch(
-      settingsProvider.select(
+      settingsProv.select(
         (v) => v.library.enableHistory.toInt() + v.library.enableFavorites.toInt(),
       ),
-    ) + ref.watch(listsProvider).when(
+    ) + ref.watch(listsProv).when(
       error: (_, __) => 1,
       loading: () => 1,
       data: (data) => data.isEmpty ? 1 : data.length,
@@ -26,7 +26,7 @@ class LibraryPage extends ConsumerWidget {
     return DefaultTabController(
       length: tabsCount,
       initialIndex: ref.watch(
-        settingsProvider.select(
+        settingsProv.select(
           (v) => v.library.defaultTab
             + 2
             - v.library.enableHistory.toInverseInt()

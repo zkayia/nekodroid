@@ -36,16 +36,16 @@ class SettingsLibraryListsPage extends ConsumerWidget {
             // TODO: desc for lib & hist
             SwitchSetting(
               title: context.tr.libraryHistory,
-              value: ref.watch(settingsProvider.select((v) => v.library.enableHistory)),
-              onChanged: (_) => ref.read(settingsProvider.notifier).toggleEnableHistory(),
+              value: ref.watch(settingsProv.select((v) => v.library.enableHistory)),
+              onChanged: (v) => ref.read(settingsProv.notifier).enableHistory = v,
             ),
             SwitchSetting(
               title: context.tr.libraryFavorites,
-              value: ref.watch(settingsProvider.select((v) => v.library.enableFavorites)),
-              onChanged: (_) => ref.read(settingsProvider.notifier).toggleEnableFavorites(),
+              value: ref.watch(settingsProv.select((v) => v.library.enableFavorites)),
+              onChanged: (v) => ref.read(settingsProv.notifier).enableFavorites = v,
             ),
             const Divider(),
-            ref.watch(listsProvider).when(
+            ref.watch(listsProv).when(
               error: (_, __) => const LabelledIcon.vertical(
                 icon: LargeIcon(Boxicons.bx_error_circle),
                 label: "Error loading lists", //TODO: tr
@@ -178,7 +178,7 @@ class SettingsLibraryListsPage extends ConsumerWidget {
     } else if (value.isEmpty) {
       return "List name can't be empty"; //TODO: tr
     } else if (
-      ref.read(listsProvider).asData?.value.any(
+      ref.read(listsProv).asData?.value.any(
         (e) => e.name == value,
       ) ?? false
     ) {
