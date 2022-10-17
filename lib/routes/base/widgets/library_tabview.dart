@@ -108,14 +108,15 @@ class LibraryTabview extends ConsumerWidget {
           ? [
             Center(
               child: GenericButton.elevated(
-                onPressed: () {}, //TODO: go to list settings 
+                onPressed: () =>
+                  Navigator.of(context).pushNamed("/settings/library/lists"),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: kPaddingMain,
                     vertical: kPaddingSecond,
                   ),
-                  child: LabelledIcon.vertical(
-                    icon: Icon(Boxicons.bx_cog),
+                  child: LabelledIcon.horizontal(
+                    icon: Icon(Boxicons.bx_plus),
                     label: "Create a list", //TODO: tr
                     minMainAxis: true,
                   ),
@@ -147,7 +148,7 @@ class LibraryTabview extends ConsumerWidget {
                     );
                   },
                   placeholder: const LabelledIcon.vertical(
-                    icon: Icon(Boxicons.bx_question_mark),
+                    icon: LargeIcon(Boxicons.bx_question_mark),
                     label: "List is empty", //TODO: tr
                   ),
                 );
