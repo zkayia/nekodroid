@@ -9,6 +9,7 @@ import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
+import 'package:nekodroid/routes/player/providers/player_value.dart';
 import 'package:nekodroid/routes/player/native/widgets/progress_bar.dart';
 import 'package:nekodroid/widgets/generic_form_dialog.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
@@ -18,7 +19,6 @@ import 'package:video_player/video_player.dart';
 class PlayerControlsMainUi extends ConsumerWidget {
   
   final VideoPlayerController controller;
-  final ProviderBase<VideoPlayerValue> playerValProvider;
   final Map<String, File> qualities;
   final String title;
   final String subtitle;
@@ -28,7 +28,6 @@ class PlayerControlsMainUi extends ConsumerWidget {
 
   const PlayerControlsMainUi({
     required this.controller,
-    required this.playerValProvider,
     required this.qualities,
     required this.title,
     required this.subtitle,
@@ -82,7 +81,7 @@ class PlayerControlsMainUi extends ConsumerWidget {
                           GenericFormDialogElement(
                             label: speed.toString(),
                             value: speed,
-                            selected: speed == ref.read(playerValProvider).playbackSpeed,
+                            selected: speed == ref.read(playerValueProv).playbackSpeed,
                           ),
                       ],
                     ),
@@ -126,11 +125,11 @@ class PlayerControlsMainUi extends ConsumerWidget {
               ),
               IconButton(
                 onPressed: () {
-                  controller.setVolume((ref.read(playerValProvider).volume + 1) % 2);
+                  controller.setVolume((ref.read(playerValueProv).volume + 1) % 2);
                   ref.watch(playerControlsProv.notifier).didAction();
                 },
                 icon: Icon(
-                  ref.watch(playerValProvider.select((v) => v.volume)) == 0
+                  ref.watch(playerValueProv.select((v) => v.volume)) == 0
                     ? Boxicons.bx_volume_mute
                     : Boxicons.bx_volume_full,
                 ),
@@ -163,12 +162,12 @@ class PlayerControlsMainUi extends ConsumerWidget {
               SizedBox(width: screenWidth10),
               ConstrainedBox(
                 constraints: BoxConstraints.tight(const Size.square(kLargeIconSize)),
-                child: ref.watch(playerValProvider.select((v) => v.isBuffering))
+                child: ref.watch(playerValueProv.select((v) => v.isBuffering))
                   ? const CircularProgressIndicator()
                   : IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      if (ref.read(playerValProvider).isPlaying) {
+                      if (ref.read(playerValueProv).isPlaying) {
                         controller.pause();
                       } else {
                         controller.play();
@@ -176,11 +175,11 @@ class PlayerControlsMainUi extends ConsumerWidget {
                       ref.watch(playerControlsProv.notifier).didAction();
                     },
                     iconSize: kLargeIconSize,
-                    icon: ref.watch(playerValProvider.select((v) => v.isPlaying))
+                    icon: ref.watch(playerValueProv.select((v) => v.isPlaying))
                       ? const Icon(Boxicons.bx_pause)
                       : 
-                        ref.watch(playerValProvider.select((v) => v.position))
-                        >= ref.watch(playerValProvider.select((v) => v.duration))
+                        ref.watch(playerValueProv.select((v) => v.position))
+                        >= ref.watch(playerValueProv.select((v) => v.duration))
                           ? Transform.scale(
                             scaleX: -1,
                             child: const Icon(Boxicons.bx_revision),
@@ -201,8 +200,8 @@ class PlayerControlsMainUi extends ConsumerWidget {
             ],
           ),
           ProgressBar(
-            position: ref.watch(playerValProvider.select((v) => v.position)),
-            duration: ref.watch(playerValProvider.select((v) => v.duration)),
+            position: ref.watch(playerValueProv.select((v) => v.position)),
+            duration: ref.watch(playerValueProv.select((v) => v.duration)),
             onSeek: (newPos) {
               controller.seekTo(newPos);
               ref.watch(playerControlsProv.notifier).didAction();

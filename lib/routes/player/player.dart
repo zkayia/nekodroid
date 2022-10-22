@@ -9,6 +9,7 @@ import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/models/player_route_params.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/player/native/native.dart';
+import 'package:nekodroid/routes/player/providers/player_value.dart';
 import 'package:nekodroid/routes/player/providers/player_params.dart';
 import 'package:nekodroid/routes/player/providers/player_pop_time.dart';
 import 'package:nekodroid/routes/player/providers/video.dart';
@@ -68,7 +69,12 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
   @override
   Widget build(BuildContext context) {
     final parameters = ModalRoute.of(context)!.settings.arguments as PlayerRouteParams;
-    ref.watch(playerPopTimeProv);
+    // To keep the state when disabling visibility
+    // when riverpod ^2.0.0 comes
+    // remove thoses and autoDispose then ref.invalidate it in dispose
+    ref
+      ..watch(playerPopTimeProv)
+      ..watch(playerValueProv);
     return GenericRoute(
       hideExitFab: true,
       onExitTap: (context) async {

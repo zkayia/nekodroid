@@ -10,7 +10,7 @@ import 'package:nekodroid/models/player_route_params.dart';
 import 'package:nekodroid/routes/player/native/providers/hls.dart';
 import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
 import 'package:nekodroid/routes/player/native/providers/player_is_init.dart';
-import 'package:nekodroid/routes/player/native/providers/player_value.dart';
+import 'package:nekodroid/routes/player/providers/player_value.dart';
 import 'package:nekodroid/routes/player/native/widgets/player_controls.dart';
 import 'package:nekodroid/routes/player/native/widgets/player_controls_quick_skip_overlay.dart';
 import 'package:nekodroid/widgets/labelled_icon.dart';
@@ -116,33 +116,26 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // To keep the state when disabling visibility
-    // when riverpod ^2.0.0 comes
-    // remove thoses and autoDispose then ref.invalidate it in dispose
-    ref.watch(playerValueProv);
-    return Stack(
-      fit: StackFit.expand,
-      alignment: Alignment.center,
-      children: [
-        VideoPlayer(controller),
-        if (ref.watch(playerIsInitProv))
-          ...[
-            PlayerControls(
-              controller: controller,
-              playerValProvider: playerValueProv,
-              qualities: widget.hlsStreams,
-              title: widget.playerRouteParameters.anime?.title ?? "",
-              subtitle: context.tr.episodeLong(widget.playerRouteParameters.episode.episodeNumber),
-              changeVideo: (newVid) => _controllerInit(newVid, _controllerDispose()),
-              onPrevious: widget.onPrevious,
-              onNext: widget.onNext,
-            ),
-            const PlayerControlsQuickSkipOverlay(),
-          ]
-        else
-          const Center(child: CircularProgressIndicator()),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Stack(
+    fit: StackFit.expand,
+    alignment: Alignment.center,
+    children: [
+      VideoPlayer(controller),
+      if (ref.watch(playerIsInitProv))
+        ...[
+          PlayerControls(
+            controller: controller,
+            qualities: widget.hlsStreams,
+            title: widget.playerRouteParameters.anime?.title ?? "",
+            subtitle: context.tr.episodeLong(widget.playerRouteParameters.episode.episodeNumber),
+            changeVideo: (newVid) => _controllerInit(newVid, _controllerDispose()),
+            onPrevious: widget.onPrevious,
+            onNext: widget.onNext,
+          ),
+          const PlayerControlsQuickSkipOverlay(),
+        ]
+      else
+        const Center(child: CircularProgressIndicator()),
+    ],
+  );
 }

@@ -7,6 +7,7 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/constants/double_tap_action.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
+import 'package:nekodroid/routes/player/providers/player_value.dart';
 import 'package:nekodroid/routes/player/native/widgets/player_controls_main_ui.dart';
 import 'package:video_player/video_player.dart';
 
@@ -14,7 +15,6 @@ import 'package:video_player/video_player.dart';
 class PlayerControls extends ConsumerWidget {
 
   final VideoPlayerController controller;
-  final ProviderBase<VideoPlayerValue> playerValProvider;
   final Map<String, File> qualities;
   final String title;
   final String subtitle;
@@ -24,7 +24,6 @@ class PlayerControls extends ConsumerWidget {
 
   const PlayerControls({
     required this.controller,
-    required this.playerValProvider,
     required this.qualities,
     required this.title,
     required this.subtitle,
@@ -42,7 +41,7 @@ class PlayerControls extends ConsumerWidget {
         final action = ref.read(playerControlsProv).dtCurrent;
         if (action != null) {
           controller.seekTo(
-            ref.read(playerValProvider).position + Duration(
+            ref.read(playerValueProv).position + Duration(
               seconds: action == DoubleTapAction.rewind
                 ? -ref.read(settingsProv).player.quickSkipBackwardTime
                 : ref.read(settingsProv).player.quickSkipForwardTime,
@@ -72,7 +71,7 @@ class PlayerControls extends ConsumerWidget {
       },
       onTap: () {
         if (
-          ref.read(playerValProvider).isPlaying
+          ref.read(playerValueProv).isPlaying
           && !ref.read(playerControlsProv).controlsDisplay
           && ref.read(settingsProv).player.controlsPauseOnDisplay
         ) {
@@ -90,7 +89,6 @@ class PlayerControls extends ConsumerWidget {
           curve: kDefaultAnimCurve,
           child: PlayerControlsMainUi(
             controller: controller,
-            playerValProvider: playerValProvider,
             qualities: qualities,
             title: title,
             subtitle: subtitle,
