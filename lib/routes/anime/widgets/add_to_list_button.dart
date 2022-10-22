@@ -25,16 +25,13 @@ class AddToListButton extends ConsumerWidget {
     data: (lists) => GenericButton.elevated(
       onPressed: () async {
         final isar = Isar.getInstance()!;
-        final isarAnime = await isar.writeTxn<IsarAnimeListItem>(
-          () async => (
-              await isar.isarAnimeListItems.getByUrl(anime.url.toString())
-            ) ?? (
-              await isar.isarAnimeListItems.get(
-                await isar.isarAnimeListItems.put(IsarAnimeListItem.fromNSAnime(anime)),
-              )
-            )!,
-        );
-        await isarAnime.lists.load();
+        var isarAnime = await isar.isarAnimeListItems.getByUrl(anime.url.toString());
+        final wasNotInDb = isarAnime == null;
+        isarAnime ??= IsarAnimeListItem.fromNSAnime(anime);
+        if (!wasNotInDb) {
+          await isarAnime.episodeStatuses.load();
+          await isarAnime.lists.load();
+        }
         final result = await showDialog<List<int>>(
           context: context,
           builder: (context) => GenericFormDialog.checkbox(
@@ -43,19 +40,19 @@ class AddToListButton extends ConsumerWidget {
               GenericFormDialogElement(
                 label: context.tr.libraryFavorites,
                 value: -1,
-                selected: isarAnime.favoritedTimestamp != null,
+                selected: isarAnime!.favoritedTimestamp != null,
               ),
               ...lists.map(
                 (e) => GenericFormDialogElement(
                   label: e.name,
                   value: e.id,
-                  selected: isarAnime.lists.contains(e),
+                  selected: isarAnime!.lists.contains(e),
                 ),
               ),
             ],
           ),
         );
-        if (result == null) {
+        if (result == null || (wasNotInDb && result.isEmpty)) {
           return;
         }
         if (result.contains(-1)) {
@@ -67,6 +64,16 @@ class AddToListButton extends ConsumerWidget {
           ..removeWhere((e) => !result.contains(e.id))
           ..addAll(lists.where((e) => result.contains(e.id)));
         await isar.writeTxn(() async {
+          if (
+            isarAnime!.lists.isEmpty
+            && isarAnime.episodeStatuses.isEmpty
+            && isarAnime.favoritedTimestamp == null
+          ) {
+            if (!wasNotInDb) {
+              await isar.isarAnimeListItems.delete(isarAnime.id);
+            }
+            return;
+          }
           await isar.isarAnimeListItems.put(isarAnime);
           return isarAnime.lists.save();
         });
