@@ -13,7 +13,7 @@ import 'package:nekodroid/routes/base.search/providers/search_results.dart';
 import 'package:nekodroid/routes/base.search/providers/selectable_filters.dart';
 import 'package:nekodroid/routes/base.search/providers/text_controller.dart';
 import 'package:nekodroid/routes/base.search/widgets/filters_dialog.dart';
-import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
+import 'package:nekodroid/widgets/anime_list_view.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
@@ -43,7 +43,7 @@ class SearchRoute extends ConsumerWidget {
           ref.watch(searchResultsProv).when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (err, stackTrace) => const Center(child: Icon(Boxicons.bxs_error_circle)),
-            data: (results) => AnimeListview(
+            data: (results) => AnimeListView(
               itemCount: results.length,
               bottomElementPadding: kFabSize + 16,
               placeholder: LabelledIcon.vertical(

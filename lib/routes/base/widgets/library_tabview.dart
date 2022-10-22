@@ -9,7 +9,7 @@ import 'package:nekodroid/provider/favorites.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/provider/lists.dart';
 import 'package:nekodroid/routes/base/providers/recent_history.dart';
-import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
+import 'package:nekodroid/widgets/anime_list_view.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
@@ -30,7 +30,7 @@ class LibraryTabview extends ConsumerWidget {
         ref.watch(recentHistoryProv).when(
           loading: () => const CircularProgressIndicator(),
           error: (_, __) => const LargeIcon(Boxicons.bxs_error_circle),
-          data: (data) => AnimeListview(
+          data: (data) => AnimeListView(
             itemCount: data.length,
             itemBuilder: (context, index) {
               final episode = data.elementAt(index);
@@ -71,7 +71,7 @@ class LibraryTabview extends ConsumerWidget {
         ref.watch(favoritesProv).when(
           loading: () => const CircularProgressIndicator(),
           error: (_, __) => const LargeIcon(Boxicons.bxs_error_circle),
-          data: (data) => AnimeListview(
+          data: (data) => AnimeListView(
             itemCount: data.length,
             itemBuilder: (context, index) {
               final anime = data.elementAt(index);
@@ -133,7 +133,7 @@ class LibraryTabview extends ConsumerWidget {
                 } else if (snap.hasError) {
                   return const Icon(Boxicons.bx_error_circle);
                 }
-                return AnimeListview(
+                return AnimeListView(
                   itemCount: e.animes.length,
                   itemBuilder: (context, index) {
                     final anime = e.animes.elementAt(index);

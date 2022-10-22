@@ -6,7 +6,7 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
 
 
-class AnimeListview extends ConsumerWidget {
+class AnimeListView extends ConsumerWidget {
 
   final int itemCount;
   final Widget Function(BuildContext context, int index) itemBuilder;
@@ -14,7 +14,7 @@ class AnimeListview extends ConsumerWidget {
   final Widget? placeholder;
   final double bottomElementPadding;
 
-  const AnimeListview({
+  const AnimeListView({
     required this.itemCount,
     required this.itemBuilder,
     this.onRefresh,

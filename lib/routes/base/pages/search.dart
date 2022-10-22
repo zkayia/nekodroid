@@ -10,7 +10,7 @@ import 'package:nekodroid/extensions/neko_sama.dart';
 import 'package:nekodroid/provider/api.dart';
 import 'package:nekodroid/provider/searchdb_status.dart';
 import 'package:nekodroid/routes/base/providers/recent_searches.dart';
-import 'package:nekodroid/routes/base/widgets/anime_listview.dart';
+import 'package:nekodroid/widgets/anime_list_view.dart';
 import 'package:nekodroid/widgets/anime_card.dart';
 import 'package:nekodroid/widgets/anime_list_tile.dart';
 import 'package:nekodroid/widgets/generic_cached_image.dart';
@@ -37,7 +37,7 @@ class SearchPage extends ConsumerWidget {
           ).when(
             loading: () => const CircularProgressIndicator(),
             error: (_, __) => const Icon(Boxicons.bx_error_circle),
-            data: (searches) => AnimeListview(
+            data: (searches) => AnimeListView(
               itemCount: searches.isEmpty ? 0 : searches.length + 1,
               placeholder: LabelledIcon.vertical(
                 icon: const LargeIcon(Boxicons.bx_question_mark),
