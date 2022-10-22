@@ -33,14 +33,15 @@ class SettingsLibraryListsRoute extends ConsumerWidget {
         ),
         child: Column(
           children: [
-            // TODO: desc for lib & hist
             SwitchSetting(
               title: context.tr.libraryHistory,
+              subtitle: context.tr.libraryHistoryDesc,
               value: ref.watch(settingsProv.select((v) => v.library.enableHistory)),
               onChanged: (v) => ref.read(settingsProv.notifier).enableHistory = v,
             ),
             SwitchSetting(
               title: context.tr.libraryFavorites,
+              subtitle: context.tr.libraryFavoritesDesc,
               value: ref.watch(settingsProv.select((v) => v.library.enableFavorites)),
               onChanged: (v) => ref.read(settingsProv.notifier).enableFavorites = v,
             ),

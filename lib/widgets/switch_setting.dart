@@ -27,7 +27,12 @@ class SwitchSetting extends StatelessWidget {
       horizontal: kPaddingSecond,
     ),
     title: SingleLineText(title),
-    subtitle: subtitle == null ? null : Text(subtitle!),
+    subtitle: subtitle == null
+      ? null
+      : Text(
+        subtitle!,
+        overflow: TextOverflow.clip,
+      ),
     isThreeLine: (subtitle?.length ?? 0) > 46,
     value: value,
     onChanged: enabled ? onChanged : null,

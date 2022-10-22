@@ -14,8 +14,10 @@
   
   "library": "Bibliothèque",
   "libraryHistory": "Historique",
+  "libraryHistoryDesc": "Afficher l'onglet Historique dans la librarie, ne supprime pas les données",
   "libraryEmptyHistory": "L'historique est vide",
   "libraryFavorites": "Favoris",
+  "libraryFavoritesDesc": "Afficher l'onglet Favoris dans la librarie, ne supprime pas les données",
   "libraryEmptyFavorites": "Aucun favori",
   "playerEpStatus": "{success, select, true{Episode {epNumber} marqué comme terminé} false{L'épisode {epNumber} est déjà marqué comme terminé}}",
   "@playerEpStatus": {

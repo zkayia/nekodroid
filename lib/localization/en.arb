@@ -14,8 +14,10 @@
   
   "library": "Library",
   "libraryHistory": "History",
+  "libraryHistoryDesc": "Display the history tab in library, data isn't deleted",
   "libraryEmptyHistory": "The history is empty",
   "libraryFavorites": "Favorites",
+  "libraryFavoritesDesc": "Display the favorites tab in library, data isn't deleted",
   "libraryEmptyFavorites": "No favorites",
 
   
