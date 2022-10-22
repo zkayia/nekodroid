@@ -71,6 +71,9 @@ class _PlayerControlsProvNotif extends StateNotifier<PlayerControlsData> {
   ).then((_) => _check());
 
   void _check() {
+    if (!mounted) {
+      return;
+    }
     if (
       state.controlsDisplay
       && isPlaying && !isDone && !isSeeking && !inAction

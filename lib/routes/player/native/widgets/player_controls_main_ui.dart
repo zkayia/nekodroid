@@ -23,6 +23,7 @@ class PlayerControlsMainUi extends ConsumerWidget {
   final String title;
   final String subtitle;
   final void Function(File newVid) changeVideo;
+  final void Function(BuildContext context) onExit;
   final void Function()? onPrevious;
   final void Function()? onNext;
 
@@ -32,6 +33,7 @@ class PlayerControlsMainUi extends ConsumerWidget {
     required this.title,
     required this.subtitle,
     required this.changeVideo,
+    required this.onExit,
     this.onPrevious,
     this.onNext,
     super.key,
@@ -50,7 +52,7 @@ class PlayerControlsMainUi extends ConsumerWidget {
           Row(
             children: [
               IconButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => onExit(context),
                 icon: const Icon(Boxicons.bx_x),
               ),
               Expanded(

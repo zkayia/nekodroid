@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,9 +8,10 @@ import 'package:nekodroid/constants/player_type.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/datetime.dart';
 import 'package:nekodroid/extensions/duration.dart';
+import 'package:nekodroid/extensions/iterable.dart';
 import 'package:nekodroid/models/player_route_params.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/provider/anime.dart';
+import 'package:nekodroid/routes/anime/providers/anime.dart';
 import 'package:nekodroid/routes/anime/providers/blur_thumbs.dart';
 import 'package:nekodroid/routes/anime/providers/lazy_load.dart';
 import 'package:nekodroid/routes/anime/widgets/anime_page_header.dart';
@@ -39,22 +38,22 @@ class AnimeRoute extends ConsumerWidget {
         child: ref.watch(animeProv(animeUrl)).when(
           loading: () => const CircularProgressIndicator(),
           error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
-          data: (anime) {
+          data: (animes) {
             final synopsis = Hero(
               tag: "anime_description",
               child: Text(
-                anime.synopsis ?? context.tr.animeNoSynopsis,
+                animes.key.synopsis ?? context.tr.animeNoSynopsis,
                 textAlign: TextAlign.justify,
                 style: theme.textTheme.bodyMedium,
               ),
             );
-            final history = {}; //TODO: load history for anime
             return LazyLoadScrollView(
-              onEndOfPage: () => ref.read(lazyLoadProv(anime.episodes.length).notifier).update(
-                (state) => (
-                  state + ref.watch(settingsProv).anime.lazyLoadItemCount
-                ).clamp(0, anime.episodes.length),
-              ),
+              onEndOfPage: () =>
+                ref.read(lazyLoadProv(animes.key.episodes.length).notifier).update(
+                  (state) => (
+                    state + ref.watch(settingsProv).anime.lazyLoadItemCount
+                  ).clamp(0, animes.key.episodes.length),
+                ),
               child: RefreshIndicator(
                 onRefresh: () async => ref.refresh(animeProv(animeUrl)),
                 child: ListView(
@@ -66,11 +65,11 @@ class AnimeRoute extends ConsumerWidget {
                   ),
                   physics: kDefaultScrollPhysics,
                   children: [
-                    AnimePageHeader(anime),
+                    AnimePageHeader(animes.key),
                     const SizedBox(height: kPaddingMain),
                     ChipWrap(
                       genres: [
-                        for (final genre in anime.genres)
+                        for (final genre in animes.key.genres)
                           GenericChip.click(
                             label: context.tr.genres(genre.name),
                             onTap: () {}, //TODO: open all anime with this genre
@@ -81,7 +80,7 @@ class AnimeRoute extends ConsumerWidget {
                     LimitedBox(
                       maxHeight: kAnimePageGroupMaxHeight,
                       child: InkWell(
-                        onTap: anime.synopsis == null
+                        onTap: animes.key.synopsis == null
                           ? null
                           : () => Navigator.of(context).pushNamed(
                             "/fullscreen_viewer",
@@ -105,20 +104,22 @@ class AnimeRoute extends ConsumerWidget {
                           child: const Icon(Boxicons.bxs_low_vision),
                         ),
                         SingleLineText(
-                          "Episodes", //TODO: tr
+                          context.tr.episodes,
                           style: theme.textTheme.titleLarge,
                         ),
                         GenericButton.elevated(
                           onPressed: () {
-                            final latest = history.isEmpty
-                              ? 0
-                              : history.keys.cast<int>().reduce(max);
+                            final latest = (
+                              animes.value?.episodeStatuses.reduce(
+                                (v, e) => v.episodeNumber > e.episodeNumber ? v : e,
+                              ).episodeNumber ?? 1
+                            ) - 1;
                             Navigator.of(context).pushNamed(
                               "/player",
                               arguments: PlayerRouteParams(
                                 playerType: PlayerType.native,
-                                episode: anime.episodes.elementAt(latest),
-                                anime: anime,
+                                episode: animes.key.episodes.elementAt(latest),
+                                anime: animes.key,
                                 currentIndex: latest,
                               ),
                             );
@@ -131,36 +132,36 @@ class AnimeRoute extends ConsumerWidget {
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: ref.watch(lazyLoadProv(anime.episodes.length)),
+                      itemCount: ref.watch(lazyLoadProv(animes.key.episodes.length)),
                       separatorBuilder: (context, index) => const SizedBox(height: kPaddingSecond),
                       itemBuilder: (context, index) {
-                        final episode = anime.episodes.elementAt(index);
+                        final episode = animes.key.episodes.elementAt(index);
                         void openPlayer(PlayerType playerType) => Navigator.of(context).pushNamed(
                           "/player",
                           arguments: PlayerRouteParams(
                             playerType: playerType,
                             episode: episode,
-                            anime: anime,
+                            anime: animes.key,
                             currentIndex: index,
                           ),
                         );
-                        final wasWatched = history.containsKey(episode.episodeNumber);
+                        final lastWatchedTimestamp = animes.value?.episodeStatuses.firstWhereOrNull(
+                          (e) => e.url == episode.url.toString(),
+                        )?.lastWatchedTimestamp;
                         return AnimeListTile(
                           leading: EpisodeThumbnail(episode.thumbnail),
-                          trailing: Checkbox(
-                            value: wasWatched,
-                            onChanged: (value) async {}, //TODO: toggle ep history
-                          ),
-                          title: "Episode ${episode.episodeNumber}", //TODO: tr
+                          title: context.tr.episodeLong(episode.episodeNumber),
                           titleWrap: false,
                           subtitle: "${
                             episode.duration?.toUnitsString(unitsTranslations: context.tr)
                               ?? context.tr.animeUnknownEpDuration
                           }${
-                            wasWatched
-                              ? DateTime.fromMillisecondsSinceEpoch(
-                                history[episode.episodeNumber] ?? 0,
-                              ).formatHistory(context)
+                            lastWatchedTimestamp != null
+                              ? "\n${
+                                DateTime.fromMillisecondsSinceEpoch(
+                                  lastWatchedTimestamp,
+                                ).formatHistory(context)
+                              }"
                               : ""
                           }",
                           onTap: () => openPlayer(PlayerType.native),

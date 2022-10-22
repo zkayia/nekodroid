@@ -19,17 +19,7 @@
   "libraryFavorites": "Favoris",
   "libraryFavoritesDesc": "Afficher l'onglet Favoris dans la librarie, ne supprime pas les données",
   "libraryEmptyFavorites": "Aucun favori",
-  "playerEpStatus": "{success, select, true{Episode {epNumber} marqué comme terminé} false{L'épisode {epNumber} est déjà marqué comme terminé}}",
-  "@playerEpStatus": {
-    "placeholders": {
-      "success": {
-        "type": "bool"
-      },
-      "epNumber": {
-        "type": "int"
-      }
-    }
-  },
+  "notWatchedYet": "Pas encore vu",
 
   
   "search": "Recherche",
@@ -172,12 +162,24 @@
   "anime": "Anime",
   "animeNoSynopsis": "Aucun synopsis.",
   "animeUnknownEpDuration": "Durée inconnue",
+  "episodes": "Episodes",
   
   
   "player": "Lecteur",
   "playerConfirmExit": "Appuyer encore pour sortir",
   "playerPlaybackSpeed": "Vitesse de lecture",
   "playerQuality": "Qualité",
+  "playerEpStatus": "{success, select, true{Episode {epNumber} marqué comme terminé} false{L'épisode {epNumber} est déjà marqué comme terminé}}",
+  "@playerEpStatus": {
+    "placeholders": {
+      "success": {
+        "type": "bool"
+      },
+      "epNumber": {
+        "type": "int"
+      }
+    }
+  },
   
   
   "score": "Score",

@@ -19,6 +19,7 @@ class PlayerControls extends ConsumerWidget {
   final String title;
   final String subtitle;
   final void Function(File newVid) changeVideo;
+  final void Function(BuildContext context) onExit;
   final void Function()? onPrevious;
   final void Function()? onNext;
 
@@ -28,6 +29,7 @@ class PlayerControls extends ConsumerWidget {
     required this.title,
     required this.subtitle,
     required this.changeVideo,
+    required this.onExit,
     this.onPrevious,
     this.onNext,
     super.key,
@@ -93,6 +95,7 @@ class PlayerControls extends ConsumerWidget {
             title: title,
             subtitle: subtitle,
             changeVideo: changeVideo,
+            onExit: onExit,
             onPrevious: onPrevious,
             onNext: onNext,
           ),

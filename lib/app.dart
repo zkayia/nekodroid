@@ -10,6 +10,7 @@ import 'package:nekodroid/extensions/neko_sama.dart';
 import 'package:nekodroid/provider/api.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
+import 'package:nekodroid/routes/base.detailled_history/detailled_history.dart';
 import 'package:nekodroid/routes/base.search/search.dart';
 import 'package:nekodroid/routes/base/base.dart';
 import 'package:nekodroid/routes/base.carousel_more/carousel_more.dart';
@@ -71,6 +72,7 @@ class AppState extends ConsumerState<App> {
       "/anime": (context) => const AnimeRoute(),
       "/base": (context) => const BaseRoute(),
       "/base/carousel_more": (context) => const CarouselMoreRoute(),
+      "/base/detailled_history": (context) => const DetailledHistoryRoute(),
       "/base/search": (context) => const SearchRoute(),
       "/fullscreen_viewer": (context) => const FullscreenViewerRoute(),
       "/player": (context) => const PlayerRoute(),

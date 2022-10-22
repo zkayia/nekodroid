@@ -19,6 +19,7 @@
   "libraryFavorites": "Favorites",
   "libraryFavoritesDesc": "Display the favorites tab in library, data isn't deleted",
   "libraryEmptyFavorites": "No favorites",
+  "notWatchedYet": "Not watched yet",
 
   
   "search": "Search",
@@ -161,6 +162,7 @@
   "anime": "Anime",
   "animeNoSynopsis": "No synopsis.",
   "animeUnknownEpDuration": "Unknown duration",
+  "episodes": "Episodes",
   
   
   "player": "Player",

@@ -54,7 +54,10 @@ class LibraryTabview extends ConsumerWidget {
                           arguments: episode.anime.value!.urlUri,
                         ),
                       ),
-                      onTap: () {}, //TODO: open detailled history page
+                      onTap: () => Navigator.of(context).pushNamed(
+                        "/base/detailled_history",
+                        arguments: episode.anime.value!,
+                      ),
                     );
                   }
                   return const CircularProgressIndicator();
