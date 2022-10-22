@@ -109,6 +109,19 @@ class SettingsGeneralRoute extends ConsumerWidget {
           ],
           onChanged: (v) => ref.read(settingsProv.notifier).defaultPage = v,
         ),
+        SwitchSetting(
+          title: context.tr.enableNavbarSwipe,
+          subtitle: context.tr.enableNavbarSwipeDesc,
+          value: ref.watch(settingsProv.select((v) => v.general.enableNavbarSwipe)),
+          onChanged: (v) => ref.read(settingsProv.notifier).enableNavbarSwipe = v,
+        ),
+        SwitchSetting(
+          title: context.tr.reverseNavbarSwipe,
+          subtitle: context.tr.reverseNavbarSwipeDesc,
+          enabled: ref.watch(settingsProv.select((v) => v.general.enableNavbarSwipe)),
+          value: ref.watch(settingsProv.select((v) => v.general.reverseNavbarSwipe)),
+          onChanged: (v) => ref.read(settingsProv.notifier).reverseNavbarSwipe = v,
+        ),
       ],
     );
   }

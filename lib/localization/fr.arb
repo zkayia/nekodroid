@@ -93,6 +93,10 @@
     }
   },
   "settingsDefaultPage": "Page par défaut",
+  "enableNavbarSwipe": "Navigation rapide",
+  "enableNavbarSwipeDesc": "Changer de page en glissant sur la barre de navigation",
+  "reverseNavbarSwipe": "Inverser la navigation rapide",
+  "reverseNavbarSwipeDesc": "Inverse le glissement de la navigation rapide",
   
   "carouselColumnCount": "Nombre de colones du carousel",
   "episodeCardPressAction": "Action d'appui sur un épisode",

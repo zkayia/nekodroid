@@ -82,6 +82,10 @@
     }
   },
   "settingsDefaultPage": "Default page",
+  "enableNavbarSwipe": "Quick navigation",
+  "enableNavbarSwipeDesc": "Change page by swiping on the navigation bar",
+  "reverseNavbarSwipe": "Invert quick navigation",
+  "reverseNavbarSwipeDesc": "Invert the quick navigation swipe direction",
   
   "carouselColumnCount": "Carousel column count",
   "episodeCardPressAction": "Episode card tap action",
