@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nekodroid/constants.dart';
+import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/widgets/generic_button.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
@@ -53,7 +54,7 @@ class GenericDialog<T> extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(
                 isConfirm ? false : onCancel?.call(context),
               ),
-              child: const SingleLineText("Cancel"), //TODO: tr
+              child: SingleLineText(context.tr.cancel),
             ),
           ),
           const SizedBox(width: kPaddingMain),
@@ -71,7 +72,7 @@ class GenericDialog<T> extends StatelessWidget {
                 Navigator.of(context).pop(isConfirm ? true : onConfirmCall);
               },
               primary: true,
-              child: const SingleLineText("Ok"), //TODO: tr
+              child: SingleLineText(context.tr.ok),
             ),
           ),
         ],

@@ -31,6 +31,16 @@ class SettingsAnimeRoute extends ConsumerWidget {
         steps: 1,
         onChanged: (v) => ref.read(settingsProv.notifier).blurThumbsSigma = v.toInt(),
       ),
+      SliderSetting(
+        title: context.tr.lazyLoadItemCount,
+        subtitle: context.tr.lazyLoadItemCountDesc,
+        label: ref.watch(settingsProv.select((v) => v.anime.lazyLoadItemCount)).toString(),
+        value: ref.watch(settingsProv.select((v) => v.anime.lazyLoadItemCount)),
+        min: 1,
+        max: 20,
+        steps: 1,
+        onChanged: (v) => ref.read(settingsProv.notifier).lazyLoadItemCount = v.toInt(),
+      ),
     ],
   );
 }

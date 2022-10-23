@@ -6,6 +6,11 @@
   "appTitle": "Nekodoid",
 
   
+  "ok": "Ok",
+  "cancel": "Cancel",
+  "reset": "Reset",
+  "close": "Close",
+
   "home": "Home",
   "homeLatestEps": "Latest episodes",
   "homeSeasonalAnimes": "Seasonal animes",
@@ -19,6 +24,7 @@
   "libraryFavorites": "Favorites",
   "libraryFavoritesDesc": "Display the favorites tab in library, data isn't deleted",
   "libraryEmptyFavorites": "No favorites",
+  "emptyList": "List is empty",
   "notWatchedYet": "Not watched yet",
 
   
@@ -114,6 +120,32 @@
   
   "defaultTab": "Default tab",
   "enableTabbarScrolling": "Enable tabs bar scrolling",
+  "listsConfig": "Lists config",
+  "listsConfigDesc": "Add/delete/edit library lists",
+  "errorLoadingLists": "Failed to load lists",
+  "loadingLists": "Loading lists",
+  "editList": "Edit list",
+  "listName": "List name",
+  "deleteList": "Delete list",
+  "deleteListDesc": "Delete list '{listName}' ?",
+  "@deleteListDesc": {
+    "placeholders": {
+      "listName": {
+        "type": "String"
+      }
+    }
+  },
+  "createNewList": "Create a new list",
+  "invalidListName": "Invalid list name",
+  "noEmptyListName": "List name can't be empty",
+  "listAlreadyExits": "List '{listName}' already exists",
+  "@listAlreadyExits": {
+    "placeholders": {
+      "listName": {
+        "type": "String"
+      }
+    }
+  },
   
   "autoOpenSearchBar": "Auto open search bar",
   "autoOpenSearchBarDesc": "Automatically open the search bar when navigating to the search tab",
@@ -130,6 +162,8 @@
   "blurThumbs": "Blur thumbnails",
   "blurThumbsSigma": "Blur intensity",
   "blurThumbsShowSwitch": "Show blur thumbnails switch",
+  "lazyLoadItemCount": "Preload episode count",
+  "lazyLoadItemCountDesc": "Preload episode thumbnails during scroll in groups of",
   
   "confirmExit": "Confirm before exiting",
   "confirmExitDesc": "Require two taps to exit using the back button",
@@ -160,6 +194,7 @@
   
   
   "anime": "Anime",
+  "addToList": "Add to list",
   "animeNoSynopsis": "No synopsis.",
   "animeUnknownEpDuration": "Unknown duration",
   "episodes": "Episodes",

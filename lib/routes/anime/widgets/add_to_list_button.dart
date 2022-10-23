@@ -35,7 +35,7 @@ class AddToListButton extends ConsumerWidget {
         final result = await showDialog<List<int>>(
           context: context,
           builder: (context) => GenericFormDialog.checkbox(
-            title: "Add to list", //TODO: tr
+            title: context.tr.addToList,
             elements: [
               GenericFormDialogElement(
                 label: context.tr.libraryFavorites,

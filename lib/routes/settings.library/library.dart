@@ -67,8 +67,8 @@ class SettingsLibraryRoute extends ConsumerWidget {
           contentPadding: const EdgeInsets.symmetric(
             horizontal: kPaddingSecond,
           ),
-          title: const Text("Lists config"), //TODO: tr
-          subtitle: const Text("Add/delete/edit lists in the library"), //TODO: tr
+          title: Text(context.tr.listsConfig),
+          subtitle: Text(context.tr.listsConfigDesc),
           onTap: () => Navigator.of(context).pushNamed("/settings/library/lists"),
         ),
       ],

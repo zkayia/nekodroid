@@ -95,16 +95,16 @@ class LibraryTabview extends ConsumerWidget {
           ),
         ),
       ...ref.watch(listsProv).when(
-        error: (_, __) => const [
+        error: (_, __) => [
           LabelledIcon.vertical(
-            icon: LargeIcon(Boxicons.bx_error_circle),
-            label: "Error loading lists", //TODO: tr
+            icon: const LargeIcon(Boxicons.bx_error_circle),
+            label: context.tr.errorLoadingLists,
           ),
         ],
-        loading: () => const [
+        loading: () => [
           LabelledIcon.vertical(
-            icon: CircularProgressIndicator(),
-            label: "Loading lists", //TODO: tr
+            icon: const CircularProgressIndicator(),
+            label: context.tr.loadingLists,
           ),
         ],
         data: (data) => data.isEmpty
@@ -113,14 +113,14 @@ class LibraryTabview extends ConsumerWidget {
               child: GenericButton.elevated(
                 onPressed: () =>
                   Navigator.of(context).pushNamed("/settings/library/lists"),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: kPaddingMain,
                     vertical: kPaddingSecond,
                   ),
                   child: LabelledIcon.horizontal(
-                    icon: Icon(Boxicons.bx_plus),
-                    label: "Create a list", //TODO: tr
+                    icon: const Icon(Boxicons.bx_plus),
+                    label: context.tr.createNewList,
                     minMainAxis: true,
                   ),
                 ),
@@ -150,9 +150,9 @@ class LibraryTabview extends ConsumerWidget {
                       ),
                     );
                   },
-                  placeholder: const LabelledIcon.vertical(
-                    icon: LargeIcon(Boxicons.bx_question_mark),
-                    label: "List is empty", //TODO: tr
+                  placeholder: LabelledIcon.vertical(
+                    icon: const LargeIcon(Boxicons.bx_question_mark),
+                    label: context.tr.emptyList,
                   ),
                 );
               },

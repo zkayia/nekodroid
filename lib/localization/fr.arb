@@ -6,6 +6,11 @@
   "appTitle": "Nekodoid",
 
   
+  "ok": "Ok",
+  "cancel": "Cancel",
+  "reset": "Reset",
+  "close": "Close",
+
   "home": "Accueil",
   "homeLatestEps": "Derniers épisodes",
   "homeSeasonalAnimes": "Animes saisonniers",
@@ -19,6 +24,7 @@
   "libraryFavorites": "Favoris",
   "libraryFavoritesDesc": "Afficher l'onglet Favoris dans la librarie, ne supprime pas les données",
   "libraryEmptyFavorites": "Aucun favori",
+  "emptyList": "La liste est vide",
   "notWatchedYet": "Pas encore vu",
 
   
@@ -114,6 +120,32 @@
   
   "defaultTab": "Onglet par défaut",
   "enableTabbarScrolling": "Défilement de la barre des onglets",
+  "listsConfig": "Configurer les listes",
+  "listsConfigDesc": "Ajouter/supprimer/configurer les listes de la bibliothèque",
+  "errorLoadingLists": "Echec du chargement des listes",
+  "loadingLists": "Chargement des listes",
+  "editList": "Configurer la liste",
+  "listName": "Nom de la liste",
+  "deleteList": "Supprimer la liste",
+  "deleteListDesc": "Supprimer la liste '{listName}' ?",
+  "@deleteListDesc": {
+    "placeholders": {
+      "listName": {
+        "type": "String"
+      }
+    }
+  },
+  "createNewList": "Créer une nouvelle liste",
+  "invalidListName": "Nom de la liste invalide",
+  "noEmptyListName": "Le nom de la liste ne doit pas être vide",
+  "listAlreadyExits": "La liste '{listName}' existe déjà",
+  "@listAlreadyExits": {
+    "placeholders": {
+      "listName": {
+        "type": "String"
+      }
+    }
+  },
   
   "autoOpenSearchBar": "Ouvrir automatiquement la barre de recherche",
   "autoOpenSearchBarDesc": "Ouvre automatiquement la barre de recherche dans l'onglet recherche",
@@ -130,6 +162,8 @@
   "blurThumbs": "Flouter les miniatures",
   "blurThumbsSigma": "Force du flou",
   "blurThumbsShowSwitch": "Afficher le switch de flou",
+  "lazyLoadItemCount": "Nombre d'épisodes préchargés",
+  "lazyLoadItemCountDesc": "Précharger les miniatures des épisodes durant le défilement par groupe de",
   
   "confirmExit": "Confirmer avant de sortir",
   "confirmExitDesc": "Demander une confirmation avant de sortir avec le bouton retour",
@@ -160,6 +194,7 @@
   
   
   "anime": "Anime",
+  "addToList": "Add to list",
   "animeNoSynopsis": "Aucun synopsis.",
   "animeUnknownEpDuration": "Durée inconnue",
   "episodes": "Episodes",

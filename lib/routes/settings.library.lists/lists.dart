@@ -47,13 +47,13 @@ class SettingsLibraryListsRoute extends ConsumerWidget {
             ),
             const Divider(),
             ref.watch(listsProv).when(
-              error: (_, __) => const LabelledIcon.vertical(
-                icon: LargeIcon(Boxicons.bx_error_circle),
-                label: "Error loading lists", //TODO: tr
+              error: (_, __) => LabelledIcon.vertical(
+                icon: const LargeIcon(Boxicons.bx_error_circle),
+                label: context.tr.errorLoadingLists,
               ),
-              loading: () => const LabelledIcon.vertical(
-                icon: CircularProgressIndicator(),
-                label: "Loading lists", //TODO: tr
+              loading: () => LabelledIcon.vertical(
+                icon: const CircularProgressIndicator(),
+                label: context.tr.loadingLists,
               ),
               data: (data) => data.isEmpty
                 ? const SizedBox()
@@ -95,8 +95,8 @@ class SettingsLibraryListsRoute extends ConsumerWidget {
                           final result = await showDialog<String>(
                             context: context,
                             builder: (context) => GenericInputDialog(
-                              title: "Edit list", //TODO: tr
-                              hintText: "List name", //TODO: tr
+                              title: context.tr.editList,
+                              hintText: context.tr.listName,
                               initialText: e.name,
                               validator: (v, c) => _listNameValidator(v, c, ref),
                             ),
@@ -117,8 +117,8 @@ class SettingsLibraryListsRoute extends ConsumerWidget {
                           onPressed: () => showDialog<bool>(
                             context: context,
                             builder: (context) => GenericDialog.confirm(
-                              title: "Delete list", //TODO: tr
-                              child: Text("Delete list '${e.name}' ?"), //TODO: tr
+                              title: context.tr.deleteList,
+                              child: Text(context.tr.deleteListDesc(e.name)),
                             ),
                           ).then(
                             (value) {
@@ -140,8 +140,8 @@ class SettingsLibraryListsRoute extends ConsumerWidget {
                 final result = await showDialog<String>(
                   context: context,
                   builder: (context) => GenericInputDialog(
-                    title: "Create a new list", //TODO: tr
-                    hintText: "List name", //TODO: tr
+                    title: context.tr.createNewList,
+                    hintText: context.tr.listName,
                     validator: (v, c) => _listNameValidator(v, c, ref),
                   ),
                 );
@@ -164,7 +164,7 @@ class SettingsLibraryListsRoute extends ConsumerWidget {
                   );
                 }
               },
-              title: const Text("Create a new list"), //TODO: tr
+              title: Text(context.tr.createNewList),
               leading: const Icon(Boxicons.bx_plus),
             ),
           ],
@@ -175,15 +175,15 @@ class SettingsLibraryListsRoute extends ConsumerWidget {
 
   String? _listNameValidator(String? value, BuildContext context, WidgetRef ref) {
     if (value == null) {
-      return "Invalid list name"; //TODO: tr
+      return context.tr.invalidListName;
     } else if (value.isEmpty) {
-      return "List name can't be empty"; //TODO: tr
+      return context.tr.noEmptyListName;
     } else if (
       ref.read(listsProv).asData?.value.any(
         (e) => e.name == value,
       ) ?? false
     ) {
-      return "List '$value' already exists"; //TODO: tr
+      return context.tr.listAlreadyExits(value);
     }
     return null;
   }

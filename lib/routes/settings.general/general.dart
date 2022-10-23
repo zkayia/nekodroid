@@ -74,6 +74,23 @@ class SettingsGeneralRoute extends ConsumerWidget {
           ],
           onChanged: (v) => ref.read(settingsProv.notifier).locale = v,
         ),
+        RadioSetting<int>(
+          title: context.tr.settingsDefaultPage,
+          subtitle: pagesText.elementAt(
+            ref.watch(settingsProv.select((v) => v.general.defaultPage)),
+          ),
+          elements: [
+            for (var i = 0; i < pagesText.length; i++)
+              GenericFormDialogElement(
+                label: pagesText.elementAt(i),
+                value: i,
+                selected: i == ref.watch(
+                  settingsProv.select((v) => v.general.defaultPage),
+                ),
+              ),
+          ],
+          onChanged: (v) => ref.read(settingsProv.notifier).defaultPage = v,
+        ),
         RadioSetting<NavLabelsMode>(
           title: context.tr.settingsNavLabel,
           subtitle: context.tr.settingsNavLabels(
@@ -91,23 +108,6 @@ class SettingsGeneralRoute extends ConsumerWidget {
             ),
           ],
           onChanged: (v) => ref.read(settingsProv.notifier).navLabelsMode = v,
-        ),
-        RadioSetting<int>(
-          title: context.tr.settingsDefaultPage,
-          subtitle: pagesText.elementAt(
-            ref.watch(settingsProv.select((v) => v.general.defaultPage)),
-          ),
-          elements: [
-            for (var i = 0; i < pagesText.length; i++)
-              GenericFormDialogElement(
-                label: pagesText.elementAt(i),
-                value: i,
-                selected: i == ref.watch(
-                  settingsProv.select((v) => v.general.defaultPage),
-                ),
-              ),
-          ],
-          onChanged: (v) => ref.read(settingsProv.notifier).defaultPage = v,
         ),
         SwitchSetting(
           title: context.tr.enableNavbarSwipe,
