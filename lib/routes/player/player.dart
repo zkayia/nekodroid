@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -165,13 +167,14 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
     if (ref.read(settingsProv).session.privateBrowsingEnabled) {
       return;
     }
+    final playerSettings = ref.read(settingsProv).player;
     final episode = ref.read(playerParamsProv(parameters)).episode;
     final duration = parameters.playerType == PlayerType.native
-      ? ref.read(playerValueProv).duration
-      : null;
+      ? ref.read(playerValueProv).duration.inMilliseconds
+      : 0;
     final position = parameters.playerType == PlayerType.native
-      ? ref.read(playerValueProv).position
-      : null;
+      ? max(ref.read(playerValueProv).position.inMilliseconds - 10, 0)
+      : 0;
     final isar = Isar.getInstance()!;
     await isar.writeTxn(() async {
       var isarEp = await isar.isarEpisodeStatus.getByUrl(episode.url.toString());
@@ -191,18 +194,25 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
         await isar.isarAnimeListItems.put(isarAnime);
         await isarAnime.episodeStatuses.save();
       }
-      if (position != null && ref.read(settingsProv).player.epContinueAtLastLocation) {
-        isarEp.lastExitTime = position.inMilliseconds;
+      if (position != 0 && playerSettings.epContinueAtLastLocation) {
+        isarEp.lastExitTime = position;
+      }
+      if (duration != 0) {
+        isarEp.duration = duration;
       }
       if (
-        ref.read(settingsProv).player.epAutoMarkCompleted
-        && (100 * (position?.inMilliseconds ?? 1) / (duration?.inMilliseconds ?? 1))
-          >= ref.read(settingsProv).player.epAutoMarkCompletedThreshold
+        playerSettings.epAutoMarkCompleted
+        && (
+          isarEp.watchedFraction == null
+            ? false
+            : isarEp.watchedFraction! * 100 >= playerSettings.epAutoMarkCompletedThreshold
+        )
       ) {
         isarEp.watchedTimestamps = [
           ...isarEp.watchedTimestamps,
           DateTime.now().millisecondsSinceEpoch,
         ];
+        isarEp.lastExitTime = null;
       }
       await isar.isarEpisodeStatus.put(isarEp);
     });

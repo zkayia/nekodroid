@@ -15,6 +15,9 @@ class IsarEpisodeStatus {
   String url;
   String thumbnail;
   int episodeNumber;
+  // In milliseconds
+  int? duration;
+  // In milliseconds
   int? lastExitTime;
   List<int> watchedTimestamps;
 
@@ -25,6 +28,7 @@ class IsarEpisodeStatus {
     required this.url,
     required this.thumbnail,
     required this.episodeNumber,
+    required this.duration,
     required this.lastExitTime,
     required this.watchedTimestamps,
   });
@@ -32,6 +36,11 @@ class IsarEpisodeStatus {
   int? get lastWatchedTimestamp => watchedTimestamps.isEmpty
     ? null
     : watchedTimestamps.last;
+  
+  @ignore
+  double? get watchedFraction => lastExitTime != null && duration != null
+    ? lastExitTime! / duration!
+    : null;
 
   @ignore
   Uri get urlUri => Uri.parse(url);
@@ -49,6 +58,7 @@ class IsarEpisodeStatus {
     url: episode.url.toString(),
     thumbnail: episode.thumbnail.toString(),
     episodeNumber: episode.episodeNumber,
+    duration: episode.duration?.inMilliseconds,
     lastExitTime: lastExitTime,
     watchedTimestamps: watchedTimestamps ?? const [],
   );

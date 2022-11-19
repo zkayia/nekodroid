@@ -12,36 +12,68 @@ import 'package:nekodroid/widgets/generic_image.dart';
 class EpisodeThumbnail extends ConsumerWidget {
 
   final Uri imageUrl;
+  final double? watchedFraction;
   
-  const EpisodeThumbnail(this.imageUrl, {super.key});
+  const EpisodeThumbnail(
+    this.imageUrl,
+    {
+      this.watchedFraction,
+      super.key,
+    }
+  );
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => ConstrainedBox(
-    constraints: const BoxConstraints(
-      maxWidth: kEpisodeThumbnailMaxWidth,
-    ),
-    child: AspectRatio(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final thumbnail = GenericImage(
+      imageUrl,
+      childBuilder: (context, child) {
+        final blurThumbsSigma = ref.watch(
+          settingsProv.select((v) => v.anime.blurThumbsSigma),
+        ).toDouble();
+        return ref.read(blurThumbsProv)
+          ? ImageFiltered(
+            imageFilter: ImageFilter.blur(
+              sigmaX: blurThumbsSigma,
+              sigmaY: blurThumbsSigma,
+            ),
+            child: child,
+          )
+          : child;
+      },
+    );
+    return AspectRatio(
       aspectRatio: 16 / 9,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(kBorderRadMain),
-        child: GenericImage(
-          imageUrl,
-          childBuilder: (context, child) {
-            final blurThumbsSigma = ref.watch(
-              settingsProv.select((v) => v.anime.blurThumbsSigma),
-            ).toDouble();
-            return ref.read(blurThumbsProv)
-              ? ImageFiltered(
-                imageFilter: ImageFilter.blur(
-                  sigmaX: blurThumbsSigma,
-                  sigmaY: blurThumbsSigma,
+        child: watchedFraction == null
+          ? thumbnail
+          : Stack(
+            children: [
+              thumbnail,
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Material(
+                  color: Theme.of(context).colorScheme.primary,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final maxWidth = constraints.maxWidth == double.infinity
+                        ? (
+                          constraints.maxHeight == double.infinity
+                            ? kAnimeListTileMaxHeight
+                            : constraints.maxHeight
+                        ) * 16 / 9
+                        : constraints.maxWidth;
+                      return SizedBox(
+                        height: 4,
+                        width: watchedFraction! * maxWidth,
+                      );
+                    },
+                  ),
                 ),
-                child: child,
               )
-              : child;
-          },
-        ),
+            ],
+          ),
       ),
-    ),
-  );
+    );
+  }
 }

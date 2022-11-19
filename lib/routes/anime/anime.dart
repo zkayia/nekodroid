@@ -145,21 +145,25 @@ class AnimeRoute extends ConsumerWidget {
                             currentIndex: index,
                           ),
                         );
-                        final lastWatchedTimestamp = animes.value?.episodeStatuses.firstWhereOrNull(
+                        // TODO: refresh when anime or ep changes
+                        final isarEp = animes.value?.episodeStatuses.firstWhereOrNull(
                           (e) => e.url == episode.url.toString(),
-                        )?.lastWatchedTimestamp;
+                        );
                         return AnimeListTile(
-                          leading: EpisodeThumbnail(episode.thumbnail),
+                          leading: EpisodeThumbnail(
+                            episode.thumbnail,
+                            watchedFraction: isarEp?.watchedFraction,
+                          ),
                           title: context.tr.episodeLong(episode.episodeNumber),
                           titleWrap: false,
                           subtitle: "${
                             episode.duration?.toUnitsString(unitsTranslations: context.tr)
                               ?? context.tr.animeUnknownEpDuration
                           }${
-                            lastWatchedTimestamp != null
+                            isarEp?.lastWatchedTimestamp != null
                               ? "\n${
                                 DateTime.fromMillisecondsSinceEpoch(
-                                  lastWatchedTimestamp,
+                                  isarEp!.lastWatchedTimestamp!,
                                 ).formatHistory(context)
                               }"
                               : ""
