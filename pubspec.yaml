@@ -71,3 +71,17 @@ flutter:
   assets:
     - assets/player/
     - assets/images/
+
+# derry scripts
+scripts:
+  apk: flutter build apk --split-per-abi
+  build: flutter pub run build_runner build
+  buildf: flutter pub run build_runner build --delete-conflicting-outputs
+  unused:
+    - flutter pub run dart_code_metrics:metrics check-unused-code lib
+    - flutter pub run dart_code_metrics:metrics check-unused-files lib
+  clean:
+    - flutter clean
+    - flutter pub get
+    - $buildf
+    
