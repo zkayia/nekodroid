@@ -49,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "zkayia.nekodroid"
+        applicationId "com.zkayia.nekodroid"
         minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

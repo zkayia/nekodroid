@@ -1,4 +1,4 @@
-package zkayia.nekodroid
+package com.zkayia.nekodroid
 
 import io.flutter.embedding.android.FlutterActivity
 
