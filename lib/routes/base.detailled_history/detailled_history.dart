@@ -36,6 +36,10 @@ class DetailledHistoryRoute extends StatelessWidget {
             ),
             child: Table(
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              columnWidths: const {
+                0: FlexColumnWidth(),
+                1: FlexColumnWidth(2),
+              },
               children: [
                 for (final episode in isarAnime.episodeStatuses.toList().reversed)
                   TableRow(
@@ -57,19 +61,25 @@ class DetailledHistoryRoute extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            for (final timestamp in episode.watchedTimestamps)
+                            for (final timestamp in episode.watchedTimestampsSet)
                               Text(
-                                DateTime.fromMillisecondsSinceEpoch(
-                                  timestamp,
-                                ).prettyToString(),
+                                "${
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                    timestamp,
+                                  ).prettyToString()
+                                } ${context.tr.completed}",
                               ),
-                            if (episode.lastExitTime != null)
+                            if (
+                              episode.lastPosition != null
+                              && episode.lastExitTimestamp != null
+                            )
                               Text(
-                                "Stopped at ${
-                                  Duration(milliseconds: episode.lastExitTime!).prettyToString()
-                                }",
+                                context.tr.dateUpToTime(
+                                  episode.lastExitDateTime!.prettyToString(),
+                                  episode.lastPositionDuration!.prettyToString(),
+                                ),
                               )
-                            else if (episode.watchedTimestamps.isEmpty)
+                            else if (episode.watchedTimestampsSet.isEmpty)
                               Text(context.tr.notWatchedYet),
                           ],
                         ),

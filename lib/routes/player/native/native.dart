@@ -104,14 +104,9 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
     if (!ref.read(settingsProv).player.epContinueAtLastLocation) {
       return null;
     }
-    final isar = Isar.getInstance()!;
-    final ep = isar.isarEpisodeStatus.getByUrlSync(
+    return Isar.getInstance()?.isarEpisodeStatus.getByUrlSync(
       widget.playerRouteParameters.episode.url.toString(),
-    );
-    if (ep?.lastExitTime == null) {
-      return null;
-    }
-    return Duration(milliseconds: ep!.lastExitTime!);
+    )?.lastPositionDuration;
   }
 
   void _controllerInit(File file, [Duration? startAt]) =>

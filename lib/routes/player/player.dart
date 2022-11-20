@@ -167,14 +167,15 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
     if (ref.read(settingsProv).session.privateBrowsingEnabled) {
       return;
     }
+    final now = DateTime.now().millisecondsSinceEpoch;
     final playerSettings = ref.read(settingsProv).player;
     final episode = ref.read(playerParamsProv(parameters)).episode;
     final duration = parameters.playerType == PlayerType.native
       ? ref.read(playerValueProv).duration.inMilliseconds
-      : 0;
+      : null;
     final position = parameters.playerType == PlayerType.native
       ? max(ref.read(playerValueProv).position.inMilliseconds - 10, 0)
-      : 0;
+      : null;
     final isar = Isar.getInstance()!;
     await isar.writeTxn(() async {
       var isarEp = await isar.isarEpisodeStatus.getByUrl(episode.url.toString());
@@ -182,9 +183,7 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
         final anime = ref.read(playerParamsProv(parameters)).anime;
         final animeUrl = anime?.url ?? episode.animeUrl;
         var isarAnime = await isar.isarAnimeListItems.getByUrl(animeUrl.toString());
-        if (isarAnime != null) {
-          await isarAnime.episodeStatuses.load();
-        }
+        await isarAnime?.episodeStatuses.load();
         isarEp = IsarEpisodeStatus.fromNSEpisode(episode);
         isarAnime ??= IsarAnimeListItem.fromNSAnime(
           anime ?? (await ref.read(apiProv).getAnime(animeUrl)),
@@ -194,10 +193,10 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
         await isar.isarAnimeListItems.put(isarAnime);
         await isarAnime.episodeStatuses.save();
       }
-      if (position != 0 && playerSettings.epContinueAtLastLocation) {
-        isarEp.lastExitTime = position;
+      if ((position ?? 0) != 0 && playerSettings.epContinueAtLastLocation) {
+        isarEp.lastPosition = position;
       }
-      if (duration != 0) {
+      if ((duration ?? 0) != 0) {
         isarEp.duration = duration;
       }
       if (
@@ -208,12 +207,9 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
             : isarEp.watchedFraction! * 100 >= playerSettings.epAutoMarkCompletedThreshold
         )
       ) {
-        isarEp.watchedTimestamps = [
-          ...isarEp.watchedTimestamps,
-          DateTime.now().millisecondsSinceEpoch,
-        ];
-        isarEp.lastExitTime = null;
+        isarEp.watchedTimestamps = [...isarEp.watchedTimestamps, now];
       }
+      isarEp.lastExitTimestamp = now;
       await isar.isarEpisodeStatus.put(isarEp);
     });
   }

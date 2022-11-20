@@ -6,7 +6,7 @@ import 'package:nekodroid/schemas/isar_episode_status.dart';
 
 final recentHistoryProv = StreamProvider.autoDispose<List<IsarEpisodeStatus>>(
   (ref) => Isar.getInstance()!.isarEpisodeStatus.filter()
-    .lastWatchedTimestampIsNotNull()
-    .sortByLastWatchedTimestampDesc()
+    .lastExitTimestampIsNotNull()
+    .sortByLastExitTimestampDesc()
     .watch(fireImmediately: true),
 );

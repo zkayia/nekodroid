@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/datetime.dart';
+import 'package:nekodroid/extensions/duration.dart';
 import 'package:nekodroid/provider/favorites.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/provider/lists.dart';
@@ -43,9 +44,14 @@ class LibraryTabview extends ConsumerWidget {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return AnimeListTile(
                       title: episode.anime.value!.title,
-                      subtitle: DateTime.fromMillisecondsSinceEpoch(
-                        episode.lastWatchedTimestamp!,
-                      ).formatHistory(context),
+                      subtitle: episode.lastPosition != null
+                        && episode.lastExitDateTime != null
+                        && episode.watchedOnLastExit != true
+                          ? context.tr.watchedUpTo(
+                            episode.lastPositionDuration!.prettyToString(),
+                            episode.lastExitDateTime!.formatHistory(context),
+                          )
+                          : episode.lastWatchedDateTime?.completedOn(context),
                       leading: AnimeCard(
                         image: GenericCachedImage(episode.thumbnailUri),
                         badge: context.tr.episodeShort(episode.episodeNumber),

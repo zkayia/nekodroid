@@ -38,6 +38,7 @@ class AnimeRoute extends ConsumerWidget {
         child: ref.watch(animeProv(animeUrl)).when(
           loading: () => const CircularProgressIndicator(),
           error: (err, stackTrace) => const LargeIcon(Boxicons.bxs_error_circle),
+          // TODO: refresh when anime or ep changes
           data: (animes) {
             final synopsis = Hero(
               tag: "anime_description",
@@ -109,18 +110,21 @@ class AnimeRoute extends ConsumerWidget {
                         ),
                         GenericButton.elevated(
                           onPressed: () {
-                            final latest = (
-                              animes.value?.episodeStatuses.reduce(
-                                (v, e) => v.episodeNumber > e.episodeNumber ? v : e,
-                              ).episodeNumber ?? 1
-                            ) - 1;
+                            final latest = animes.value?.episodeStatuses.reduce(
+                              (v, e) => (v.lastExitTimestamp ?? 1) > (e.lastExitTimestamp ?? 0)
+                                ? v
+                                : e,
+                            );
+                            final currentIndex = latest?.watchedOnLastExit ?? false
+                              ? latest?.episodeNumber ?? 0
+                              : (latest?.episodeNumber ?? 1) - 1;
                             Navigator.of(context).pushNamed(
                               "/player",
                               arguments: PlayerRouteParams(
                                 playerType: PlayerType.native,
-                                episode: animes.key.episodes.elementAt(latest),
+                                episode: animes.key.episodes.elementAt(currentIndex),
                                 anime: animes.key,
-                                currentIndex: latest,
+                                currentIndex: currentIndex,
                               ),
                             );
                           },
@@ -145,7 +149,6 @@ class AnimeRoute extends ConsumerWidget {
                             currentIndex: index,
                           ),
                         );
-                        // TODO: refresh when anime or ep changes
                         final isarEp = animes.value?.episodeStatuses.firstWhereOrNull(
                           (e) => e.url == episode.url.toString(),
                         );
@@ -156,18 +159,11 @@ class AnimeRoute extends ConsumerWidget {
                           ),
                           title: context.tr.episodeLong(episode.episodeNumber),
                           titleWrap: false,
-                          subtitle: "${
+                          subtitle: [
                             episode.duration?.toUnitsString(unitsTranslations: context.tr)
-                              ?? context.tr.animeUnknownEpDuration
-                          }${
-                            isarEp?.lastWatchedTimestamp != null
-                              ? "\n${
-                                DateTime.fromMillisecondsSinceEpoch(
-                                  isarEp!.lastWatchedTimestamp!,
-                                ).formatHistory(context)
-                              }"
-                              : ""
-                          }",
+                              ?? context.tr.animeUnknownEpDuration,
+                            isarEp?.lastExitDateTime?.formatHistory(context)
+                          ].whereType<String>().join("\n"),
                           onTap: () => openPlayer(PlayerType.native),
                           onLongPress: () => openPlayer(PlayerType.webview),
                         );

@@ -10,6 +10,7 @@
   "cancel": "Cancel",
   "reset": "Reset",
   "close": "Close",
+  "completed": "completed",
 
   "home": "Home",
   "homeLatestEps": "Latest episodes",
@@ -26,6 +27,47 @@
   "libraryEmptyFavorites": "No favorites",
   "emptyList": "List is empty",
   "notWatchedYet": "Not watched yet",
+  "dateAtTime": "{date} at {time}",
+  "@dateAtTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "dateUpToTime": "{date} up to {time}",
+  "@dateUpToTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "completedOn": "Completed on {date}",
+  "@completedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "watchedUpTo": "Watched up to {position} on {date}",
+  "@watchedUpTo": {
+    "placeholders": {
+      "position": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
 
   
   "search": "Search",

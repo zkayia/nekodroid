@@ -18,7 +18,8 @@ class IsarEpisodeStatus {
   // In milliseconds
   int? duration;
   // In milliseconds
-  int? lastExitTime;
+  int? lastPosition;
+  int? lastExitTimestamp;
   List<int> watchedTimestamps;
 
   @Backlink(to: "episodeStatuses")
@@ -29,18 +30,37 @@ class IsarEpisodeStatus {
     required this.thumbnail,
     required this.episodeNumber,
     required this.duration,
-    required this.lastExitTime,
+    required this.lastPosition,
     required this.watchedTimestamps,
   });
 
-  int? get lastWatchedTimestamp => watchedTimestamps.isEmpty
+  @ignore
+  Set<int> get watchedTimestampsSet => watchedTimestamps.toSet();
+
+  @ignore
+  double? get watchedFraction => lastPosition != null && duration != null
+    ? lastPosition! / duration!
+    : null;
+
+  @ignore
+  bool? get watchedOnLastExit => lastExitTimestamp != null && watchedTimestamps.isNotEmpty
+    ? lastExitTimestamp == watchedTimestamps.last
+    : null;
+
+  @ignore
+  Duration? get lastPositionDuration => lastPosition == null
     ? null
-    : watchedTimestamps.last;
+    : Duration(milliseconds: lastPosition!);
   
   @ignore
-  double? get watchedFraction => lastExitTime != null && duration != null
-    ? lastExitTime! / duration!
-    : null;
+  DateTime? get lastExitDateTime => lastExitTimestamp == null
+    ? null
+    : DateTime.fromMillisecondsSinceEpoch(lastExitTimestamp!);
+  
+  @ignore
+  DateTime? get lastWatchedDateTime => watchedTimestamps.isEmpty
+    ? null
+    : DateTime.fromMillisecondsSinceEpoch(watchedTimestamps.last);
 
   @ignore
   Uri get urlUri => Uri.parse(url);
@@ -59,7 +79,7 @@ class IsarEpisodeStatus {
     thumbnail: episode.thumbnail.toString(),
     episodeNumber: episode.episodeNumber,
     duration: episode.duration?.inMilliseconds,
-    lastExitTime: lastExitTime,
+    lastPosition: lastExitTime,
     watchedTimestamps: watchedTimestamps ?? const [],
   );
   

@@ -8,23 +8,26 @@ extension DateTimeX on DateTime {
 
   Duration diffToNow() => difference(DateTime.now()).abs();
 
-  String prettyToString() => "$day/$month/$year ${
+  String prettyToString({bool seconds=false}) => "$day/$month/$year ${
     hour.toPaddedString()
   }:${
     minute.toPaddedString()
-  }:${
-    second.toPaddedString()
+  }${
+    seconds ? " ${second.toPaddedString()}" : ""
   }";
 
-  String formatHistory(BuildContext context) => "$day ${
-    context.tr.monthsShort(month)
-  }. ${
-    year == DateTime.now().year
-      ? ""
-      : "$year "
-  }${
-    hour.toPaddedString()
-  }:${
-    minute.toPaddedString()
-  }";
+  String formatHistory(BuildContext context) => context.tr.dateAtTime(
+    "$day ${
+      context.tr.monthsShort(month)
+    }.${
+      year == DateTime.now().year
+        ? ""
+        : " $year"
+    }",
+    "${hour.toPaddedString()}:${minute.toPaddedString()}",
+  );
+
+  String completedOn(BuildContext context) => context.tr.completedOn(
+    formatHistory(context),
+  );
 }

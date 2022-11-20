@@ -10,6 +10,7 @@
   "cancel": "Cancel",
   "reset": "Reset",
   "close": "Close",
+  "completed": "fini",
 
   "home": "Accueil",
   "homeLatestEps": "Derniers épisodes",
@@ -26,6 +27,47 @@
   "libraryEmptyFavorites": "Aucun favori",
   "emptyList": "La liste est vide",
   "notWatchedYet": "Pas encore vu",
+  "dateAtTime": "{date} à {time}",
+  "@dateAtTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "dateUpToTime": "{date} jusqu'à {time}",
+  "@dateUpToTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "completedOn": "Fini le {date}",
+  "@completedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "watchedUpTo": "Vu jusqu'à {position} le {date}",
+  "@watchedUpTo": {
+    "placeholders": {
+      "position": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
 
   
   "search": "Recherche",
