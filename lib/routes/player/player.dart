@@ -50,6 +50,11 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
 
   @override
   void dispose() {
+    _onPlayerExit();
+    super.dispose();
+  }
+
+  void _onPlayerExit() {
     fToast
       ..removeQueuedCustomToasts()
       ..removeCustomToast();
@@ -57,8 +62,10 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
     );
-    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   void _offsetCurrentEpBy(int offset, PlayerRouteParams parameters) =>
@@ -85,6 +92,7 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
       hideExitFab: true,
       onExitTap: (context) async {
         if (!ref.read(settingsProv).player.confirmOnBackExit) {
+          _onPlayerExit();
           return true;
         }
         final current = DateTime.now().millisecondsSinceEpoch;
@@ -105,6 +113,7 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
           ref: ref,
           parameters: parameters,
         );
+        _onPlayerExit();
         return true;
       },
       body: Center(
