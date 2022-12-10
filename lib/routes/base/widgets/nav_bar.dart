@@ -43,7 +43,7 @@ class NavBar extends ConsumerWidget {
             final item = items.elementAt(index);
             final isSelected = currentIndex == index;
             final label = SingleLineText(
-              item.label!,
+              item.label,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: isSelected ? theme.indicatorColor : null,
               ),
@@ -60,24 +60,23 @@ class NavBar extends ConsumerWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (item.icon != null)
-                        Icon(
-                          isSelected
-                            ? item.selectedIcon ?? item.icon!
-                            : item.icon!,
-                          color: isSelected ? theme.colorScheme.primary : null,
-                        ),
+                      Icon(
+                        isSelected
+                          ? item.selectedIcon ?? item.icon
+                          : item.icon,
+                        color: isSelected ? theme.colorScheme.primary : null,
+                      ),
                       const SizedBox(height: kDotIndicatorSize),
                       AnimatedContainer(
                         duration: kDefaultAnimDuration,
                         curve: kDefaultAnimCurve,
                         height: isSelected
-                          ? item.label != null && showSelectedLabels
+                          ? showSelectedLabels
                             ? labelHeight
                             : showSelectedDot ? kDotIndicatorSize : 0
                           : showUnselectedLabels ? labelHeight : 0,
                         child: isSelected
-                          ? item.label != null && showSelectedLabels
+                          ? showSelectedLabels
                             ? label
                             : showSelectedDot
                               ? DecoratedBox(
