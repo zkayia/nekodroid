@@ -136,5 +136,5 @@ class SearchRoute extends ConsumerWidget {
       (_) => ref.read(textControllerProv).text,
     )
     ..read(queryProv.notifier).build()
-    ..refresh(searchResultsProv);
+    ..invalidate(searchResultsProv);
 }

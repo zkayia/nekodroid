@@ -66,6 +66,9 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
+    ref
+      ..invalidate(playerPopTimeProv)
+      ..invalidate(playerValueProv);
   }
 
   void _offsetCurrentEpBy(int offset, PlayerRouteParams parameters) =>
@@ -82,12 +85,6 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
   @override
   Widget build(BuildContext context) {
     final parameters = ModalRoute.of(context)!.settings.arguments as PlayerRouteParams;
-    // To keep the state when disabling visibility
-    // when riverpod ^2.0.0 comes
-    // remove thoses and autoDispose then ref.invalidate it in dispose
-    ref
-      ..watch(playerPopTimeProv)
-      ..watch(playerValueProv);
     return GenericRoute(
       hideExitFab: true,
       onExitTap: (context) async {

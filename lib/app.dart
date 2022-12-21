@@ -1,4 +1,5 @@
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,11 +38,10 @@ class App extends ConsumerStatefulWidget {
   AppState createState() => AppState();
 }
 
-class AppState extends ConsumerState<App> {
+class AppState extends ConsumerState<App> with AfterLayoutMixin<App> {
 
   @override
-  void initState() {
-    super.initState();
+  void afterFirstLayout(BuildContext context) {
     ref.read(apiProv).checkSearchdb(ref);
   }
 

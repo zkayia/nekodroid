@@ -40,7 +40,7 @@ class GenericInputDialog extends ConsumerWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator != null
         ? (v) {
-          ref.refresh(_errorTextProv.notifier);
+          ref.invalidate(_errorTextProv);
           return validator!(v?.trim(), context);
         }
         : null,
