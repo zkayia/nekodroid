@@ -2,6 +2,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/constants/double_tap_action.dart';
 import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
 
@@ -28,6 +29,7 @@ class PlayerControlsQuickSkipOverlay extends ConsumerWidget {
               display == DoubleTapAction.rewind
                 ? Boxicons.bx_rewind
                 : Boxicons.bx_fast_forward,
+              color: kNativePlayerControlsColor,
             ),
           ),
         ),

@@ -42,6 +42,7 @@ const EdgeInsetsGeometry kAnimeCardBadgeTextPadding = EdgeInsets.symmetric(
 
 const Color _kAccentColor = Color(0xff1cb9f4);
 const Color _kOnAccentColor = Color(0xff000000);
+const Color kNativePlayerControlsColor = Color(0xffffffff);
 const Color kOnImageColor = Color(0xffffffff);
 const Color kAnimeCardBadgeColor = Color(0xfff9f9f9);
 const Color kAnimeCardBadgeShadow = Color.fromARGB(160, 0, 0, 0);

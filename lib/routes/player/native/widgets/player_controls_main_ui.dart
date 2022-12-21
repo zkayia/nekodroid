@@ -41,175 +41,190 @@ class PlayerControlsMainUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     final screenWidth10 = MediaQuery.of(context).size.width * 0.1;
+    final hasSubtitle = subtitle.trim().isNotEmpty;
     return Material(
       color: Colors.black.withAlpha(
         255 * ref.read(settingsProv).player.controlsBackgroundTransparency ~/ 100,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () => onExit(context),
-                icon: const Icon(Boxicons.bx_x),
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SingleLineText(
-                      title,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    SingleLineText.secondary(
-                      subtitle,
-                    ),
-                  ],
+      child: IconTheme(
+        data: theme.iconTheme.copyWith(
+          color: kNativePlayerControlsColor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () => onExit(context),
+                  icon: const Icon(Boxicons.bx_x),
                 ),
-              ),
-              SizedBox(width: screenWidth10),
-              IconButton(
-                onPressed: () async {
-                  ref.read(playerControlsProv.notifier).inAction = true;
-                  final newSpeed = await showDialog<double>(
-                    context: context,
-                    builder: (context) => GenericFormDialog.radio(
-                      title: context.tr.playerPlaybackSpeed,
-                      elements: [
-                        for (final speed in [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0])
-                          GenericFormDialogElement(
-                            label: speed.toString(),
-                            value: speed,
-                            selected: speed == ref.read(playerValueProv).playbackSpeed,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: hasSubtitle
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.center,
+                    children: [
+                      SingleLineText(
+                        title,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: kNativePlayerControlsColor,
+                        ),
+                      ),
+                      if (hasSubtitle)
+                        SingleLineText(
+                          subtitle,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: kNativePlayerControlsColor,
                           ),
-                      ],
-                    ),
-                  );
-                  if (newSpeed != null) {
-                    controller.setPlaybackSpeed(newSpeed);
-                  }
-                  ref.read(playerControlsProv.notifier)
-                    ..didAction()
-                    ..inAction = false;
-                },
-                icon: const Icon(Boxicons.bx_timer),
-              ),
-              IconButton(
-                onPressed: qualities.isEmpty
-                  ? null
-                  : () async {
+                        ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: screenWidth10),
+                IconButton(
+                  onPressed: () async {
                     ref.read(playerControlsProv.notifier).inAction = true;
-                    final newQuality = await showDialog<File>(
+                    final newSpeed = await showDialog<double>(
                       context: context,
                       builder: (context) => GenericFormDialog.radio(
-                        title: context.tr.playerQuality,
+                        title: context.tr.playerPlaybackSpeed,
                         elements: [
-                          for (final quality in qualities.entries)
+                          for (final speed in [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0])
                             GenericFormDialogElement(
-                              label: quality.key,
-                              value: quality.value,
-                              selected: "file://${quality.value.path}" == controller.dataSource,
+                              label: speed.toString(),
+                              value: speed,
+                              selected: speed == ref.read(playerValueProv).playbackSpeed,
                             ),
                         ],
                       ),
                     );
-                    if (newQuality != null) {
-                      changeVideo(newQuality);
+                    if (newSpeed != null) {
+                      controller.setPlaybackSpeed(newSpeed);
                     }
                     ref.read(playerControlsProv.notifier)
                       ..didAction()
                       ..inAction = false;
                   },
-                icon: const Icon(Boxicons.bxs_videos),
-              ),
-              IconButton(
-                onPressed: () {
-                  controller.setVolume((ref.read(playerValueProv).volume + 1) % 2);
-                  ref.watch(playerControlsProv.notifier).didAction();
-                },
-                icon: Icon(
-                  ref.watch(playerValueProv.select((v) => v.volume)) == 0
-                    ? Boxicons.bx_volume_mute
-                    : Boxicons.bx_volume_full,
+                  icon: const Icon(Boxicons.bx_timer),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  controller.seekTo(
-                    controller.value.position + Duration(
-                      seconds: ref.read(settingsProv).player.introSkipTime,
-                    ),
-                  );
-                  ref.watch(playerControlsProv.notifier).didAction();
-                },
-                icon: const Icon(Boxicons.bx_fast_forward),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: onPrevious != null
-                  ? () {
-                    ref.watch(playerControlsProv.notifier).didAction();
-                    onPrevious!();
-                  }
-                  : null,
-                icon: const Icon(Boxicons.bx_skip_previous),
-              ),
-              SizedBox(width: screenWidth10),
-              ConstrainedBox(
-                constraints: BoxConstraints.tight(const Size.square(kLargeIconSize)),
-                child: ref.watch(playerValueProv.select((v) => v.isBuffering))
-                  ? const CircularProgressIndicator()
-                  : IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      if (ref.read(playerValueProv).isPlaying) {
-                        controller.pause();
-                      } else {
-                        controller.play();
+                IconButton(
+                  onPressed: qualities.isEmpty
+                    ? null
+                    : () async {
+                      ref.read(playerControlsProv.notifier).inAction = true;
+                      final newQuality = await showDialog<File>(
+                        context: context,
+                        builder: (context) => GenericFormDialog.radio(
+                          title: context.tr.playerQuality,
+                          elements: [
+                            for (final quality in qualities.entries)
+                              GenericFormDialogElement(
+                                label: quality.key,
+                                value: quality.value,
+                                selected: "file://${quality.value.path}" == controller.dataSource,
+                              ),
+                          ],
+                        ),
+                      );
+                      if (newQuality != null) {
+                        changeVideo(newQuality);
                       }
-                      ref.watch(playerControlsProv.notifier).didAction();
+                      ref.read(playerControlsProv.notifier)
+                        ..didAction()
+                        ..inAction = false;
                     },
-                    iconSize: kLargeIconSize,
-                    icon: ref.watch(playerValueProv.select((v) => v.isPlaying))
-                      ? const Icon(Boxicons.bx_pause)
-                      : 
-                        ref.watch(playerValueProv.select((v) => v.position))
-                        >= ref.watch(playerValueProv.select((v) => v.duration))
-                          ? Transform.scale(
-                            scaleX: -1,
-                            child: const Icon(Boxicons.bx_revision),
-                          )
-                          : const Icon(Boxicons.bx_play),
+                  icon: const Icon(Boxicons.bxs_videos),
+                ),
+                IconButton(
+                  onPressed: () {
+                    controller.setVolume((ref.read(playerValueProv).volume + 1) % 2);
+                    ref.watch(playerControlsProv.notifier).didAction();
+                  },
+                  icon: Icon(
+                    ref.watch(playerValueProv.select((v) => v.volume)) == 0
+                      ? Boxicons.bx_volume_mute
+                      : Boxicons.bx_volume_full,
                   ),
-              ),
-              SizedBox(width: screenWidth10),
-              IconButton(
-                onPressed: onNext != null
-                  ? () {
+                ),
+                IconButton(
+                  onPressed: () {
+                    controller.seekTo(
+                      controller.value.position + Duration(
+                        seconds: ref.read(settingsProv).player.introSkipTime,
+                      ),
+                    );
+                    ref.watch(playerControlsProv.notifier).didAction();
+                  },
+                  icon: const Icon(Boxicons.bx_fast_forward),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: onPrevious != null
+                    ? () {
                       ref.watch(playerControlsProv.notifier).didAction();
-                      onNext!();
+                      onPrevious!();
                     }
-                  : null,
-                icon: const Icon(Boxicons.bx_skip_next),
-              ),
-            ],
-          ),
-          ProgressBar(
-            position: ref.watch(playerValueProv.select((v) => v.position)),
-            duration: ref.watch(playerValueProv.select((v) => v.duration)),
-            onSeek: (newPos) {
-              controller.seekTo(newPos);
-              ref.watch(playerControlsProv.notifier).didAction();
-            },
-          ),
-        ],
+                    : null,
+                  icon: const Icon(Boxicons.bx_skip_previous),
+                ),
+                SizedBox(width: screenWidth10),
+                ConstrainedBox(
+                  constraints: BoxConstraints.tight(const Size.square(kLargeIconSize)),
+                  child: ref.watch(playerValueProv.select((v) => v.isBuffering))
+                    ? const CircularProgressIndicator()
+                    : IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        if (ref.read(playerValueProv).isPlaying) {
+                          controller.pause();
+                        } else {
+                          controller.play();
+                        }
+                        ref.watch(playerControlsProv.notifier).didAction();
+                      },
+                      iconSize: kLargeIconSize,
+                      icon: ref.watch(playerValueProv.select((v) => v.isPlaying))
+                        ? const Icon(Boxicons.bx_pause)
+                        : 
+                          ref.watch(playerValueProv.select((v) => v.position))
+                          >= ref.watch(playerValueProv.select((v) => v.duration))
+                            ? Transform.scale(
+                              scaleX: -1,
+                              child: const Icon(Boxicons.bx_revision),
+                            )
+                            : const Icon(Boxicons.bx_play),
+                    ),
+                ),
+                SizedBox(width: screenWidth10),
+                IconButton(
+                  onPressed: onNext != null
+                    ? () {
+                        ref.watch(playerControlsProv.notifier).didAction();
+                        onNext!();
+                      }
+                    : null,
+                  icon: const Icon(Boxicons.bx_skip_next),
+                ),
+              ],
+            ),
+            ProgressBar(
+              position: ref.watch(playerValueProv.select((v) => v.position)),
+              duration: ref.watch(playerValueProv.select((v) => v.duration)),
+              onSeek: (newPos) {
+                controller.seekTo(newPos);
+                ref.watch(playerControlsProv.notifier).didAction();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

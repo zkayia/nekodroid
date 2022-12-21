@@ -26,6 +26,9 @@ class ProgressBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = MediaQuery.of(context).size;
+    final labelsStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
+      color: kNativePlayerControlsColor,
+    );
     ref.watch(progressBarValueProv);
     return ConstrainedBox(
       constraints: BoxConstraints(
@@ -36,14 +39,16 @@ class ProgressBar extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: kPaddingSecond),
-            child: SingleLineText.secondary(
+            child: SingleLineText(
               position.prettyToString(),
+              style: labelsStyle,
             ),
           ),
           Expanded(
             child: SliderTheme(
               data: Theme.of(context).sliderTheme.copyWith(
                 trackHeight: 4,
+                inactiveTrackColor: kNativePlayerControlsColor,
               ),
               child: Slider(
                 divisions: duration.inSeconds == 0 ? null : duration.inSeconds,
@@ -73,8 +78,9 @@ class ProgressBar extends ConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: kPaddingSecond),
-            child: SingleLineText.secondary(
+            child: SingleLineText(
               duration.prettyToString(),
+              style: labelsStyle,
             ),
           ),
         ],
