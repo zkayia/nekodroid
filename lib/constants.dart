@@ -16,7 +16,7 @@ const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
 const Curve kDefaultAnimCurve = Curves.easeInOutQuad;
 const ScrollPhysics kDefaultScrollPhysics = ClampingScrollPhysics();
 
-const double kDefaultElevation = 6;
+const double kDefaultElevation = 4;
 
 const double kPaddingMain = 16;
 const double kPaddingSecond = 8;
@@ -67,12 +67,10 @@ final ThemeData lightTheme = _buildTheme(
   brightness: Brightness.light,
   accent: _kAccentColor,
   onAccent: _kOnAccentColor,
-  prim: const Color(0xfffafafa),
-  primAlt: const Color(0xffefefef),
-  // prim: const Color(0xfffafafa),
-  // primAlt: const Color(0xfffafafa),
-  polar: const Color(0xff2c2c2c),
-  polarAlt: const Color(0xff505050),
+  prim: const Color(0xfffdfdfd),
+  primAlt: const Color(0xffffffff),
+  polar: const Color(0xff000000),
+  polarAlt: const Color(0xff2c2c2c),
 );
 
 final ThemeData amoledTheme = _buildTheme(
@@ -131,13 +129,13 @@ ThemeData _buildTheme({
       overflow: TextOverflow.fade,
       color: polar,
       fontSize: 30,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w900,
     ),
     displaySmall: const TextStyle().copyWith(
       overflow: TextOverflow.fade,
       color: polar,
       fontSize: 24,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w800,
     ),
     titleLarge: const TextStyle().copyWith(
       overflow: TextOverflow.fade,
@@ -149,13 +147,13 @@ ThemeData _buildTheme({
       overflow: TextOverflow.fade,
       color: polar,
       fontSize: 16,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w600,
     ),
     bodyLarge: const TextStyle().copyWith(
       overflow: TextOverflow.fade,
       color: polar,
       fontSize: 14,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
     ),
     bodyMedium: const TextStyle().copyWith(
       overflow: TextOverflow.fade,
@@ -195,7 +193,7 @@ ThemeData _buildTheme({
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kBorderRadMain),
       ),
-      systemOverlayStyle: brightness == Brightness.dark
+      systemOverlayStyle: isDark
         ? SystemUiOverlayStyle.light
         : SystemUiOverlayStyle.dark,
     ),
@@ -247,6 +245,7 @@ ThemeData _buildTheme({
       brightness: brightness,
       padding: EdgeInsets.zero,
       selectedColor: accent,
+      elevation: kDefaultElevation,
       labelPadding: const EdgeInsets.symmetric(
         horizontal: 5,
         vertical: -2,
@@ -290,6 +289,7 @@ ThemeData _buildTheme({
         horizontal: 8,
         vertical: 2,
       ),
+      iconColor: polar,
       horizontalTitleGap: 4,
       selectedColor: accent,
     ),
@@ -309,7 +309,7 @@ ThemeData _buildTheme({
       thumbColor: accent,
       trackHeight: 8,
       activeTrackColor: accent,
-      inactiveTrackColor: prim,
+      inactiveTrackColor: Color.lerp(prim, polarAlt, 0.3)!,
       tickMarkShape: SliderTickMarkShape.noTickMark,
       overlayShape: SliderComponentShape.noOverlay,
       valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
@@ -324,7 +324,7 @@ ThemeData _buildTheme({
       trackColor: MaterialStateColor.resolveWith(
         (states) => states.contains(MaterialState.selected)
           ? accent
-          : prim,
+          : Color.lerp(prim, polarAlt, 0.3)!,
       ),
     ),
     tabBarTheme: const TabBarTheme().copyWith(
