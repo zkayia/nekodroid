@@ -45,14 +45,17 @@ class SliderSetting extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SingleLineText(
+          Text(
             title,
             style: textTheme.subtitle1?.apply(color: textColor),
+            overflow: TextOverflow.clip,
+            maxLines: 1,
           ),
           if (subtitle != null)
             Text(
               subtitle!,
               style: textTheme.bodyText2?.apply(color: textColor),
+              overflow: TextOverflow.clip,
             ),
           const SizedBox(height: kPaddingSecond),
           Row(

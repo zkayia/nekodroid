@@ -134,10 +134,6 @@ class _SettingsProvNotif extends StateNotifier<AppSettings> {
 
   // Anime
 
-  set autoAddToWatching(bool value) => state = state.copyWith(
-    anime: state.anime.copyWith(autoAddToWatching: value),
-  );
-
   set blurThumbs(bool value) => state = state.copyWith(
     anime: state.anime.copyWith(blurThumbs: value),
   );
@@ -146,8 +142,12 @@ class _SettingsProvNotif extends StateNotifier<AppSettings> {
     anime: state.anime.copyWith(blurThumbsSigma: value),
   );
 
-  set lazyLoadItemCount(int value) => state = state.copyWith(
-    anime: state.anime.copyWith(lazyLoadItemCount: value),
+  set episodeCacheExtent(int value) => state = state.copyWith(
+    anime: state.anime.copyWith(episodeCacheExtent: value),
+  );
+
+  set keepEpisodesAlive(bool value) => state = state.copyWith(
+    anime: state.anime.copyWith(keepEpisodesAlive: value),
   );
 
   // Player

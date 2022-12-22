@@ -10,35 +10,40 @@ class AnimeSettings {
 
   final bool blurThumbs;
   final int blurThumbsSigma;
-  final int lazyLoadItemCount;
+  final int episodeCacheExtent;
+  final bool keepEpisodesAlive;
   
   const AnimeSettings({
     this.blurThumbs=true,
     this.blurThumbsSigma=12,
-    this.lazyLoadItemCount=5,
+    this.episodeCacheExtent=4,
+    this.keepEpisodesAlive=false,
   });
 
   AnimeSettings copyWith({
     bool? blurThumbs,
     int? blurThumbsSigma,
-    int? lazyLoadItemCount,
-    bool? autoAddToWatching,
+    int? episodeCacheExtent,
+    bool? keepEpisodesAlive,
   }) => AnimeSettings(
     blurThumbs: blurThumbs ?? this.blurThumbs,
     blurThumbsSigma: blurThumbsSigma ?? this.blurThumbsSigma,
-    lazyLoadItemCount: lazyLoadItemCount ?? this.lazyLoadItemCount,
+    episodeCacheExtent: episodeCacheExtent ?? this.episodeCacheExtent,
+    keepEpisodesAlive: keepEpisodesAlive ?? this.keepEpisodesAlive,
   );
 
   Map<String, dynamic> toMap() => {
     "blurThumbs": blurThumbs,
     "blurThumbsSigma": blurThumbsSigma,
-    "lazyLoadItemCount": lazyLoadItemCount,
+    "episodeCacheExtent": episodeCacheExtent,
+    "keepEpisodesAlive": keepEpisodesAlive,
   };
 
   factory AnimeSettings.fromMap(Map map) => AnimeSettings(
     blurThumbs: map["blurThumbs"] ?? kDefaultSettings.anime.blurThumbs,
     blurThumbsSigma: map["blurThumbsSigma"] ?? kDefaultSettings.anime.blurThumbsSigma,
-    lazyLoadItemCount: map["lazyLoadItemCount"] ?? kDefaultSettings.anime.lazyLoadItemCount,
+    episodeCacheExtent: map["episodeCacheExtent"] ?? kDefaultSettings.anime.episodeCacheExtent,
+    keepEpisodesAlive: map["keepEpisodesAlive"] ?? kDefaultSettings.anime.keepEpisodesAlive,
   );
 
   String toJson() => json.encode(toMap());
@@ -47,7 +52,7 @@ class AnimeSettings {
 
   @override
   String toString() =>
-    "AnimeSettings(blurThumbs: $blurThumbs, blurThumbsSigma: $blurThumbsSigma, lazyLoadItemCount: $lazyLoadItemCount)";
+    "AnimeSettings(blurThumbs: $blurThumbs, blurThumbsSigma: $blurThumbsSigma, episodeCacheExtent: $episodeCacheExtent, keepEpisodesAlive: $keepEpisodesAlive)";
 
   @override
   bool operator ==(Object other) {
@@ -57,11 +62,13 @@ class AnimeSettings {
     return other is AnimeSettings
       && other.blurThumbs == blurThumbs
       && other.blurThumbsSigma == blurThumbsSigma
-      && other.lazyLoadItemCount == lazyLoadItemCount;
+      && other.episodeCacheExtent == episodeCacheExtent
+      && other.keepEpisodesAlive == keepEpisodesAlive;
   }
 
   @override
   int get hashCode => blurThumbs.hashCode
     ^ blurThumbsSigma.hashCode
-    ^ lazyLoadItemCount.hashCode;
+    ^ episodeCacheExtent.hashCode
+    ^ keepEpisodesAlive.hashCode;
 }

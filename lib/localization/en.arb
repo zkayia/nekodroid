@@ -204,8 +204,9 @@
   "blurThumbs": "Blur thumbnails",
   "blurThumbsSigma": "Blur intensity",
   "blurThumbsShowSwitch": "Show blur thumbnails switch",
-  "lazyLoadItemCount": "Preload episode count",
-  "lazyLoadItemCountDesc": "Preload episode thumbnails during scroll in groups of",
+  "episodeCacheExtent": "Preload episode count",
+  "episodeCacheExtentDesc": "Number of episode thumbnails to preload when scrolling",
+  "keepEpisodesAlive": "Keep thumbnails in cache",
   
   "confirmExit": "Confirm before exiting",
   "confirmExitDesc": "Require two taps to exit using the back button",

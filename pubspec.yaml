@@ -16,6 +16,7 @@ environment:
 dependencies:
   after_layout: ^1.2.0
   android_intent_plus: ^3.1.5
+  async: ^2.9.0
   boxicons:
     git:
       url: https://github.com/zkayia/dartpacks
@@ -33,7 +34,6 @@ dependencies:
   intl: ^0.17.0
   isar: ^3.0.5
   isar_flutter_libs: ^3.0.5
-  lazy_load_scrollview: ^1.3.0
   nekosama:
     git:
       url: https://github.com/zkayia/nekosama_dart

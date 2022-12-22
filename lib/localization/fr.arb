@@ -204,8 +204,9 @@
   "blurThumbs": "Flouter les miniatures",
   "blurThumbsSigma": "Force du flou",
   "blurThumbsShowSwitch": "Afficher le switch de flou",
-  "lazyLoadItemCount": "Nombre d'épisodes préchargés",
-  "lazyLoadItemCountDesc": "Précharger les miniatures des épisodes durant le défilement par groupe de",
+  "episodeCacheExtent": "Nombre d'épisodes préchargés",
+  "episodeCacheExtentDesc": "Nombre de miniatures d'épisode à précharger durant le défilement",
+  "keepEpisodesAlive": "Garder les miniatures en cache",
   
   "confirmExit": "Confirmer avant de sortir",
   "confirmExitDesc": "Demander une confirmation avant de sortir avec le bouton retour",
