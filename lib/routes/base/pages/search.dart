@@ -83,7 +83,11 @@ class SearchPage extends ConsumerWidget {
                 return AnimeListTile(
                   title: element.title,
                   leading: AnimeCard(
-                    image: GenericCachedImage(element.thumbnailUri),
+                    image: GenericCachedImage(
+                      element.thumbnailUri,
+                      cacheHeight: kAnimeListTileMaxHeight,
+                      cacheWidth: kAnimeListTileMaxHeight * 5 / 7,
+                    ),
                   ),
                   onTap: () => Navigator.of(context).pushNamed(
                     "/anime",

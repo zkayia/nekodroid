@@ -26,6 +26,8 @@ class EpisodeThumbnail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final thumbnail = GenericImage(
       imageUrl,
+      cacheHeight: kAnimeListTileMaxHeight,
+      cacheWidth: kAnimeListTileMaxHeight * 16 / 9,
       childBuilder: (context, child) {
         final blurThumbsSigma = ref.watch(
           settingsProv.select((v) => v.anime.blurThumbsSigma),

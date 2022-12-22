@@ -57,7 +57,11 @@ class SearchRoute extends ConsumerWidget {
                   title: anime.title,
                   subtitle: anime.dataText(context),
                   leading: AnimeCard(
-                    image: GenericCachedImage(anime.thumbnailUri),
+                    image: GenericCachedImage(
+                      anime.thumbnailUri,
+                      cacheHeight: kAnimeListTileMaxHeight,
+                      cacheWidth: kAnimeListTileMaxHeight * 5 / 7,
+                    ),
                   ),
                   onTap: () {
                     final miscBox = Hive.box("misc-data");

@@ -53,7 +53,12 @@ class LibraryTabview extends ConsumerWidget {
                           )
                           : episode.lastWatchedDateTime?.completedOn(context),
                       leading: AnimeCard(
-                        image: GenericCachedImage(episode.thumbnailUri),
+                        image: GenericCachedImage(
+                          episode.thumbnailUri,
+                          cacheHeight: kAnimeListTileMaxHeight,
+                          cacheWidth: kAnimeListTileMaxHeight * 16 / 9,
+                        ),
+                        isEpisode: true,
                         badge: context.tr.episodeShort(episode.episodeNumber),
                         onTap: () => Navigator.of(context).pushNamed(
                           "/anime",
@@ -87,7 +92,13 @@ class LibraryTabview extends ConsumerWidget {
               return AnimeListTile(
                 title: anime.title,
                 subtitle: anime.dataText(context),
-                leading: AnimeCard(image: GenericCachedImage(anime.thumbnailUri)),
+                leading: AnimeCard(
+                  image: GenericCachedImage(
+                    anime.thumbnailUri,
+                    cacheHeight: kAnimeListTileMaxHeight,
+                    cacheWidth: kAnimeListTileMaxHeight * 5 / 7,
+                  ),
+                ),
                 onTap: () => Navigator.of(context).pushNamed(
                   "/anime",
                   arguments: anime.urlUri,
@@ -149,7 +160,13 @@ class LibraryTabview extends ConsumerWidget {
                     return AnimeListTile(
                       title: anime.title,
                       subtitle: anime.dataText(context),
-                      leading: AnimeCard(image: GenericCachedImage(anime.thumbnailUri)),
+                      leading: AnimeCard(
+                        image: GenericCachedImage(
+                          anime.thumbnailUri,
+                          cacheHeight: kAnimeListTileMaxHeight,
+                          cacheWidth: kAnimeListTileMaxHeight * 5 / 7,
+                        ),
+                      ),
                       onTap: () => Navigator.of(context).pushNamed(
                         "/anime",
                         arguments: anime.urlUri,

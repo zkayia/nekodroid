@@ -24,7 +24,11 @@ class AnimePageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final thumbnail = Hero(
       tag: "anime_thumbnail",
-      child: GenericImage(anime.thumbnail),
+      child: GenericImage(
+        anime.thumbnail,
+        cacheHeight: kAnimePageGroupMaxHeight,
+        cacheWidth: kAnimePageGroupMaxHeight * 5 / 7,
+      ),
     );
     return LimitedBox(
       maxHeight: kAnimePageGroupMaxHeight,

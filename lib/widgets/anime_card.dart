@@ -27,7 +27,7 @@ class AnimeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AspectRatio(
-    aspectRatio: 5 / 7,
+    aspectRatio: isEpisode ? 16 / 9 : 5 / 7,
     child: Column(
       children: [
         Expanded(
