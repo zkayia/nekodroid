@@ -9,11 +9,13 @@ class SliverTitleScrollviewRoute extends ConsumerWidget {
 
   final String title;
   final Widget? sliver;
+  final double horizontalPadding;
   final Future<bool> Function(BuildContext context)? onExitTap;
 
   const SliverTitleScrollviewRoute({
     required this.title,
     required this.sliver,
+    this.horizontalPadding=kPaddingSecond,
     this.onExitTap,
     super.key,
   });
@@ -34,10 +36,10 @@ class SliverTitleScrollviewRoute extends ConsumerWidget {
         ),
         _SettingsSliverHeader(title),
         SliverPadding(
-          padding: const EdgeInsets.only(
+          padding: EdgeInsets.only(
             top: kPaddingSecond,
-            left: kPaddingMain,
-            right: kPaddingMain,
+            left: horizontalPadding,
+            right: horizontalPadding,
             bottom: kPaddingSecond + kFabSize + 16,
           ),
           sliver: sliver,
@@ -52,7 +54,7 @@ final _scrollControllerProvider = Provider.autoDispose.family<ScrollController, 
     final controller = ScrollController();
     controller.addListener(
       () => ref.watch(_scrollOffsetRatioProvider(title).notifier).update(
-        (state) => controller.offset.clamp(0, kTopBarHeight) / kTopBarHeight,
+        (state) => controller.offset.clamp(0, 100) / 100,
       ),
     );
     ref.onDispose(controller.dispose);
@@ -96,11 +98,14 @@ class _SettingsSliverHeader extends ConsumerWidget {
     final theme = Theme.of(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final ratio = ref.watch(_scrollOffsetRatioProvider(title));
+    final double elevation = ratio > 0.8 ? ratio * kDefaultElevation : 0;
     return SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: kPaddingMain * 1 + ratio),
       sliver: SliverAppBar(
         automaticallyImplyLeading: false,
         pinned: true,
+        elevation: elevation,
+        scrolledUnderElevation: elevation,
         toolbarHeight: kTopBarHeight,
         collapsedHeight: kTopBarHeight,
         expandedHeight: screenHeight * 0.2,

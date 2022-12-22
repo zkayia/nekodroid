@@ -45,9 +45,7 @@ class HomePage extends ConsumerWidget {
                 final carousel = carousels.entries.elementAt(index);
                 final isEpisode = index == 0;
                 AnimeCard cardBuilder(BuildContext context, element, {bool detailled=false}) {
-                  final thumbWidth = isEpisode
-                    ? (size.width - kPaddingSecond - kPaddingMain * 2) / 2
-                    : (size.width - kPaddingSecond * 2 - kPaddingMain * 2) / 3;
+                  final thumbWidth = (size.width - kPaddingSecond * (isEpisode ? 3 : 4)) / 2;
                   return AnimeCard(
                     image: isEpisode
                       ? GenericImage(

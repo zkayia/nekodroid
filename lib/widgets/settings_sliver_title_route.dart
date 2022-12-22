@@ -8,6 +8,7 @@ class SettingsSliverTitleRoute extends StatelessWidget {
 
   final String title;
   final double verticalPadding;
+  final double horizontalPadding;
   final List<Widget> children;
   final Future<bool> Function(BuildContext context)? onExitTap;
   
@@ -15,6 +16,7 @@ class SettingsSliverTitleRoute extends StatelessWidget {
     required this.title,
     required this.children,
     this.verticalPadding=kPaddingMain,
+    this.horizontalPadding=kPaddingSecond,
     this.onExitTap,
     super.key,
   });
@@ -23,13 +25,17 @@ class SettingsSliverTitleRoute extends StatelessWidget {
   Widget build(BuildContext context) => SliverTitleScrollviewRoute(
     title: title,
     onExitTap: onExitTap,
+    horizontalPadding: horizontalPadding,
     sliver: SliverList(
-      delegate: SliverChildListDelegate.fixed([
-        for (int i = 0 ; i < children.length * 2 - 1; i++)
-          i.isEven
-            ? children.elementAt(i ~/ 2)
-            : SizedBox(height: verticalPadding),
-      ]),
+      delegate: SliverChildBuilderDelegate(
+        (context, index) => index.isEven
+          ? children.elementAt(index ~/ 2)
+          : SizedBox(height: verticalPadding),
+        childCount: children.length * 2 - 1,
+        semanticIndexCallback: (_, index) => index.isEven
+          ? index ~/ 2
+          : null,
+      ),
     ),
   );
 }

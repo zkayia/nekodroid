@@ -47,6 +47,7 @@ class SettingsRoute extends ConsumerWidget {
     return SettingsSliverTitleRoute(
       title: context.tr.settings,
       verticalPadding: kPaddingSecond,
+      horizontalPadding: kPaddingMain,
       onExitTap: (_) async {
         await ref.read(settingsProv.notifier).saveToHive();
         return true;
