@@ -101,7 +101,7 @@ class SettingsPlayerRoute extends ConsumerWidget {
         label: ref.watch(settingsProv.select((v) => v.player.introSkipTime)).toString(),
         value: ref.watch(settingsProv.select((v) => v.player.introSkipTime)),
         min: 0,
-        max: 500,
+        max: 300,
         steps: 1,
         onChanged: (v) => ref.read(settingsProv.notifier).introSkipTime = v.toInt(),
       ),
