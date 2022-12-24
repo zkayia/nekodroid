@@ -234,6 +234,8 @@
   "quickSkipDisplayDurationDesc": "(milliseconds) Hide the quick skip overlay after",
   
   "settingsAbout": "About",
+  "linkCopiedToClipboard": "Link copied to clipboard",
+  "failedToCopyLinkToClipboard": "Failed to copy link to clipboard",
   
   
   "anime": "Anime",

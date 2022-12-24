@@ -234,6 +234,8 @@
   "quickSkipDisplayDurationDesc": "(millisecondes) Cacher le déplacement rapide après",
   
   "settingsAbout": "A propos",
+  "linkCopiedToClipboard": "Lien copié dans le presse-papiers",
+  "failedToCopyLinkToClipboard": "La copie du lien dans le presse-papiers à échouée",
   
   
   "anime": "Anime",

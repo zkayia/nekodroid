@@ -13,7 +13,7 @@ class ListTileIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    height: double.infinity,
+    height: double.maxFinite,
     child: Icon(
       icon,
       color: _useAccent

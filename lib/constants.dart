@@ -50,8 +50,35 @@ const Color kShadowThumbWithIcon = Color.fromARGB(100, 0, 0, 0);
 const List<Color> kShadowColors = [Colors.black, Colors.transparent];
 const List<double> kShadowStops = [0, 0.1];
 
+const List<String> kAppDependencies = [
+  "after_layout",
+  "android_intent_plus",
+  "async",
+  "build_runner",
+  "cached_network_image",
+  "dart_code_metrics",
+  "device_preview",
+  "derry",
+  "flutter_launcher_icons",
+  "flutter_lints",
+  "flutter_inappwebview",
+  "flutter_native_splash",
+  "flutter_svg",
+  "fluttertoast",
+  "hive",
+  "intl",
+  "isar",
+  "package_info_plus",
+  "path_provider",
+  "riverpod",
+  "share_plus",
+  "video_player",
+];
 
 final Uri kAppRepoUrl = Uri.https("github.com", "/zkayia/nekodroid");
+final Uri kAppIssuesUrl = Uri.https("github.com", "/zkayia/nekodroid/issues");
+final Uri kAppChangelogUrl = Uri.https("github.com", "/zkayia/nekodroid/blob/master/CHANGELOG.md");
+final Uri kAppLicenseUrl = Uri.https("github.com", "/zkayia/nekodroid/blob/master/LICENSE");
 
 final ThemeData darkTheme = _buildTheme(
   brightness: Brightness.dark,
