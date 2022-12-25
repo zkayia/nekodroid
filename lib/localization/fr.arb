@@ -57,13 +57,10 @@
       }
     }
   },
-  "watchedUpTo": "Vu jusqu'à {position} le {date}",
+  "watchedUpTo": "Vu jusqu'à {position}",
   "@watchedUpTo": {
     "placeholders": {
       "position": {
-        "type": "String"
-      },
-      "date": {
         "type": "String"
       }
     }

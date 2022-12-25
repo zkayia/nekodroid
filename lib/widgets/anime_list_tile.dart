@@ -50,7 +50,7 @@ class AnimeListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
-                    flex: 2,
+                    flex: titleWrap ? 2 : 1,
                     child: titleWrap
                       ? AnimeTitle.bold(title)
                       : FittedBox(child: AnimeTitle.bold(title)),

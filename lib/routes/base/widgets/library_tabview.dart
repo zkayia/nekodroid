@@ -47,10 +47,13 @@ class LibraryTabview extends ConsumerWidget {
                       subtitle: episode.lastPosition != null
                         && episode.lastExitDateTime != null
                         && episode.watchedOnLastExit != true
-                          ? context.tr.watchedUpTo(
-                            episode.lastPositionDuration!.prettyToString(),
-                            episode.lastExitDateTime!.formatHistory(context),
-                          )
+                          ? "${
+                            context.tr.watchedUpTo(
+                              episode.lastPositionDuration!.prettyToString(),
+                            )
+                          }\n${
+                            episode.lastExitDateTime!.formatHistory(context)
+                          }"
                           : episode.lastWatchedDateTime?.completedOn(context),
                       leading: AnimeCard(
                         image: GenericCachedImage(

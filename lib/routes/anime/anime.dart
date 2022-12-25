@@ -160,7 +160,20 @@ class AnimeRoute extends ConsumerWidget {
                           subtitle: [
                             episode.duration?.toUnitsString(unitsTranslations: context.tr)
                               ?? context.tr.animeUnknownEpDuration,
-                            isarEp?.lastExitDateTime?.formatHistory(context)
+                            if (
+                              isarEp?.lastPosition != null
+                              && isarEp?.lastExitDateTime != null
+                              && isarEp?.watchedOnLastExit != true
+                            )
+                              ...[
+                                if (isarEp?.lastPositionDuration != null)
+                                context.tr.watchedUpTo(
+                                  isarEp?.lastPositionDuration?.prettyToString() ?? "",
+                                ),
+                                isarEp?.lastExitDateTime?.formatHistory(context),
+                              ]
+                            else
+                              isarEp?.lastWatchedDateTime?.completedOn(context), 
                           ].whereType<String>().join("\n"),
                           onTap: () => openPlayer(context, PlayerType.native),
                           onLongPress: () => openPlayer(context, PlayerType.webview),
