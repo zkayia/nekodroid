@@ -178,14 +178,17 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
     final episode = ref.read(playerParamsProv(parameters)).episode;
     final duration = parameters.playerType == PlayerType.native
       ? ref.read(playerValueProv).duration.inMilliseconds
-      : null;
+      : 0;
     final position = parameters.playerType == PlayerType.native
-      ? max(ref.read(playerValueProv).position.inMilliseconds - 10, 0)
-      : null;
+      ? max(ref.read(playerValueProv).position.inMilliseconds - 10000, 0)
+      : 0;
     final isar = Isar.getInstance()!;
     await isar.writeTxn(() async {
       var isarEp = await isar.isarEpisodeStatus.getByUrl(episode.url.toString());
       if (isarEp == null) {
+        if (position == 0) {
+          return;
+        }
         final anime = ref.read(playerParamsProv(parameters)).anime;
         final animeUrl = anime?.url ?? episode.animeUrl;
         var isarAnime = await isar.isarAnimeListItems.getByUrl(animeUrl.toString());
@@ -199,10 +202,10 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
         await isar.isarAnimeListItems.put(isarAnime);
         await isarAnime.episodeStatuses.save();
       }
-      if ((position ?? 0) != 0 && playerSettings.epContinueAtLastLocation) {
+      if (position != 0 && playerSettings.epContinueAtLastLocation) {
         isarEp.lastPosition = position;
       }
-      if ((duration ?? 0) != 0) {
+      if (duration != 0) {
         isarEp.duration = duration;
       }
       if (
