@@ -46,7 +46,7 @@ class AddToListButton extends ConsumerWidget {
                 (e) => GenericFormDialogElement(
                   label: e.name,
                   value: e.id,
-                  selected: isarAnime!.lists.contains(e),
+                  selected: !wasNotInDb && isarAnime!.lists.contains(e),
                 ),
               ),
             ],
