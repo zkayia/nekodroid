@@ -23,6 +23,7 @@ import 'package:nekodroid/schemas/isar_episode_status.dart';
 import 'package:nekodroid/widgets/generic_route.dart';
 import 'package:nekodroid/widgets/generic_toast_text.dart';
 import 'package:nekodroid/widgets/large_icon.dart';
+import 'package:wakelock/wakelock.dart';
 
 
 class PlayerRoute extends ConsumerStatefulWidget {
@@ -45,6 +46,7 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
       DeviceOrientation.landscapeRight,
     ]);
     fToast.init(context);
+    Wakelock.enable();
     super.initState();
   }
 
@@ -55,9 +57,6 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
   }
 
   void _onPlayerExit() {
-    fToast
-      ..removeQueuedCustomToasts()
-      ..removeCustomToast();
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
@@ -66,6 +65,10 @@ class PlayerRouteState extends ConsumerState<PlayerRoute> {
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
+    fToast
+      ..removeQueuedCustomToasts()
+      ..removeCustomToast();
+    Wakelock.disable();
     ref
       ..invalidate(playerPopTimeProv)
       ..invalidate(playerValueProv);
