@@ -10,12 +10,14 @@ class SliverTitleScrollviewRoute extends ConsumerWidget {
   final String title;
   final Widget? sliver;
   final double horizontalPadding;
+  final bool hideExitFab;
   final Future<bool> Function(BuildContext context)? onExitTap;
 
   const SliverTitleScrollviewRoute({
     required this.title,
     required this.sliver,
     this.horizontalPadding=kPaddingSecond,
+    this.hideExitFab=false,
     this.onExitTap,
     super.key,
   });
@@ -23,6 +25,7 @@ class SliverTitleScrollviewRoute extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => GenericRoute(
     onExitTap: onExitTap,
+    hideExitFab: hideExitFab,
     body: CustomScrollView(
       physics: kDefaultScrollPhysics,
       controller: ref.watch(_scrollControllerProvider(title)),
