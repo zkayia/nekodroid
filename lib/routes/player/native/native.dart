@@ -153,6 +153,11 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
             onNext: widget.onNext,
           ),
           const PlayerControlsQuickSkipOverlay(),
+          if (
+            ref.watch(playerValueProv.select((v) => v.isBuffering))
+            && !ref.watch(playerControlsProv.select((v) => v.controlsDisplay))
+          )
+            const Center(child: CircularProgressIndicator()),
         ]
       else
         const Center(child: CircularProgressIndicator()),
