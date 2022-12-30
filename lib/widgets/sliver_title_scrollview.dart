@@ -2,53 +2,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/widgets/generic_route.dart';
 
 
-class SliverTitleScrollviewRoute extends ConsumerWidget {
+class SliverTitleScrollview extends ConsumerWidget {
 
+  final bool isList;
   final String title;
   final Widget? sliver;
+  final List<Widget>? children;
+  final bool hasFab;
   final double horizontalPadding;
-  final bool hideExitFab;
-  final Future<bool> Function(BuildContext context)? onExitTap;
+  final double verticalPadding;
+  final double listSeparatorSize;
 
-  const SliverTitleScrollviewRoute({
+  const SliverTitleScrollview({
     required this.title,
     required this.sliver,
+    this.hasFab=true,
     this.horizontalPadding=kPaddingSecond,
-    this.hideExitFab=false,
-    this.onExitTap,
+    this.verticalPadding=kPaddingSecond,
     super.key,
-  });
+  }) :
+    isList = false,
+    listSeparatorSize = 0,
+    children = null;
+
+  const SliverTitleScrollview.list({
+    required this.title,
+    required this.children,
+    this.hasFab=true,
+    this.horizontalPadding=kPaddingSecond,
+    this.verticalPadding=kPaddingSecond,
+    this.listSeparatorSize=kPaddingMain,
+    super.key,
+  }) :
+    isList = true,
+    sliver = null;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => GenericRoute(
-    onExitTap: onExitTap,
-    hideExitFab: hideExitFab,
-    body: CustomScrollView(
-      physics: kDefaultScrollPhysics,
-      controller: ref.watch(_scrollControllerProvider(title)),
-      shrinkWrap: true,
-      slivers: [
-        const SliverPersistentHeader(
-          pinned: true,
-          delegate: _VerticalPaddingPersistantHeaderDelegate(
-            padding: kPaddingSecond,
-          ),
+  Widget build(BuildContext context, WidgetRef ref) => CustomScrollView(
+    physics: kDefaultScrollPhysics,
+    controller: ref.watch(_scrollControllerProvider(title)),
+    shrinkWrap: true,
+    slivers: [
+      const SliverPersistentHeader(
+        pinned: true,
+        delegate: _VerticalPaddingPersistantHeaderDelegate(
+          padding: kPaddingSecond,
         ),
-        _SettingsSliverHeader(title),
-        SliverPadding(
-          padding: EdgeInsets.only(
-            top: kPaddingSecond,
-            left: horizontalPadding,
-            right: horizontalPadding,
-            bottom: kPaddingSecond + kFabSize + 16,
-          ),
-          sliver: sliver,
+      ),
+      _SettingsSliverHeader(title),
+      SliverPadding(
+        padding: EdgeInsets.only(
+          top: verticalPadding,
+          left: horizontalPadding,
+          right: horizontalPadding,
+          bottom: hasFab
+            ? verticalPadding + kFabSize + 16
+            : verticalPadding,
         ),
-      ],
-    ),
+        sliver: isList
+          ? SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => index.isEven
+                ? children!.elementAt(index ~/ 2)
+                : SizedBox(height: listSeparatorSize),
+              childCount: children!.length * 2 - 1,
+              semanticIndexCallback: (_, index) => index.isEven
+                ? index ~/ 2
+                : null,
+            ),
+          )
+          : sliver,
+      ),
+    ],
   );
 }
 

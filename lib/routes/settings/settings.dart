@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/widgets/settings_sliver_title_route.dart';
+import 'package:nekodroid/widgets/generic_route.dart';
+import 'package:nekodroid/widgets/sliver_title_scrollview.dart';
 
 
 class SettingsRoute extends ConsumerWidget {
@@ -44,27 +45,29 @@ class SettingsRoute extends ConsumerWidget {
         context.tr.settingsAbout,
       ),
     };
-    return SettingsSliverTitleRoute(
-      title: context.tr.settings,
-      verticalPadding: kPaddingSecond,
-      horizontalPadding: kPaddingMain,
+    return GenericRoute(
       onExitTap: (_) async {
         await ref.read(settingsProv.notifier).saveToHive();
         return true;
       },
-      children: [
-        ...settingsCategories.entries.map(
-          (e) => ListTile(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: kPaddingSecond,
+      body: SliverTitleScrollview.list(
+        title: context.tr.settings,
+        verticalPadding: kPaddingSecond,
+        horizontalPadding: kPaddingMain,
+        children: [
+          ...settingsCategories.entries.map(
+            (e) => ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: kPaddingSecond,
+              ),
+              title: Text(e.value.value),
+              leading: Icon(e.key),
+              trailing: const Icon(Boxicons.bxs_chevron_right),
+              onTap: () => Navigator.of(context).pushNamed(e.value.key),
             ),
-            title: Text(e.value.value),
-            leading: Icon(e.key),
-            trailing: const Icon(Boxicons.bxs_chevron_right),
-            onTap: () => Navigator.of(context).pushNamed(e.value.key),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
