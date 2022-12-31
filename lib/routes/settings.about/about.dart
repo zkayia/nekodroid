@@ -44,6 +44,7 @@ class SettingsAboutRoute extends ConsumerWidget {
           link: kAppLicenseUrl,
           logo: const ListTileIcon(Boxicons.bx_book_bookmark),
         ),
+        const Divider(),
         const Center(child: Text("Made with")),
         ExternalLinkTile(
           title: "Flutter",

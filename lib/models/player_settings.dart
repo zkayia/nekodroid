@@ -35,9 +35,9 @@ class PlayerSettings {
     this.epContinueAtLastLocation=true,
     this.epAutoMarkCompleted=true,
     this.epAutoMarkCompletedThreshold=80,
+    this.controlsPauseOnDisplay=false,
     this.controlsDisplayDuration=3,
     this.controlsBackgroundTransparency=50,
-    this.controlsPauseOnDisplay=true,
     this.introSkipTime=90,
     this.quickSkipForwardTime=10,
     this.quickSkipBackwardTime=10,
@@ -50,9 +50,9 @@ class PlayerSettings {
     bool? epContinueAtLastLocation,
     bool? epAutoMarkCompleted,
     int? epAutoMarkCompletedThreshold,
+    bool? controlsPauseOnDisplay,
     int? controlsDisplayDuration,
     int? controlsBackgroundTransparency,
-    bool? controlsPauseOnDisplay,
     int? introSkipTime,
     int? quickSkipForwardTime,
     int? quickSkipBackwardTime,
@@ -63,9 +63,9 @@ class PlayerSettings {
     epContinueAtLastLocation: epContinueAtLastLocation ?? this.epContinueAtLastLocation,
     epAutoMarkCompleted: epAutoMarkCompleted ?? this.epAutoMarkCompleted,
     epAutoMarkCompletedThreshold: epAutoMarkCompletedThreshold ?? this.epAutoMarkCompletedThreshold,
+    controlsPauseOnDisplay: controlsPauseOnDisplay ?? this.controlsPauseOnDisplay,
     controlsDisplayDuration: controlsDisplayDuration ?? this.controlsDisplayDuration,
     controlsBackgroundTransparency: controlsBackgroundTransparency ?? this.controlsBackgroundTransparency,
-    controlsPauseOnDisplay: controlsPauseOnDisplay ?? this.controlsPauseOnDisplay,
     introSkipTime: introSkipTime ?? this.introSkipTime,
     quickSkipForwardTime: quickSkipForwardTime ?? this.quickSkipForwardTime,
     quickSkipBackwardTime: quickSkipBackwardTime ?? this.quickSkipBackwardTime,
@@ -78,9 +78,9 @@ class PlayerSettings {
     "epContinueAtLastLocation": epContinueAtLastLocation,
     "epAutoMarkCompleted": epAutoMarkCompleted,
     "epAutoMarkCompletedThreshold": epAutoMarkCompletedThreshold,
+    "controlsPauseOnDisplay": controlsPauseOnDisplay,
     "controlsDisplayDuration": controlsDisplayDuration,
     "controlsBackgroundTransparency": controlsBackgroundTransparency,
-    "controlsPauseOnDisplay": controlsPauseOnDisplay,
     "introSkipTime": introSkipTime,
     "quickSkipForwardTime": quickSkipForwardTime,
     "quickSkipBackwardTime": quickSkipBackwardTime,
@@ -98,12 +98,12 @@ class PlayerSettings {
       ?? kDefaultSettings.player.epAutoMarkCompleted,
     epAutoMarkCompletedThreshold: map["epAutoMarkCompletedThreshold"]
       ?? kDefaultSettings.player.epAutoMarkCompletedThreshold,
+    controlsPauseOnDisplay: map["controlsPauseOnDisplay"]
+      ?? kDefaultSettings.player.controlsPauseOnDisplay,
     controlsDisplayDuration: map["controlsDisplayDuration"]
       ?? kDefaultSettings.player.controlsDisplayDuration,
     controlsBackgroundTransparency: map["controlsBackgroundTransparency"]
       ?? kDefaultSettings.player.controlsBackgroundTransparency,
-    controlsPauseOnDisplay: map["controlsPauseOnDisplay"]
-      ?? kDefaultSettings.player.controlsPauseOnDisplay,
     introSkipTime: map["introSkipTime"]
       ?? kDefaultSettings.player.introSkipTime,
     quickSkipForwardTime: map["quickSkipForwardTime"]
@@ -120,7 +120,7 @@ class PlayerSettings {
 
   @override
   String toString() =>
-    "PlayerSettings(confirmOnBackExit: $confirmOnBackExit, backExitDelay: $backExitDuration, epContinueAtLastLocation: $epContinueAtLastLocation, epAutoMarkCompleted: $epAutoMarkCompleted, epAutoMarkCompletedThreshold: $epAutoMarkCompletedThreshold, controlsDisplayDuration: $controlsDisplayDuration, controlsBackgroundTransparency: $controlsBackgroundTransparency, controlsPauseOnDisplay: $controlsPauseOnDisplay, introSkipTime: $introSkipTime, quickSkipForwardTime: $quickSkipForwardTime, quickSkipBackwardTime: $quickSkipBackwardTime, quickSkipDisplayDuration: $quickSkipDisplayDuration)";
+    "PlayerSettings(confirmOnBackExit: $confirmOnBackExit, backExitDelay: $backExitDuration, epContinueAtLastLocation: $epContinueAtLastLocation, epAutoMarkCompleted: $epAutoMarkCompleted, epAutoMarkCompletedThreshold: $epAutoMarkCompletedThreshold, controlsPauseOnDisplay: $controlsPauseOnDisplay, controlsDisplayDuration: $controlsDisplayDuration, controlsBackgroundTransparency: $controlsBackgroundTransparency, introSkipTime: $introSkipTime, quickSkipForwardTime: $quickSkipForwardTime, quickSkipBackwardTime: $quickSkipBackwardTime, quickSkipDisplayDuration: $quickSkipDisplayDuration)";
 
   @override
   bool operator ==(Object other) {
@@ -133,9 +133,9 @@ class PlayerSettings {
       && other.epContinueAtLastLocation == epContinueAtLastLocation
       && other.epAutoMarkCompleted == epAutoMarkCompleted
       && other.epAutoMarkCompletedThreshold == epAutoMarkCompletedThreshold
+      && other.controlsPauseOnDisplay == controlsPauseOnDisplay
       && other.controlsDisplayDuration == controlsDisplayDuration
       && other.controlsBackgroundTransparency == controlsBackgroundTransparency
-      && other.controlsPauseOnDisplay == controlsPauseOnDisplay
       && other.introSkipTime == introSkipTime
       && other.quickSkipForwardTime == quickSkipForwardTime
       && other.quickSkipBackwardTime == quickSkipBackwardTime
@@ -148,9 +148,9 @@ class PlayerSettings {
     ^ epContinueAtLastLocation.hashCode
     ^ epAutoMarkCompleted.hashCode
     ^ epAutoMarkCompletedThreshold.hashCode
+    ^ controlsPauseOnDisplay.hashCode
     ^ controlsDisplayDuration.hashCode
     ^ controlsBackgroundTransparency.hashCode
-    ^ controlsPauseOnDisplay.hashCode
     ^ introSkipTime.hashCode
     ^ quickSkipForwardTime.hashCode
     ^ quickSkipBackwardTime.hashCode

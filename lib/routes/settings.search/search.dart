@@ -29,6 +29,7 @@ class SettingsSearchRoute extends ConsumerWidget {
           value: ref.watch(settingsProv.select((v) => v.search.showAllWhenNoQuery)),
           onChanged: (v) => ref.read(settingsProv.notifier).showAllWhenNoQuery = v,
         ),
+        const Divider(),
         SwitchSetting(
           title: context.tr.exitOnClear,
           subtitle: context.tr.exitOnClearDesc,

@@ -35,6 +35,7 @@ class SettingsPlayerRoute extends ConsumerWidget {
           steps: 1,
           onChanged: (v) => ref.read(settingsProv.notifier).backExitDelay = v.toInt(),
         ),
+        const Divider(),
         SwitchSetting(
           title: context.tr.rememberLastLocation,
           subtitle: context.tr.rememberLastLocationDesc,
@@ -62,6 +63,13 @@ class SettingsPlayerRoute extends ConsumerWidget {
           steps: 1,
           onChanged: (v) =>
             ref.read(settingsProv.notifier).epAutoMarkCompletedThreshold = v.toInt(),
+        ),
+        const Divider(),
+        SwitchSetting(
+          title: context.tr.pauseOnControlsDisplay,
+          subtitle: context.tr.pauseOnControlsDisplayDesc,
+          value: ref.watch(settingsProv.select((v) => v.player.controlsPauseOnDisplay)),
+          onChanged: (v) => ref.read(settingsProv.notifier).controlsPauseOnDisplay = v,
         ),
         SliderSetting(
           title: context.tr.controlsDisplayDuration,
@@ -91,12 +99,7 @@ class SettingsPlayerRoute extends ConsumerWidget {
           onChanged: (v) =>
             ref.read(settingsProv.notifier).controlsBackgroundTransparency = v.toInt(),
         ),
-        SwitchSetting(
-          title: context.tr.pauseOnControlsDisplay,
-          subtitle: context.tr.pauseOnControlsDisplayDesc,
-          value: ref.watch(settingsProv.select((v) => v.player.controlsPauseOnDisplay)),
-          onChanged: (v) => ref.read(settingsProv.notifier).controlsPauseOnDisplay = v,
-        ),
+        const Divider(),
         SliderSetting(
           title: context.tr.introSkipTime,
           subtitle: context.tr.introSkipTimeDesc,
