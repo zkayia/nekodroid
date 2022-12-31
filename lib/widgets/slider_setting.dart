@@ -50,7 +50,7 @@ class SliderSetting extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  title * 2,
+                  title,
                   style: textTheme.subtitle1?.apply(color: textColor),
                   overflow: TextOverflow.clip,
                   maxLines: 1,
