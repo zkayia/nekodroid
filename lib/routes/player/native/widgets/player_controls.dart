@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/constants/double_tap_action.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
@@ -85,10 +84,8 @@ class PlayerControls extends ConsumerWidget {
       },
       child: IgnorePointer(
         ignoring: !ref.watch(playerControlsProv).controlsDisplay,
-        child: AnimatedOpacity(
+        child: Opacity(
           opacity: ref.watch(playerControlsProv).controlsDisplay ? 1 : 0,
-          duration: kDefaultAnimDuration,
-          curve: kDefaultAnimCurve,
           child: PlayerControlsMainUi(
             controller: controller,
             qualities: qualities,
