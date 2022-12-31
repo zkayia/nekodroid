@@ -10,7 +10,7 @@ const kFallbackLocale = Locale("en");
 const kDefaultSettings = AppSettings();
 
 // all of the below are in ms
-const int kHeadlessWebviewMaxLifetime = 20 * 1000;
+const int kHeadlessWebviewMaxLifetime = 60 * 1000;
 
 const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
 const Curve kDefaultAnimCurve = Curves.easeInOutQuad;
