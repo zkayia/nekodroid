@@ -136,10 +136,17 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
 
   @override
   Widget build(BuildContext context) => Stack(
-    fit: StackFit.expand,
     alignment: Alignment.center,
     children: [
-      VideoPlayer(controller),
+      const SizedBox.expand(
+        child: ColoredBox(
+          color: Colors.black,
+        ),
+      ),
+      AspectRatio(
+        aspectRatio: 16 / 9,
+        child: VideoPlayer(controller),
+      ),
       if (ref.watch(playerIsInitProv))
         ...[
           PlayerControls(
@@ -157,10 +164,10 @@ class _VideoPlayerState extends ConsumerState<_VideoPlayer> {
             ref.watch(playerValueProv.select((v) => v.isBuffering))
             && !ref.watch(playerControlsProv.select((v) => v.controlsDisplay))
           )
-            const Center(child: CircularProgressIndicator()),
+            const CircularProgressIndicator(),
         ]
       else
-        const Center(child: CircularProgressIndicator()),
+        const CircularProgressIndicator(),
     ],
   );
 }

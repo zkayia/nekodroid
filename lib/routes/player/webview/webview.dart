@@ -20,73 +20,71 @@ class WebviewPlayer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => Stack(
     alignment: Alignment.center,
     children: [
-      const Positioned.fill(
-        child: Material(
+      const SizedBox.expand(
+        child: ColoredBox(
           color: Colors.black,
         ),
       ),
-      Center(
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: InAppWebView(
-            key: GlobalKey(),
-            initialUrlRequest: URLRequest(url: videoUrl),
-            initialOptions: InAppWebViewGroupOptions(
-              crossPlatform: InAppWebViewOptions(
-                clearCache: true,
-                disableHorizontalScroll: true,
-                disableVerticalScroll: true,
-                javaScriptCanOpenWindowsAutomatically: false,
-                incognito: true,
-                mediaPlaybackRequiresUserGesture: false,
-                supportZoom: false,
-                transparentBackground: true,
-                useShouldOverrideUrlLoading: true,
-              ),
-              android: AndroidInAppWebViewOptions(
-                clearSessionCache: true,
-                databaseEnabled: false,
-                domStorageEnabled: false,
-                geolocationEnabled: false,
-                useHybridComposition: true,
-                thirdPartyCookiesEnabled: false,
-                displayZoomControls: false,
-                useWideViewPort: false,
-                useShouldInterceptRequest: true,
-                forceDark: _resolveForceDark(
-                  ref.watch(settingsProv.select((v) => v.general.themeMode)),
-                ),
+      AspectRatio(
+        aspectRatio: 16 / 9,
+        child: InAppWebView(
+          key: GlobalKey(),
+          initialUrlRequest: URLRequest(url: videoUrl),
+          initialOptions: InAppWebViewGroupOptions(
+            crossPlatform: InAppWebViewOptions(
+              clearCache: true,
+              disableHorizontalScroll: true,
+              disableVerticalScroll: true,
+              javaScriptCanOpenWindowsAutomatically: false,
+              incognito: true,
+              mediaPlaybackRequiresUserGesture: false,
+              supportZoom: false,
+              transparentBackground: true,
+              useShouldOverrideUrlLoading: true,
+            ),
+            android: AndroidInAppWebViewOptions(
+              clearSessionCache: true,
+              databaseEnabled: false,
+              domStorageEnabled: false,
+              geolocationEnabled: false,
+              useHybridComposition: true,
+              thirdPartyCookiesEnabled: false,
+              displayZoomControls: false,
+              useWideViewPort: false,
+              useShouldInterceptRequest: true,
+              forceDark: _resolveForceDark(
+                ref.watch(settingsProv.select((v) => v.general.themeMode)),
               ),
             ),
-            onWebViewCreated: (controller) async {
-              ref.read(webviewControllerProv.notifier).update((state) => controller);
-              controller
-                ..addUserScript(
-                  userScript: UserScript(
-                    injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
-                    source: await DefaultAssetBundle.of(context).loadString(
-                      "assets/player/nekosama_buttons.user.js",
-                    ),
-                  ),
-                )
-                ..addUserScript(
-                  userScript: UserScript(
-                    injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
-                    source: await DefaultAssetBundle.of(context).loadString(
-                      "assets/player/adblock.js",
-                    ),
-                  ),
-                );
-            },
-            onLoadStop: (controller, url) =>
-              ref.read(webviewIsLoadingProv.notifier).update((state) => false),
-            androidShouldInterceptRequest: (controller, request) async =>
-              _keepRequest(request) ? null : WebResourceResponse(),
-            shouldOverrideUrlLoading: (controller, action) async =>
-              _keepRequest(action.request)
-                ? NavigationActionPolicy.ALLOW
-                : NavigationActionPolicy.CANCEL,
           ),
+          onWebViewCreated: (controller) async {
+            ref.read(webviewControllerProv.notifier).update((state) => controller);
+            controller
+              ..addUserScript(
+                userScript: UserScript(
+                  injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
+                  source: await DefaultAssetBundle.of(context).loadString(
+                    "assets/player/nekosama_buttons.user.js",
+                  ),
+                ),
+              )
+              ..addUserScript(
+                userScript: UserScript(
+                  injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
+                  source: await DefaultAssetBundle.of(context).loadString(
+                    "assets/player/adblock.js",
+                  ),
+                ),
+              );
+          },
+          onLoadStop: (controller, url) =>
+            ref.read(webviewIsLoadingProv.notifier).update((state) => false),
+          androidShouldInterceptRequest: (controller, request) async =>
+            _keepRequest(request) ? null : WebResourceResponse(),
+          shouldOverrideUrlLoading: (controller, action) async =>
+            _keepRequest(action.request)
+              ? NavigationActionPolicy.ALLOW
+              : NavigationActionPolicy.CANCEL,
         ),
       ),
       if (ref.watch(webviewIsLoadingProv))
