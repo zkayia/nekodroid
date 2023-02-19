@@ -51,7 +51,7 @@ class SliderSetting extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: textTheme.subtitle1?.apply(color: textColor),
+                  style: textTheme.titleMedium?.apply(color: textColor),
                   overflow: TextOverflow.clip,
                   maxLines: 1,
                 ),
@@ -63,7 +63,7 @@ class SliderSetting extends StatelessWidget {
           if (subtitle != null)
             Text(
               subtitle!,
-              style: textTheme.bodyText2?.apply(color: textColor),
+              style: textTheme.bodyMedium?.apply(color: textColor),
               overflow: TextOverflow.clip,
             ),
           const SizedBox(height: kPaddingSecond),
@@ -71,7 +71,7 @@ class SliderSetting extends StatelessWidget {
             children: [
               SingleLineText(
                 minLabel ?? min.toString(),
-                style: textTheme.bodyText2?.apply(color: textColor),
+                style: textTheme.bodyMedium?.apply(color: textColor),
               ),
               Expanded(
                 child: Slider(
@@ -85,7 +85,7 @@ class SliderSetting extends StatelessWidget {
               ),
               SingleLineText(
                 "${maxLabel ?? max}",
-                style: textTheme.bodyText2?.apply(color: textColor),
+                style: textTheme.bodyMedium?.apply(color: textColor),
               ),
             ],
           ),
