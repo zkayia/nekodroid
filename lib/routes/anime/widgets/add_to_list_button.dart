@@ -25,12 +25,12 @@ class AddToListButton extends ConsumerWidget {
     data: (lists) => GenericButton.elevated(
       onPressed: () async {
         final isar = Isar.getInstance()!;
-        var isarAnime = await isar.isarAnimeListItems.getByUrl(anime.url.toString());
+        var isarAnime = isar.isarAnimeListItems.getByUrlSync(anime.url.toString());
         final wasNotInDb = isarAnime == null;
         isarAnime ??= IsarAnimeListItem.fromNSAnime(anime);
         if (!wasNotInDb) {
-          await isarAnime.episodeStatuses.load();
-          await isarAnime.lists.load();
+          isarAnime.episodeStatuses.loadSync();
+          isarAnime.lists.loadSync();
         }
         final result = await showDialog<List<int>>(
           context: context,
@@ -46,7 +46,7 @@ class AddToListButton extends ConsumerWidget {
                 (e) => GenericFormDialogElement(
                   label: e.name,
                   value: e.id,
-                  selected: !wasNotInDb && isarAnime!.lists.contains(e),
+                  selected: !wasNotInDb && isarAnime!.lists.any((list) => e.id == list.id),
                 ),
               ),
             ],
@@ -60,22 +60,21 @@ class AddToListButton extends ConsumerWidget {
         } else {
           isarAnime.favoritedTimestamp = null;
         }
-        isarAnime.lists
-          ..removeWhere((e) => !result.contains(e.id))
-          ..addAll(lists.where((e) => result.contains(e.id)));
-        await isar.writeTxn(() async {
-          if (
-            isarAnime!.lists.isEmpty
-            && isarAnime.episodeStatuses.isEmpty
-            && isarAnime.favoritedTimestamp == null
-          ) {
-            if (!wasNotInDb) {
-              await isar.isarAnimeListItems.delete(isarAnime.id);
-            }
-            return;
+        // only add and remove actually have effect on the link state
+        for (final list in lists) {
+          if (result.contains(list.id)) {
+            isarAnime.lists.add(list);
+          } else {
+            isarAnime.lists.remove(list);
           }
-          await isar.isarAnimeListItems.put(isarAnime);
-          return isarAnime.lists.save();
+        }
+        await isar.writeTxn(() async {
+          if (isarAnime!.episodeStatuses.isEmpty && result.isEmpty) {
+            await isar.isarAnimeListItems.delete(isarAnime.id);
+          } else {
+            await isar.isarAnimeListItems.put(isarAnime);
+            await isarAnime.lists.save();
+          }
         });
       },
       child: const Icon(Boxicons.bx_list_plus),
