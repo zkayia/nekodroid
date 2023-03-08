@@ -28,7 +28,7 @@ class SearchRoute extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    final textTheme = Theme.of(context).textTheme;
     ref
       ..watch(lastTextQueryProv)
       ..watch(selectableFiltersProv)
@@ -90,11 +90,12 @@ class SearchRoute extends ConsumerWidget {
                 autocorrect: false,
                 autofocus: true,
                 textAlignVertical: TextAlignVertical.center,
+                style: textTheme.bodyMedium,
                 decoration: InputDecoration(
                   prefixIcon: IconButton(
                     icon: const Icon(Boxicons.bx_x),
                     splashRadius: kTopBarHeight / 2,
-                    color: bodyLarge?.color,
+                    color: textTheme.bodyLarge?.color,
                     onPressed: () {
                       if (ref.read(textControllerProv).text.isNotEmpty) {
                         return ref.read(textControllerProv).clear();
@@ -107,7 +108,7 @@ class SearchRoute extends ConsumerWidget {
                   suffixIcon: IconButton(
                     icon: const Icon(Boxicons.bx_filter_alt),
                     splashRadius: kTopBarHeight / 2,
-                    color: bodyLarge?.color,
+                    color: textTheme.bodyLarge?.color,
                     onPressed: () {
                       final focus = FocusScope.of(context);
                       if (!focus.hasPrimaryFocus) {
