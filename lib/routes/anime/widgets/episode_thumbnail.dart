@@ -50,6 +50,7 @@ class EpisodeThumbnail extends ConsumerWidget {
         child: watchedFraction == null
           ? thumbnail
           : Stack(
+            fit: StackFit.expand,
             children: [
               thumbnail,
               Align(
