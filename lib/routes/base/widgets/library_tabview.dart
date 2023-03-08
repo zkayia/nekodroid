@@ -62,6 +62,7 @@ class LibraryTabview extends ConsumerWidget {
                           cacheWidth: kAnimeListTileMaxHeight * 16 / 9,
                         ),
                         isEpisode: true,
+                        hidePlayButton: true,
                         badge: context.tr.episodeShort(episode.episodeNumber),
                         onTap: () => Navigator.of(context).pushNamed(
                           "/anime",

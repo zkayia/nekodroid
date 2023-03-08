@@ -11,6 +11,7 @@ class AnimeCard extends StatelessWidget {
   final Widget image;
   final String? badge;
   final bool isEpisode;
+  final bool hidePlayButton;
   final String? label;
   final void Function()? onTap;
   final void Function()? onLongPress;
@@ -19,6 +20,7 @@ class AnimeCard extends StatelessWidget {
     required this.image,
     this.badge,
     this.isEpisode=false,
+    this.hidePlayButton=false,
     this.label,
     this.onTap,
     this.onLongPress,
@@ -38,7 +40,7 @@ class AnimeCard extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 image,
-                if (isEpisode)
+                if (isEpisode && !hidePlayButton)
                   const ColoredBox(
                     color: kShadowThumbWithIcon,
                     child: Center(
