@@ -24,6 +24,7 @@ class AnimeSynopsis extends StatelessWidget {
       child: Text(
         hasSynopsis ? synopsis! : context.tr.animeNoSynopsis,
         textAlign: TextAlign.justify,
+        overflow: TextOverflow.clip,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
