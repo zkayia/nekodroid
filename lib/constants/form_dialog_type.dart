@@ -1,6 +1,0 @@
-
-
-enum FormDialogType {
-  checkbox,
-  radio,
-}

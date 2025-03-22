@@ -1,6 +1,0 @@
-
-
-enum DoubleTapAction {
-  rewind,
-  fastForward,
-}

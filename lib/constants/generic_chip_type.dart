@@ -1,6 +1,0 @@
-
-
-enum GenericChipType {
-  click,
-  select,
-}

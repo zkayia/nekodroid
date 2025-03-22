@@ -1,0 +1,4 @@
+enum DoubleTapAction {
+  rewind,
+  forward,
+}

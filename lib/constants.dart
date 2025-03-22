@@ -1,79 +1,41 @@
-
+import 'package:nekodroid/core/extensions/text_style.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:nekodroid/extensions/iterable.dart';
-import 'package:nekodroid/models/app_settings.dart';
-
-
-const kFallbackLocale = Locale("en");
-
-const kDefaultSettings = AppSettings();
-
-// all of the below are in ms
-const int kHeadlessWebviewMaxLifetime = 60 * 1000;
-
-const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
-const Curve kDefaultAnimCurve = Curves.easeInOutQuad;
-const ScrollPhysics kDefaultScrollPhysics = ClampingScrollPhysics();
 
 const double kDefaultElevation = 4;
 
-const double kPaddingMain = 16;
-const double kPaddingSecond = 8;
-const double kPaddingCarousels = kPaddingMain + kPaddingSecond;
-const double kBorderRadMain = 10;
-const double kBorderRadSecond = 5;
-const double kPaddingGenresGrid = 5;
-
+const double kPadding = 8;
+const double kBorderRad = 10;
+const BorderRadius kBorderRadCirc = BorderRadius.all(Radius.circular(kBorderRad));
+const RoundedRectangleBorder kRoundedRecShape = RoundedRectangleBorder(borderRadius: kBorderRadCirc);
 const double kLargeIconSize = 48;
-const double kDotIndicatorSize = 5;
-const double kTabbarIndicatorSize = 2;
-const double kFabSize = 56;
-const double kAnimeCarouselMinHeight = 200;
-const double kTopBarHeight = 46;
-const double kBottomBarHeight = 56;
-const double kEpisodeThumbnailMaxWidth = 200;
-const double kAnimePageGroupMaxHeight = 200;
-const double kAnimeListTileMaxHeight = 100;
-const EdgeInsetsGeometry kAnimeCardBadgeTextPadding = EdgeInsets.symmetric(
-  horizontal: 4,
-  vertical: 2,
-);
 
-const Color _kAccentColor = Color(0xff1cb9f4);
-const Color _kOnAccentColor = Color(0xff000000);
-const Color kNativePlayerControlsColor = Color(0xffffffff);
-const Color kOnImageColor = Color(0xffffffff);
-const Color kAnimeCardBadgeColor = Color(0xfff9f9f9);
-const Color kAnimeCardBadgeShadow = Color.fromARGB(160, 0, 0, 0);
-const Color kShadowThumbWithIcon = Color.fromARGB(100, 0, 0, 0);
-const List<Color> kShadowColors = [Colors.black, Colors.transparent];
-const List<double> kShadowStops = [0, 0.1];
+const Duration kDefaultAnimDuration = Duration(milliseconds: 300);
+const Curve kDefaultAnimCurve = Curves.easeInOutQuad;
 
-const List<String> kAppDependencies = [
-  "after_layout",
-  "android_intent_plus",
-  "async",
-  "build_runner",
-  "cached_network_image",
-  "dart_code_metrics",
-  "device_preview",
-  "derry",
-  "flutter_file_dialog",
-  "flutter_launcher_icons",
-  "flutter_lints",
-  "flutter_inappwebview",
-  "flutter_native_splash",
-  "flutter_riverpod",
-  "flutter_svg",
-  "fluttertoast",
-  "hive",
-  "intl",
-  "isar",
-  "package_info_plus",
-  "path_provider",
-  "share_plus",
-  "wakelock",
+const kAppLocale = Locale("fr", "FR");
+const List<String> kWeekDays = [
+  "Lundi",
+  "Mardi",
+  "Mercredi",
+  "Jeudi",
+  "Vendredi",
+  "Samedi",
+  "Dimanche",
+];
+const List<String> kMonths = [
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Août",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Décembre",
 ];
 
 final Uri kAppRepoUrl = Uri.https("github.com", "/zkayia/nekodroid");
@@ -81,292 +43,188 @@ final Uri kAppIssuesUrl = Uri.https("github.com", "/zkayia/nekodroid/issues");
 final Uri kAppChangelogUrl = Uri.https("github.com", "/zkayia/nekodroid/blob/master/CHANGELOG.md");
 final Uri kAppLicenseUrl = Uri.https("github.com", "/zkayia/nekodroid/blob/master/LICENSE");
 
-final ThemeData darkTheme = _buildTheme(
-  brightness: Brightness.dark,
-  accent: _kAccentColor,
-  onAccent: _kOnAccentColor,
-  prim: const Color(0xff262626),
-  primAlt: const Color(0xff171717),
-  polar: const Color(0xfff9f9f9),
-  polarAlt: const Color(0xffb9b9b9),
-);
+const Color kNativePlayerControlsColor = Color(0xffffffff);
 
-final ThemeData lightTheme = _buildTheme(
+// const Color kPrimaryColor = Color(0xff64d092);
+const Color kPrimaryColor = Color(0xff38C3FF);
+const Color kOnPrimaryColor = Color(0xff000000);
+
+final ThemeData kLightTheme = _buildTheme(
   brightness: Brightness.light,
-  accent: _kAccentColor,
-  onAccent: _kOnAccentColor,
-  prim: const Color(0xfffdfdfd),
-  primAlt: const Color(0xffffffff),
-  polar: const Color(0xff000000),
-  polarAlt: const Color(0xff2c2c2c),
+  primary: kPrimaryColor,
+  onPrimary: kOnPrimaryColor,
+  background: const Color(0xffffffff),
+  surface: const Color(0xfff5f5f5),
+  text: const Color(0xff000000),
+  dimmerText: const Color(0xff737373),
+  error: const Color(0xffba1a1a),
+  onError: const Color(0xffffffff),
+  errorContainer: const Color(0xffffdad6),
+  onErrorContainer: const Color(0xff000000),
 );
-
-final ThemeData amoledTheme = _buildTheme(
+final ThemeData kDarkTheme = _buildTheme(
   brightness: Brightness.dark,
-  accent: _kAccentColor,
-  onAccent: _kOnAccentColor,
-  prim: const Color(0xff171717),
-  primAlt: const Color(0xff000000),
-  polar: const Color(0xfff9f9f9),
-  polarAlt: const Color(0xffb9b9b9),
+  primary: kPrimaryColor,
+  onPrimary: kOnPrimaryColor,
+  background: const Color(0xff101010),
+  surface: const Color(0xff1b1c1d),
+  text: const Color(0xffffffff),
+  dimmerText: const Color(0xff8c8c8c),
+  error: const Color(0xffffb4ab),
+  onError: const Color(0xff000000),
+  errorContainer: const Color(0xff93000a),
+  onErrorContainer: const Color(0xffffffff),
 );
 
 ThemeData _buildTheme({
   required Brightness brightness,
-  required Color accent,
-  required Color onAccent,
-  required Color prim,
-  required Color primAlt,
-  required Color polar,
-  required Color polarAlt,
+  required Color primary,
+  required Color onPrimary,
+  required Color background,
+  required Color surface,
+  required Color text,
+  required Color dimmerText,
+  required Color error,
+  required Color onError,
+  required Color errorContainer,
+  required Color onErrorContainer,
 }) {
-  final isDark = brightness == Brightness.dark;
-  final baseTheme = isDark ? ThemeData.dark() : ThemeData.light();
-  final buttonStyle = const ButtonStyle().copyWith(
-    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-    minimumSize: MaterialStateProperty.all(const Size.square(kMinInteractiveDimension)),
-    overlayColor: MaterialStateProperty.all(baseTheme.splashColor),
-    elevation: MaterialStateProperty.resolveWith(
-      (states) => states.contains(MaterialState.disabled)
-        ? 0
-        : kDefaultElevation,
-    ),
-    backgroundColor: MaterialStateProperty.resolveWith(
-      (states) => {
-        MaterialState.disabled: primAlt,
-        MaterialState.selected: accent,
-      }.entries.firstWhereOrNull((e) => states.contains(e.key))?.value ?? prim,
-    ),
-    foregroundColor: MaterialStateProperty.resolveWith(
-      (states) => {
-        MaterialState.disabled: baseTheme.disabledColor,
-        MaterialState.selected: onAccent,
-      }.entries.firstWhereOrNull((e) => states.contains(e.key))?.value ?? polar,
-    ),
-    shape: MaterialStateProperty.all(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadMain),
-      ),
-    ),
-    padding: MaterialStateProperty.all(
-      const EdgeInsets.all(kPaddingSecond),
-    ),
+  final theme = ThemeData(brightness: brightness);
+  final colorScheme = ColorScheme(
+    brightness: brightness,
+    primary: primary,
+    onPrimary: onPrimary,
+    secondary: Color.lerp(primary, surface, 0.7)!,
+    onSecondary: text,
+    surface: surface,
+    onSurface: text,
+    surfaceTint: Colors.transparent,
+    outline: text,
+    outlineVariant: dimmerText,
+    error: error,
+    onError: onError,
+    errorContainer: errorContainer,
+    onErrorContainer: onErrorContainer,
   );
-  final textTheme = const TextTheme().copyWith(
-    displayMedium: const TextStyle().copyWith(
-      overflow: TextOverflow.fade,
-      color: polar,
-      fontSize: 30,
-      fontWeight: FontWeight.w900,
-    ),
-    displaySmall: const TextStyle().copyWith(
-      overflow: TextOverflow.fade,
-      color: polar,
-      fontSize: 24,
-      fontWeight: FontWeight.w800,
-    ),
-    titleLarge: const TextStyle().copyWith(
-      overflow: TextOverflow.fade,
-      color: polar,
-      fontSize: 18,
-      fontWeight: FontWeight.w700,
-    ),
-    titleMedium: const TextStyle().copyWith(
-      overflow: TextOverflow.fade,
-      color: polar,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-    ),
-    bodyLarge: const TextStyle().copyWith(
-      overflow: TextOverflow.fade,
-      color: polar,
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-    ),
-    bodyMedium: const TextStyle().copyWith(
-      overflow: TextOverflow.fade,
-      color: polarAlt,
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-    ),
-    bodySmall: const TextStyle().copyWith(
-      overflow: TextOverflow.fade,
-      color: polarAlt,
-      fontSize: 12,
-      fontWeight: FontWeight.w400,
-    ),
+  final textTheme = theme.typography.geometryThemeFor(ScriptCategory.englishLike).merge(
+        TextTheme(
+          displayLarge: theme.textTheme.displayLarge?.copyWith(color: text), // 57
+          displayMedium: theme.textTheme.displayMedium?.copyWith(color: text), // 45
+          displaySmall: theme.textTheme.displaySmall?.copyWith(color: text), // 36
+          headlineLarge: theme.textTheme.headlineLarge?.copyWith(color: text), // 32
+          headlineMedium: theme.textTheme.headlineMedium?.copyWith(color: text), // 28
+          headlineSmall: theme.textTheme.headlineSmall?.copyWith(color: text), // 24
+          titleLarge: theme.textTheme.titleLarge?.copyWith(color: text), // 22
+          titleMedium: theme.textTheme.titleMedium?.copyWith(color: text), // 16
+          titleSmall: theme.textTheme.titleSmall?.copyWith(color: text), // 14
+          bodyLarge: theme.textTheme.bodyLarge?.copyWith(color: text), // 16
+          bodyMedium: theme.textTheme.bodyMedium?.copyWith(color: text), // 14
+          bodySmall: theme.textTheme.bodySmall?.copyWith(color: text), // 12
+          labelLarge: theme.textTheme.labelLarge?.copyWith(color: dimmerText), // 14
+          labelMedium: theme.textTheme.labelMedium?.copyWith(color: dimmerText), // 12
+          labelSmall: theme.textTheme.labelSmall?.copyWith(color: dimmerText), // 11
+        ),
+      );
+  final iconTheme = theme.iconTheme.copyWith(
+    color: text,
+    weight: 700,
   );
-  return baseTheme.copyWith(
-    primaryColor: prim,
-    scaffoldBackgroundColor: primAlt,
-    indicatorColor: accent,
-    canvasColor: prim,
-    colorScheme: (
-      isDark ? const ColorScheme.dark() : const ColorScheme.light()
-    ).copyWith(
-      background: primAlt,
-      surface: prim,
-      primary: accent,
-      onPrimary: onAccent,
-      secondary: accent,
-      onSecondary: onAccent,
-      tertiary: accent,
-      onTertiary: onAccent,
+  return theme.copyWith(
+    brightness: brightness,
+    scaffoldBackgroundColor: background,
+    iconTheme: iconTheme,
+    textTheme: textTheme,
+    colorScheme: colorScheme,
+    appBarTheme: theme.appBarTheme.copyWith(
+      titleTextStyle: textTheme.titleLarge.bold(),
+      iconTheme: iconTheme,
+      backgroundColor: background,
     ),
-    appBarTheme: AppBarTheme(
-      backgroundColor: primAlt,
-      foregroundColor: polar,
-      elevation: kDefaultElevation,
-      toolbarHeight: kTopBarHeight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadMain),
-      ),
-      systemOverlayStyle: isDark
-        ? SystemUiOverlayStyle.light
-        : SystemUiOverlayStyle.dark,
-    ),
-    bottomAppBarTheme: const BottomAppBarTheme().copyWith(
-      color: Colors.transparent,
-      elevation: kDefaultElevation,
-    ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: prim,
-      selectedItemColor: accent,
-      unselectedItemColor: polarAlt,
-    ),
-    bottomSheetTheme: const BottomSheetThemeData().copyWith(
+    bottomSheetTheme: theme.bottomSheetTheme.copyWith(
+      backgroundColor: background,
       elevation: kDefaultElevation,
       modalElevation: kDefaultElevation,
-      backgroundColor: primAlt,
-      modalBackgroundColor: primAlt,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(kBorderRadMain),
-          topRight: Radius.circular(kBorderRadMain),
+      showDragHandle: true,
+    ),
+    cardTheme: theme.cardTheme.copyWith(
+      shape: kRoundedRecShape,
+    ),
+    chipTheme: theme.chipTheme.copyWith(
+      shape: kRoundedRecShape,
+    ),
+    dialogTheme: theme.dialogTheme.copyWith(
+      titleTextStyle: textTheme.titleLarge.bold(),
+      contentTextStyle: textTheme.bodyLarge,
+    ),
+    dividerTheme: theme.dividerTheme.copyWith(
+      color: colorScheme.surface,
+      indent: kPadding * 2,
+      endIndent: kPadding * 2,
+      thickness: 2,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: theme.elevatedButtonTheme.style?.copyWith(
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.disabled) ? dimmerText : text,
+        ),
+        shape: const WidgetStatePropertyAll(kRoundedRecShape),
+        textStyle: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.disabled) ? textTheme.labelLarge : textTheme.titleSmall.bold(),
         ),
       ),
     ),
-    buttonTheme: const ButtonThemeData().copyWith(
-      alignedDropdown: true,
+    listTileTheme: theme.listTileTheme.copyWith(
+      shape: kRoundedRecShape,
+      titleTextStyle: textTheme.titleMedium,
+      subtitleTextStyle: textTheme.labelLarge,
+      iconColor: iconTheme.color,
+      horizontalTitleGap: kPadding,
     ),
-    cardTheme: const CardTheme().copyWith(
-      color: prim,
-      elevation: kDefaultElevation,
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadMain),
+    menuButtonTheme: MenuButtonThemeData(
+      style: theme.menuButtonTheme.style?.copyWith(
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.disabled) ? dimmerText : text,
+        ),
       ),
     ),
-    checkboxTheme: const CheckboxThemeData().copyWith(
-      checkColor: MaterialStateProperty.all(onAccent),
-      fillColor: MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
-          ? accent
-          : polarAlt,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadSecond),
+    navigationBarTheme: theme.navigationBarTheme.copyWith(
+      backgroundColor: surface,
+      labelTextStyle: WidgetStatePropertyAll(textTheme.titleSmall),
+      iconTheme: WidgetStateProperty.resolveWith(
+        (states) => iconTheme.copyWith(fill: states.contains(WidgetState.selected) ? 1 : 0),
       ),
     ),
-    chipTheme: const ChipThemeData().copyWith(
-      backgroundColor: prim,
-      brightness: brightness,
-      padding: EdgeInsets.zero,
-      selectedColor: accent,
-      elevation: kDefaultElevation,
-      labelPadding: const EdgeInsets.symmetric(
-        horizontal: 5,
-        vertical: -2,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadSecond),
-      ),
+    navigationRailTheme: theme.navigationRailTheme.copyWith(
+      unselectedIconTheme: iconTheme,
+      selectedIconTheme: iconTheme.copyWith(fill: 1),
     ),
-    dialogTheme: const DialogTheme().copyWith(
-      backgroundColor: primAlt,
-      elevation: kDefaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadMain),
-      ),
-      titleTextStyle: textTheme.displaySmall,
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: <TargetPlatform, PageTransitionsBuilder>{
+        defaultTargetPlatform: const CupertinoPageTransitionsBuilder(),
+      },
     ),
-    dividerTheme: const DividerThemeData().copyWith(
-      thickness: 1,
+    progressIndicatorTheme: theme.progressIndicatorTheme.copyWith(
+      linearTrackColor: Colors.transparent,
+      circularTrackColor: Colors.transparent,
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData().copyWith(
-      backgroundColor: prim,
-      foregroundColor: polar,
-      elevation: kDefaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadMain),
+    radioTheme: theme.radioTheme.copyWith(
+      fillColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected) ? primary : iconTheme.color,
       ),
     ),
-    iconTheme: const IconThemeData().copyWith(
-      color: polar,
+    scrollbarTheme: theme.scrollbarTheme.copyWith(
+      radius: const Radius.circular(kBorderRad),
+      interactive: true,
     ),
-    inputDecorationTheme: const InputDecorationTheme().copyWith(
-      border: InputBorder.none,
-      contentPadding: const EdgeInsets.symmetric(horizontal: kPaddingSecond),
-    ),
-    listTileTheme: const ListTileThemeData().copyWith(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadMain),
-      ),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 2,
-      ),
-      iconColor: polar,
-      horizontalTitleGap: 4,
-      selectedColor: accent,
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
-    radioTheme: const RadioThemeData().copyWith(
-      fillColor: MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
-          ? accent
-          : polar,
-      ),
-    ),
-    scrollbarTheme: const ScrollbarThemeData().copyWith(
-      thumbColor: MaterialStateProperty.all(Colors.red),
-      thumbVisibility: MaterialStateProperty.all(true),
-    ),
-    sliderTheme: const SliderThemeData().copyWith(
-      thumbColor: accent,
-      trackHeight: 8,
-      activeTrackColor: accent,
-      inactiveTrackColor: Color.lerp(prim, polarAlt, 0.3)!,
-      tickMarkShape: SliderTickMarkShape.noTickMark,
-      overlayShape: SliderComponentShape.noOverlay,
-      valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-      valueIndicatorTextStyle: const TextStyle().copyWith(color: onAccent),
-    ),
-    switchTheme: const SwitchThemeData().copyWith(
-      thumbColor: MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
-          ? accent
-          : polarAlt,
-      ),
-      trackColor: MaterialStateColor.resolveWith(
-        (states) => states.contains(MaterialState.selected)
-          ? accent
-          : Color.lerp(prim, polarAlt, 0.3)!,
-      ),
-    ),
-    tabBarTheme: const TabBarTheme().copyWith(
-      labelColor: polar,
-      unselectedLabelColor: polarAlt,
+    tabBarTheme: theme.tabBarTheme.copyWith(
+      dividerHeight: 0,
       indicator: UnderlineTabIndicator(
-        insets: const EdgeInsets.symmetric(horizontal: kPaddingMain),
+        borderRadius: kBorderRadCirc,
         borderSide: BorderSide(
-          color: accent,
-          width: kTabbarIndicatorSize,
+          width: 3,
+          color: primary,
         ),
       ),
     ),
-    textButtonTheme: TextButtonThemeData(style: buttonStyle),
-    textTheme: textTheme,
   );
 }

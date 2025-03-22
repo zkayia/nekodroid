@@ -1,6 +1,6 @@
 # nekodroid
 
-![Demo animation](assets/images/nekodroid_logo_regular.svg "Demo animation")
+![Demo animation](assets/img/nekodroid_logo.svg "Demo animation")
 
 Unofficial android client for [neko-sama.fr](https://neko-sama.fr).
 
