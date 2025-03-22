@@ -1,6 +1,0 @@
-
-
-enum PlayerType {
-  webview,
-  native,
-}

@@ -1,6 +1,4 @@
 
-import 'dart:io';
-
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,31 +6,25 @@ import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/models/generic_form_dialog_element.dart';
 import 'package:nekodroid/provider/settings.dart';
-import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
+import 'package:nekodroid/routes/player/providers/player_controls.dart';
+import 'package:nekodroid/routes/player/providers/webview_channel_port.dart';
 import 'package:nekodroid/routes/player/providers/player_value.dart';
-import 'package:nekodroid/routes/player/native/widgets/progress_bar.dart';
+import 'package:nekodroid/routes/player/widgets/progress_bar.dart';
 import 'package:nekodroid/widgets/generic_form_dialog.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
-import 'package:video_player/video_player.dart';
 
 
 class PlayerControlsMainUi extends ConsumerWidget {
   
-  final VideoPlayerController controller;
-  final Map<String, File> qualities;
   final String title;
   final String subtitle;
-  final void Function(File newVid) changeVideo;
   final void Function(BuildContext context) onExit;
   final void Function()? onPrevious;
   final void Function()? onNext;
 
   const PlayerControlsMainUi({
-    required this.controller,
-    required this.qualities,
     required this.title,
     required this.subtitle,
-    required this.changeVideo,
     required this.onExit,
     this.onPrevious,
     this.onNext,
@@ -97,13 +89,13 @@ class PlayerControlsMainUi extends ConsumerWidget {
                             GenericFormDialogElement(
                               label: speed.toString(),
                               value: speed,
-                              selected: speed == ref.read(playerValueProv).playbackSpeed,
+                              selected: speed == ref.read(playerValueProv)?.playbackRate,
                             ),
                         ],
                       ),
                     );
                     if (newSpeed != null) {
-                      controller.setPlaybackSpeed(newSpeed);
+                      ref.read(webviewChannelPortProv.notifier).setPlaybackSpeed(newSpeed);
                     }
                     ref.read(playerControlsProv.notifier)
                       ..didAction()
@@ -112,26 +104,31 @@ class PlayerControlsMainUi extends ConsumerWidget {
                   icon: const Icon(Boxicons.bx_timer),
                 ),
                 IconButton(
-                  onPressed: qualities.isEmpty
+                  onPressed: ref.watch(
+                    playerValueProv.select(
+                      (v) => (v?.qualities.isEmpty ?? true) || v?.currentQuality == null,
+                    ),
+                  )
                     ? null
                     : () async {
                       ref.read(playerControlsProv.notifier).inAction = true;
-                      final newQuality = await showDialog<File>(
+                      final newQuality = await showDialog<int>(
                         context: context,
                         builder: (context) => GenericFormDialog.radio(
                           title: context.tr.playerQuality,
-                          elements: [
-                            for (final quality in qualities.entries)
-                              GenericFormDialogElement(
-                                label: quality.key,
-                                value: quality.value,
-                                selected: "file://${quality.value.path}" == controller.dataSource,
+                          elements: ref.read(playerValueProv.select((v) => v))?.qualities.map(
+                            (e) => GenericFormDialogElement(
+                              label: e.label,
+                              value: e.index,
+                              selected: ref.read(
+                                playerValueProv.select((v) => v?.currentQuality == e.index),
                               ),
-                          ],
+                            ),
+                          ).toList() ?? const [],
                         ),
                       );
                       if (newQuality != null) {
-                        changeVideo(newQuality);
+                        ref.read(webviewChannelPortProv.notifier).setQuality(newQuality);
                       }
                       ref.read(playerControlsProv.notifier)
                         ..didAction()
@@ -141,21 +138,19 @@ class PlayerControlsMainUi extends ConsumerWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    controller.setVolume((ref.read(playerValueProv).volume + 1) % 2);
+                    ref.read(webviewChannelPortProv.notifier).muteUnmute();
                     ref.watch(playerControlsProv.notifier).didAction();
                   },
                   icon: Icon(
-                    ref.watch(playerValueProv.select((v) => v.volume)) == 0
+                    ref.watch(playerValueProv.select((v) => v?.muted ?? false))
                       ? Boxicons.bx_volume_mute
                       : Boxicons.bx_volume_full,
                   ),
                 ),
                 IconButton(
                   onPressed: () {
-                    controller.seekTo(
-                      controller.value.position + Duration(
-                        seconds: ref.read(settingsProv).player.introSkipTime,
-                      ),
+                    ref.read(webviewChannelPortProv.notifier).moveBy(
+                      ref.read(settingsProv).player.introSkipTime,
                     );
                     ref.watch(playerControlsProv.notifier).didAction();
                   },
@@ -178,30 +173,22 @@ class PlayerControlsMainUi extends ConsumerWidget {
                 SizedBox(width: screenWidth10),
                 ConstrainedBox(
                   constraints: BoxConstraints.tight(const Size.square(kLargeIconSize)),
-                  child: ref.watch(playerValueProv.select((v) => v.isBuffering))
-                    ? const CircularProgressIndicator()
-                    : IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        if (ref.read(playerValueProv).isPlaying) {
-                          controller.pause();
-                        } else {
-                          controller.play();
-                        }
-                        ref.watch(playerControlsProv.notifier).didAction();
-                      },
-                      iconSize: kLargeIconSize,
-                      icon: ref.watch(playerValueProv.select((v) => v.isPlaying))
-                        ? const Icon(Boxicons.bx_pause)
-                        : 
-                          ref.watch(playerValueProv.select((v) => v.position))
-                          >= ref.watch(playerValueProv.select((v) => v.duration))
-                            ? Transform.scale(
-                              scaleX: -1,
-                              child: const Icon(Boxicons.bx_revision),
-                            )
-                            : const Icon(Boxicons.bx_play),
-                    ),
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      ref.read(webviewChannelPortProv.notifier).playPause();
+                      ref.watch(playerControlsProv.notifier).didAction();
+                    },
+                    iconSize: kLargeIconSize,
+                    icon: ref.watch(playerValueProv.select((v) => v?.paused ?? true))
+                      ? ref.watch(playerValueProv.select((v) => v?.ended ?? false))
+                        ? Transform.scale(
+                          scaleX: -1,
+                          child: const Icon(Boxicons.bx_revision),
+                        )
+                        : const Icon(Boxicons.bx_play)
+                      : const Icon(Boxicons.bx_pause),
+                  ),
                 ),
                 SizedBox(width: screenWidth10),
                 IconButton(
@@ -216,13 +203,14 @@ class PlayerControlsMainUi extends ConsumerWidget {
               ],
             ),
             ProgressBar(
-              position: ref.watch(playerValueProv.select((v) => v.position)),
-              duration: ref.watch(playerValueProv.select((v) => v.duration)),
+              position: ref.watch(playerValueProv.select((v) => v?.currentTime ?? Duration.zero)),
+              duration: ref.watch(playerValueProv.select((v) => v?.duration ?? Duration.zero)),
               onSeek: (newPos) {
-                controller.seekTo(newPos);
+                ref.read(webviewChannelPortProv.notifier).goTo(newPos.inSeconds);
                 ref.watch(playerControlsProv.notifier).didAction();
               },
             ),
+            
           ],
         ),
       ),

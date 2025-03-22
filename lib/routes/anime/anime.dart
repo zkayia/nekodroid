@@ -3,7 +3,6 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
-import 'package:nekodroid/constants/player_type.dart';
 import 'package:nekodroid/extensions/build_context.dart';
 import 'package:nekodroid/extensions/datetime.dart';
 import 'package:nekodroid/extensions/duration.dart';
@@ -64,6 +63,7 @@ class AnimeRoute extends ConsumerWidget {
                     style: theme.textTheme.titleLarge,
                   ),
                   GenericButton.elevated(
+                    //FIXME: not working when anime not in db
                     onPressed: () async {
                       final navigator = Navigator.of(context);
                       final latest = data.isarAnime?.episodeStatuses.reduce(
@@ -74,11 +74,12 @@ class AnimeRoute extends ConsumerWidget {
                       final currentIndex = latest?.watchedOnLastExit ?? false
                         ? latest?.episodeNumber ?? 0
                         : (latest?.episodeNumber ?? 1) - 1;
+                      print(currentIndex);
                       navigator.pushNamed(
                         "/player",
                         arguments: PlayerRouteParams(
-                          playerType: PlayerType.native,
                           episode: data.anime.episodes.elementAt(currentIndex),
+                          title: data.anime.title,
                           anime: data.anime,
                           currentIndex: currentIndex,
                         ),
@@ -132,16 +133,6 @@ class AnimeRoute extends ConsumerWidget {
                   }
                   final epIndex = realIndex - headers.length;
                   final episode = data.anime.episodes.elementAt(epIndex);
-                  void openPlayer(BuildContext context, PlayerType playerType) =>
-                    Navigator.of(context).pushNamed(
-                      "/player",
-                      arguments: PlayerRouteParams(
-                        playerType: playerType,
-                        episode: episode,
-                        anime: data.anime,
-                        currentIndex: epIndex,
-                      ),
-                    );
                   final isarEp = data.isarAnime?.episodeStatuses.firstWhereOrNull(
                     (e) => e.url == episode.url.toString(),
                   );
@@ -175,8 +166,15 @@ class AnimeRoute extends ConsumerWidget {
                             else
                               isarEp?.lastWatchedDateTime?.completedOn(context), 
                           ].whereType<String>().join("\n"),
-                          onTap: () => openPlayer(context, PlayerType.native),
-                          onLongPress: () => openPlayer(context, PlayerType.webview),
+                          onTap: () => Navigator.of(context).pushNamed(
+                            "/player",
+                            arguments: PlayerRouteParams(
+                              episode: episode,
+                              title: data.anime.title,
+                              anime: data.anime,
+                              currentIndex: epIndex,
+                            ),
+                          ),
                         ),
                       ),
                     ),

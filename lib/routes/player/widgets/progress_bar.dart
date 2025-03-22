@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nekodroid/constants.dart';
 import 'package:nekodroid/extensions/duration.dart';
-import 'package:nekodroid/routes/player/native/providers/player_controls.dart';
-import 'package:nekodroid/routes/player/native/providers/progress_bar_is_changing.dart';
-import 'package:nekodroid/routes/player/native/providers/progress_bar_value.dart';
+import 'package:nekodroid/routes/player/providers/player_controls.dart';
+import 'package:nekodroid/routes/player/providers/progress_bar_is_changing.dart';
+import 'package:nekodroid/routes/player/providers/progress_bar_value.dart';
 import 'package:nekodroid/widgets/single_line_text.dart';
 
 

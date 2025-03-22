@@ -59,10 +59,12 @@ const List<String> kAppDependencies = [
   "dart_code_metrics",
   "device_preview",
   "derry",
+  "flutter_file_dialog",
   "flutter_launcher_icons",
   "flutter_lints",
   "flutter_inappwebview",
   "flutter_native_splash",
+  "flutter_riverpod",
   "flutter_svg",
   "fluttertoast",
   "hive",
@@ -70,9 +72,8 @@ const List<String> kAppDependencies = [
   "isar",
   "package_info_plus",
   "path_provider",
-  "riverpod",
   "share_plus",
-  "video_player",
+  "wakelock",
 ];
 
 final Uri kAppRepoUrl = Uri.https("github.com", "/zkayia/nekodroid");

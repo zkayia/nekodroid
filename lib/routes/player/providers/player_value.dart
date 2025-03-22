@@ -1,8 +1,8 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:video_player/video_player.dart';
+import 'package:nekodroid/models/player_value.dart';
 
 
-final playerValueProv = StateProvider<VideoPlayerValue>(
-  (ref) => VideoPlayerValue(duration: Duration.zero),
+final playerValueProv = StateProvider.autoDispose<PlayerValue?>(
+  (ref) => null,
 );

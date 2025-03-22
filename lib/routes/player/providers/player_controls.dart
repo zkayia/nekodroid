@@ -44,6 +44,9 @@ class _PlayerControlsProvNotif extends StateNotifier<PlayerControlsData> {
   );
 
   void videoDone() {
+    if (isDone) {
+      return;
+    }
     isDone = true;
     toggleControls(force: true);
   }

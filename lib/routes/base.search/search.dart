@@ -65,6 +65,7 @@ class SearchRoute extends ConsumerWidget {
                   ),
                   onTap: () {
                     final miscBox = Hive.box("misc-data");
+                    //TODO: limit recent searches (with a setting maybe?)
                     miscBox.put(
                       "recent-searches",
                       [

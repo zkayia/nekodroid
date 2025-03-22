@@ -57,6 +57,7 @@ class AnimePageHeader extends StatelessWidget {
                     ),
                   ),
                 ),
+                // TODO long press to copy title (for very best friend)
                 Flexible(
                   flex: 2,
                   child: AnimeTitle.bold(

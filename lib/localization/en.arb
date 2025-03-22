@@ -11,6 +11,7 @@
   "reset": "Reset",
   "close": "Close",
   "completed": "completed",
+  "warning": "Warning",
 
   "home": "Home",
   "homeLatestEps": "Latest episodes",
@@ -83,7 +84,7 @@
   },
   "searchFiltersResetConfirm": "Reset filters ?",
   "searchFiltersResetConfirmDesc": "All current selected filters will be unselected.",
-  "searchFiltersPersistModes": "{mode, select, device{Always} session{Until app restart} route{While search is open}}",
+  "searchFiltersPersistModes": "{mode, select, device{Always} session{Until app restart} route{While search is open} other{Unknown}}",
   "@searchFiltersPersistModes": {
     "placeholders": {
       "mode": {
@@ -102,13 +103,16 @@
   
   
   "backupRestore": "Backup & restore",
+  "backup": "Backup",
+  "restore": "Restore",
+  "backupRestoreWarning": "Restored data takes priority, current data may be overwritten and lost",
 
   
   "settings": "Settings",
   
   "settingsGeneral": "General",
   "settingsTheme": "Theme",
-  "settingsThemes": "{theme, select, system{Device} dark{Dark} light{Light}}",
+  "settingsThemes": "{theme, select, system{Device} dark{Dark} light{Light} other{Unknown}}",
   "@settingsThemes": {
     "placeholders": {
       "theme": {
@@ -121,7 +125,7 @@
   "settingsLocale": "Language",
   "settingsDeviceLocale": "Device language",
   "settingsNavLabel": "Navigation labels",
-  "settingsNavLabels": "{navLabel, select, all{Always active} onlySelected{Only on selected} disabled{Never active}}",
+  "settingsNavLabels": "{navLabel, select, all{Always active} onlySelected{Only on selected} disabled{Never active} other{Unknown}}",
   "@settingsNavLabels": {
     "placeholders": {
       "navLabel": {
@@ -138,7 +142,7 @@
   "carouselColumnCount": "Carousel column count",
   "episodeCardPressAction": "Episode card tap action",
   "episodeCardLongPressAction": "Episode card hold action",
-  "episodeCardActions": "{action, select, playEpisodeNative{Play (native)} playEpisodeWebview{Play (webview)} openAnime{Open anime} copyAnimeTitle{Copy anime title} copyAnimeTitleWithEp{Copy anime title with episode number} copyEpisodeLink{Copy episode link} copyVideoLink{Copy video link} copyAnimeLink{Copy anime link} nothing{Do nothing}}",
+  "episodeCardActions": "{action, select, playEpisode{Play} openAnime{Open anime} copyAnimeTitle{Copy anime title} copyAnimeTitleWithEp{Copy anime title with episode number} copyEpisodeLink{Copy episode link} copyVideoLink{Copy video link} copyAnimeLink{Copy anime link} nothing{Do nothing} other{Unknown}}",
   "@episodeCardActions": {
     "placeholders": {
       "action": {
@@ -148,7 +152,7 @@
   },
   "animeCardPressAction": "Anime card tap action",
   "animeCardLongPressAction": "Anime card hold action",
-  "animeCardActions": "{action, select, openAnime{Open anime} playFirstEpNative{Play first episode (native)} playFirstEpWebview{Play first episode (webview)} copyTitle{Copy title} copyLink{Copy link} nothing{Do nothing}}",
+  "animeCardActions": "{action, select, openAnime{Open anime} playFirstEp{Play first episode} copyTitle{Copy title} copyLink{Copy link} nothing{Do nothing} other{Unknown}}",
   "@animeCardActions": {
     "placeholders": {
       "action": {
@@ -246,11 +250,11 @@
   "playerConfirmExit": "Press again to exit",
   "playerPlaybackSpeed": "Playback speed",
   "playerQuality": "Quality",
-  "playerEpStatus": "{success, select, true{Episode {epNumber} marked as completed} false{Episode {epNumber} is already marked as completed}}",
+  "playerEpStatus": "{success, select, true{Episode {epNumber} marked as completed} false{Episode {epNumber} is already marked as completed} other{Unknown}}",
   "@playerEpStatus": {
     "placeholders": {
       "success": {
-        "type": "bool"
+        "type": "String"
       },
       "epNumber": {
         "type": "int"
@@ -263,7 +267,7 @@
   "popularity": "Popularity",
   
   "genre": "Genre",
-  "genres": "{genre, select, action{action} adventure{adventure} battleRoyale{battle royale} comedy{comedy} cyberpunk{cyberpunk} drama{drama} ecchi{ecchi} fantasy{fantasy} hentai{hentai} horror{horror} isekai{isekai} mafia{mafia} magic{magic} magicalGirl{magical girl} mecha{mecha} military{military} music{music} mystery{mystery} psychological{psychological} romance{romance} sciFi{sci-fi} sliceOfLife{slice of life} sports{sports} supernatural{supernatural} thriller{thriller}}",
+  "genres": "{genre, select, action{action} adventure{adventure} battleRoyale{battle royale} comedy{comedy} cyberpunk{cyberpunk} drama{drama} ecchi{ecchi} fantasy{fantasy} hentai{hentai} horror{horror} isekai{isekai} mafia{mafia} magic{magic} magicalGirl{magical girl} mecha{mecha} military{military} music{music} mystery{mystery} psychological{psychological} romance{romance} sciFi{sci-fi} sliceOfLife{slice of life} sports{sports} supernatural{supernatural} thriller{thriller} other{Unknown}}",
   "@genres": {
     "placeholders": {
       "genre": {
@@ -273,7 +277,7 @@
   },
   
   "type": "Format",
-  "types": "{type, select, movie{Movie} ova{OVA} special{Special} tv{TV}}",
+  "types": "{type, select, movie{Movie} ova{OVA} special{Special} tv{TV} other{Unknown}}",
   "@types": {
     "placeholders": {
       "type": {
@@ -283,7 +287,7 @@
   },
   
   "status": "Status",
-  "statuses": "{status, select, aired{Aired} airing{Airing} planned{Planned}}",
+  "statuses": "{status, select, aired{Aired} airing{Airing} planned{Planned} other{Unknown}}",
   "@statuses": {
     "placeholders": {
       "status": {
@@ -380,19 +384,19 @@
   },
   
   
-  "monthsShort": "{month, select, 1{Jan} 2{Feb} 3{Mar} 4{Apr} 5{May} 6{Jun} 7{Jul} 8{Aug} 9{Sep} 10{Oct} 11{Nov} 12{Dec}}",
+  "monthsShort": "{month, select, m1{Jan} m2{Feb} m3{Mar} m4{Apr} m5{May} m6{Jun} m7{Jul} m8{Aug} m9{Sep} m10{Oct} m11{Nov} m12{Dec} other{Unknown}}",
   "@monthsShort": {
     "placeholders": {
       "month": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "monthsLong": "{month, select, 1{January} 2{February} 3{March} 4{April} 5{May} 6{June} 7{July} 8{August} 9{September} 10{October} 11{November} 12{December}}",
+  "monthsLong": "{month, select, m1{January} m2{February} m3{March} m4{April} m5{May} m6{June} m7{July} m8{August} m9{September} m10{October} m11{November} m12{December} other{Unknown}}",
   "@monthsLong": {
     "placeholders": {
       "month": {
-        "type": "int"
+        "type": "String"
       }
     }
   }

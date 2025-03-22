@@ -11,6 +11,7 @@
   "reset": "Reset",
   "close": "Close",
   "completed": "fini",
+  "warning": "Avertissement",
 
   "home": "Accueil",
   "homeLatestEps": "Derniers épisodes",
@@ -83,7 +84,7 @@
   },
   "searchFiltersResetConfirm": "Réinitialiser les filtres ?",
   "searchFiltersResetConfirmDesc": "Tous les filtres actuellement sélectionnés seront désélectionnés.",
-  "searchFiltersPersistModes": "{mode, select, device{Tout le temps} session{Jusqu'au redémarrage de l'application} route{Tant que la page de recherche est ouverte}}",
+  "searchFiltersPersistModes": "{mode, select, device{Tout le temps} session{Jusqu'au redémarrage de l'application} route{Tant que la page de recherche est ouverte} other{Inconnu}}",
   "@searchFiltersPersistModes": {
     "placeholders": {
       "mode": {
@@ -102,13 +103,16 @@
   
   
   "backupRestore": "Sauvegarder & restaurer",
+  "backup": "Backup",
+  "restore": "Restore",
+  "backupRestoreWarning": "Les données restaurés sont prioritaires, les données actuelles peuvent être écrasées et perdues",
 
   
   "settings": "Paramètres",
   
   "settingsGeneral": "Général",
   "settingsTheme": "Thème",
-  "settingsThemes": "{theme, select, system{Appareil} dark{Sombre} light{Clair}}",
+  "settingsThemes": "{theme, select, system{Appareil} dark{Sombre} light{Clair} other{Inconnu}}",
   "@settingsThemes": {
     "placeholders": {
       "theme": {
@@ -121,7 +125,7 @@
   "settingsLocale": "Langage",
   "settingsDeviceLocale": "Language de l'appareil",
   "settingsNavLabel": "Etiquettes de navigation",
-  "settingsNavLabels": "{navLabel, select, all{Toujours activées} onlySelected{Seulement sur l'element selectionné} disabled{Jamais activées}}",
+  "settingsNavLabels": "{navLabel, select, all{Toujours activées} onlySelected{Seulement sur l'element selectionné} disabled{Jamais activées} other{Inconnu}}",
   "@settingsNavLabels": {
     "placeholders": {
       "navLabel": {
@@ -138,7 +142,7 @@
   "carouselColumnCount": "Nombre de colones du carousel",
   "episodeCardPressAction": "Action d'appui sur un épisode",
   "episodeCardLongPressAction": "Action d'appui long sur un épisode",
-  "episodeCardActions": "{action, select, playEpisodeNative{Jouer (natif)} playEpisodeWebview{Jouer (webview)} openAnime{Ouvrir l'anime} copyAnimeTitle{Copier le title de l'anime} copyAnimeTitleWithEp{Copier le title de l'anime avec le numéro d'épisode} copyEpisodeLink{Copier le lien de l'épisode} copyVideoLink{Copier le lien de la vidéo} copyAnimeLink{Copier le lien de l'anime} nothing{Ne rien faire}}",
+  "episodeCardActions": "{action, select, playEpisode{Jouer} openAnime{Ouvrir l'anime} copyAnimeTitle{Copier le title de l'anime} copyAnimeTitleWithEp{Copier le title de l'anime avec le numéro d'épisode} copyEpisodeLink{Copier le lien de l'épisode} copyVideoLink{Copier le lien de la vidéo} copyAnimeLink{Copier le lien de l'anime} nothing{Ne rien faire} other{Inconnu}}",
   "@episodeCardActions": {
     "placeholders": {
       "action": {
@@ -148,7 +152,7 @@
   },
   "animeCardPressAction": "Action d'appui sur un anime",
   "animeCardLongPressAction": "Action d'appui long sur un anime",
-  "animeCardActions": "{action, select, openAnime{Ouvrir l'anime} playFirstEpNative{Jouer le premier épisode (natif)} playFirstEpWebview{Jouer le premier épisode (webview)} copyTitle{Copier le titre} copyLink{Copier le lien} nothing{Ne rien faire}}",
+  "animeCardActions": "{action, select, openAnime{Ouvrir l'anime} playFirstEp{Jouer le premier épisode} copyTitle{Copier le titre} copyLink{Copier le lien} nothing{Ne rien faire} other{Inconnu}}",
   "@animeCardActions": {
     "placeholders": {
       "action": {
@@ -246,11 +250,11 @@
   "playerConfirmExit": "Appuyer encore pour sortir",
   "playerPlaybackSpeed": "Vitesse de lecture",
   "playerQuality": "Qualité",
-  "playerEpStatus": "{success, select, true{Episode {epNumber} marqué comme terminé} false{L'épisode {epNumber} est déjà marqué comme terminé}}",
+  "playerEpStatus": "{success, select, true{Episode {epNumber} marqué comme terminé} false{L'épisode {epNumber} est déjà marqué comme terminé} other{Inconnu}}",
   "@playerEpStatus": {
     "placeholders": {
       "success": {
-        "type": "bool"
+        "type": "String"
       },
       "epNumber": {
         "type": "int"
@@ -263,7 +267,7 @@
   "popularity": "Popularité",
   
   "genre": "Genre",
-  "genres": "{genre, select, action{action} adventure{aventure} battleRoyale{battle royale} comedy{comédie} cyberpunk{cyberpunk} drama{drama} ecchi{ecchi} fantasy{fantastique} hentai{hentai} horror{horreur} isekai{isekai} mafia{mafia} magic{magique} magicalGirl{magical girl} mecha{mecha} military{militaire} music{musique} mystery{mystère} psychological{psychologique} romance{romance} sciFi{sci-fi} sliceOfLife{tranche de vie} sports{sports} supernatural{supernaturel} thriller{suspense}}",
+  "genres": "{genre, select, action{action} adventure{aventure} battleRoyale{battle royale} comedy{comédie} cyberpunk{cyberpunk} drama{drama} ecchi{ecchi} fantasy{fantastique} hentai{hentai} horror{horreur} isekai{isekai} mafia{mafia} magic{magique} magicalGirl{magical girl} mecha{mecha} military{militaire} music{musique} mystery{mystère} psychological{psychologique} romance{romance} sciFi{sci-fi} sliceOfLife{tranche de vie} sports{sports} supernatural{supernaturel} thriller{suspense} other{Inconnu}}",
   "@genres": {
     "placeholders": {
       "genre": {
@@ -273,7 +277,7 @@
   },
   
   "type": "Format",
-  "types": "{type, select, movie{Film} ova{OVA} special{Spécial} tv{TV}}",
+  "types": "{type, select, movie{Film} ova{OVA} special{Spécial} tv{TV} other{Inconnu}}",
   "@types": {
     "placeholders": {
       "type": {
@@ -283,7 +287,7 @@
   },
   
   "status": "Status",
-  "statuses": "{status, select, aired{Terminé} airing{En cours} planned{Pas commencé}}",
+  "statuses": "{status, select, aired{Terminé} airing{En cours} planned{Pas commencé} other{Inconnu}}",
   "@statuses": {
     "placeholders": {
       "status": {
@@ -381,19 +385,19 @@
   },
   
   
-  "monthsShort": "{month, select, 1{Jan} 2{Fév} 3{Mar} 4{Avr} 5{Mai} 6{Jun} 7{Jul} 8{Aoû} 9{Sep} 10{Oct} 11{Nov} 12{Déc}}",
+  "monthsShort": "{month, select, m1{Jan} m2{Fév} m3{Mar} m4{Avr} m5{Mai} m6{Jun} m7{Jul} m8{Aoû} m9{Sep} m10{Oct} m11{Nov} m12{Déc} other{Inconnu}}",
   "@monthsShort": {
     "placeholders": {
       "month": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "monthsLong": "{month, select, 1{Janvier} 2{Février} 3{Mars} 4{Avril} 5{Mai} 6{Juin} 7{Juillet} 8{Août} 9{Septembre} 10{Octobre} 11{Novembre} 12{Décembre}}",
+  "monthsLong": "{month, select, m1{Janvier} m2{Février} m3{Mars} m4{Avril} m5{Mai} m6{Juin} m7{Juillet} m8{Août} m9{Septembre} m10{Octobre} m11{Novembre} m12{Décembre} other{Inconnu}}",
   "@monthsLong": {
     "placeholders": {
       "month": {
-        "type": "int"
+        "type": "String"
       }
     }
   }

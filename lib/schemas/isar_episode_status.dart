@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:isar/isar.dart';
 import 'package:nekodroid/schemas/isar_anime_list_item.dart';
 import 'package:nekosama/nekosama.dart';
@@ -31,6 +33,7 @@ class IsarEpisodeStatus {
     required this.episodeNumber,
     required this.duration,
     required this.lastPosition,
+    required this.lastExitTimestamp,
     required this.watchedTimestamps,
   });
 
@@ -71,7 +74,8 @@ class IsarEpisodeStatus {
   factory IsarEpisodeStatus.fromNSEpisode(
     NSEpisode episode,
     [
-      int? lastExitTime,
+      int? lastPosition,
+      int? lastExitTimestamp,
       List<int>? watchedTimestamps,
     ]
   ) => IsarEpisodeStatus(
@@ -79,8 +83,32 @@ class IsarEpisodeStatus {
     thumbnail: episode.thumbnail.toString(),
     episodeNumber: episode.episodeNumber,
     duration: episode.duration?.inMilliseconds,
-    lastPosition: lastExitTime,
+    lastPosition: lastPosition,
+    lastExitTimestamp: lastExitTimestamp,
     watchedTimestamps: watchedTimestamps ?? const [],
   );
-  
+
+  Map<String, dynamic> toMap() => {
+    "url": url,
+    "thumbnail": thumbnail,
+    "episodeNumber": episodeNumber,
+    "duration": duration,
+    "lastPosition": lastPosition,
+    "lastExitTimestamp": lastExitTimestamp,
+    "watchedTimestamps": watchedTimestamps,
+  };
+
+  factory IsarEpisodeStatus.fromMap(Map<String, dynamic> map) => IsarEpisodeStatus(
+    url: map["url"],
+    thumbnail: map["thumbnail"],
+    episodeNumber: map["episodeNumber"],
+    duration: map["duration"],
+    lastPosition: map["lastPosition"],
+    lastExitTimestamp: map["lastExitTimestamp"],
+    watchedTimestamps: List<int>.from(map["watchedTimestamps"]),
+  );
+
+  String toJson() => json.encode(toMap());
+
+  factory IsarEpisodeStatus.fromJson(String source) => IsarEpisodeStatus.fromMap(json.decode(source));
 }

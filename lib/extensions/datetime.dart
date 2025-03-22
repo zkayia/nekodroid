@@ -18,7 +18,7 @@ extension DateTimeX on DateTime {
 
   String formatHistory(BuildContext context) => context.tr.dateAtTime(
     "$day ${
-      context.tr.monthsShort(month)
+      context.tr.monthsShort("m$month")
     }.${
       year == DateTime.now().year
         ? ""

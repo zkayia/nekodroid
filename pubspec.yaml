@@ -24,6 +24,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter:
     sdk: flutter
+  flutter_file_dialog: ^2.3.2
   flutter_inappwebview: ^5.7.2+3
   flutter_localizations:
     sdk: flutter
@@ -41,7 +42,6 @@ dependencies:
   package_info_plus: ^3.0.3
   path_provider: ^2.0.13
   share_plus: ^6.3.1
-  video_player: ^2.5.2
   wakelock: ^0.6.2
 
 dev_dependencies:
@@ -51,8 +51,6 @@ dev_dependencies:
   flutter_launcher_icons: ^0.11.0
   flutter_lints: ^2.0.1
   flutter_native_splash: ^2.2.16
-  flutter_test:
-    sdk: flutter
   isar_generator: ^3.0.5
 
 flutter_icons:

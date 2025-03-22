@@ -49,10 +49,9 @@ class MorePage extends StatelessWidget {
           onTap: () {}, //TODO: goto /stats
         ),
         ListTile(
-          enabled: false, //TODO: make /backup
           leading: const ListTileIcon(Boxicons.bxs_save),
           title: Text(context.tr.backupRestore),
-          onTap: () {}, //TODO: goto /backup
+          onTap: () => Navigator.of(context).pushNamed("/data"),
         ),
         ListTile(
           leading: const ListTileIcon(Boxicons.bxs_cog),

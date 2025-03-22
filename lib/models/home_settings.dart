@@ -18,7 +18,7 @@ class HomeSettings {
   
   const HomeSettings({
     this.carouselColumnCount=5,
-    this.episodeCardPressAction=HomeEpisodeCardAction.playEpisodeNative,
+    this.episodeCardPressAction=HomeEpisodeCardAction.playEpisode,
     this.episodeCardLongPressAction=HomeEpisodeCardAction.openAnime,
     this.animeCardPressAction=HomeAnimeCardAction.openAnime,
     this.animeCardLongPressAction=HomeAnimeCardAction.copyLink,

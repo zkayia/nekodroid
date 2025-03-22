@@ -11,6 +11,7 @@ import 'package:nekodroid/extensions/neko_sama.dart';
 import 'package:nekodroid/provider/api.dart';
 import 'package:nekodroid/provider/settings.dart';
 import 'package:nekodroid/routes/anime/anime.dart';
+import 'package:nekodroid/routes/data/data.dart';
 import 'package:nekodroid/routes/base.detailled_history/detailled_history.dart';
 import 'package:nekodroid/routes/base.search/search.dart';
 import 'package:nekodroid/routes/base/base.dart';
@@ -74,6 +75,7 @@ class AppState extends ConsumerState<App> with AfterLayoutMixin<App> {
       "/base/carousel_more": (context) => const CarouselMoreRoute(),
       "/base/detailled_history": (context) => const DetailledHistoryRoute(),
       "/base/search": (context) => const SearchRoute(),
+      "/data": (context) => const DataRoute(),
       "/fullscreen_viewer": (context) => const FullscreenViewerRoute(),
       "/player": (context) => const PlayerRoute(),
       "/settings": (context) => const SettingsRoute(),

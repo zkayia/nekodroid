@@ -56,6 +56,7 @@ android {
         versionName flutterVersionName
         multiDexEnabled true
     }
+
     signingConfigs {
        release {
             keyAlias keystoreProperties['keyAlias']
@@ -64,6 +65,7 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
+    
     buildTypes {
         release {
             signingConfig signingConfigs.release

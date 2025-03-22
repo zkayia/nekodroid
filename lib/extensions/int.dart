@@ -2,5 +2,5 @@
 
 extension ExtendedX on int {
 
-  String toPaddedString() => toString().padLeft(2, "0");
+  String toPaddedString([int length=2]) => toString().padLeft(length, "0");
 }

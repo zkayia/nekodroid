@@ -16,8 +16,7 @@ import 'package:nekodroid/schemas/isar_episode_status.dart';
 import 'package:nekodroid/schemas/isar_search_anime.dart';
 import 'package:path_provider/path_provider.dart';
 
-// import 'dart:io';
-// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 // import 'package:device_preview/device_preview.dart';
 
 
@@ -53,10 +52,10 @@ void main() async {
   );
   // Isar.getInstance()!.writeTxnSync(Isar.getInstance()!.clearSync);
 
-  // // Webview debug mode
-  // if (Platform.isAndroid) {
-  //   await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
-  // }
+  // Webview debug mode
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
 
   // // Clears all Hive db storage at restart
   // await Hive.openBox("settings");
