@@ -1,10 +1,13 @@
+__The app no longer has any use since [neko-sama.fr](https://neko-sama.fr) sadly closed in September 2024__ *rip*
+
+
 # nekodroid
 
 ![Demo animation](assets/img/nekodroid_logo.svg "Demo animation")
 
 Unofficial android client for [neko-sama.fr](https://neko-sama.fr).
 
-This app is still in active developpement, a stable release is soon to come.
+~~This app is still in active developpement, a stable release is soon to come.~~
 
 [Screenshots](screenshots/ "Screenshots")
 
